@@ -1,83 +1,86 @@
 {
   "people": [
     {
-      "name": "Adam",
-      "bondNumber": "2010",
-      "pledgeClass": "Alpha",
-      "family": "Cheetah",
+      "name": "Naveen Prabhath",
+      "bondNumber": "1111",
+      "pledgeClass": "Alpha Omicron",
+      "family": "Ash",
       "bigs": [
-        "Alex Ollman"
-      ],
-      "littles": [
-        "Elliott"
-      ],
-      "nickname": ""
-    },
-    {
-      "name": "Alex Ollman",
-      "bondNumber": "2013",
-      "pledgeClass": "Alpha",
-      "family": "Brown",
-      "bigs": [
-        "Matt",
-        "Connor"
+        "Connor Hughes",
+        "Roman Savino"
       ],
       "littles": [],
-      "nickname": "Cheeser"
+      "nickname": "Spud Bruh"
+    },
+    {
+      "name": "Connor Hughes",
+      "bondNumber": "2158",
+      "pledgeClass": "Alpha Nu",
+      "family": "Ash",
+      "bigs": [
+        "Jai Makhija"
+      ],
+      "littles": [
+        "Naveen Prabhath (type full name",
+        "not nickname)"
+      ],
+      "nickname": ""
     }
   ],
   "pledgeClasses": [
     {
-      "name": "Adam",
-      "bondNumber": "2010",
-      "pledgeClass": "Alpha",
-      "family": "Cheetah",
+      "name": "Naveen Prabhath",
+      "bondNumber": "1111",
+      "pledgeClass": "Alpha Omicron",
+      "family": "Ash",
       "bigs": [
-        "Alex Ollman"
-      ],
-      "littles": [
-        "Elliott"
-      ],
-      "nickname": ""
-    },
-    {
-      "name": "Alex Ollman",
-      "bondNumber": "2013",
-      "pledgeClass": "Alpha",
-      "family": "Brown",
-      "bigs": [
-        "Matt",
-        "Connor"
+        "Connor Hughes",
+        "Roman Savino"
       ],
       "littles": [],
-      "nickname": "Cheeser"
+      "nickname": "Spud Bruh"
+    },
+    {
+      "name": "Connor Hughes",
+      "bondNumber": "2158",
+      "pledgeClass": "Alpha Nu",
+      "family": "Ash",
+      "bigs": [
+        "Jai Makhija"
+      ],
+      "littles": [
+        "Naveen Prabhath (type full name",
+        "not nickname)"
+      ],
+      "nickname": ""
     }
   ],
   "families": [
     {
-      "name": "Adam",
-      "bondNumber": "2010",
-      "pledgeClass": "Alpha",
-      "family": "Cheetah",
+      "name": "Naveen Prabhath",
+      "bondNumber": "1111",
+      "pledgeClass": "Alpha Omicron",
+      "family": "Ash",
       "bigs": [
-        "Alex Ollman"
-      ],
-      "littles": [
-        "Elliott"
-      ],
-      "nickname": ""
-    },
-    {
-      "name": "Alex Ollman",
-      "bondNumber": "2013",
-      "pledgeClass": "Alpha",
-      "family": "Brown",
-      "bigs": [
-        "Matt",
-        "Connor"
+        "Connor Hughes",
+        "Roman Savino"
       ],
       "littles": [],
-      "nickname": "Cheeser"
+      "nickname": "Spud Bruh"
+    },
+    {
+      "name": "Connor Hughes",
+      "bondNumber": "2158",
+      "pledgeClass": "Alpha Nu",
+      "family": "Ash",
+      "bigs": [
+        "Jai Makhija"
+      ],
+      "littles": [
+        "Naveen Prabhath (type full name",
+        "not nickname)"
+      ],
+      "nickname": ""
     }
   ]
 }
