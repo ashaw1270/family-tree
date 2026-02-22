@@ -1817,15 +1817,17 @@ function zoomToPath(path) {
     // Calculate scale based on available space (with some padding)
     const scaleX = availableWidth / spanX;
     const scaleY = availableHeight / spanY;
-    const scale = Math.min(scaleX, scaleY) * 0.8;
+    let scale = Math.min(scaleX, scaleY) * 0.8;
+    // Enforce minimum scale so long paths don't zoom out too much
+    const pathSpan = Math.max(spanX, spanY);
+    const minPathPixels = Math.min(availableWidth, availableHeight) * 0.9;
+    const minScaleFromView = pathSpan > 0 ? minPathPixels / pathSpan : scale;
+    const absoluteMinScale = 0.55; // Never zoom out past this (path stays readable)
+    scale = Math.max(absoluteMinScale, Math.max(minScaleFromView, scale));
     
-    // Adjust center to account for panel taking up space in lower right
-    // Shift center left and up to keep path visible
-    const offsetX = (panelWidth + panelPadding) / 2;
-    const offsetY = (panelHeight + panelPadding) / 2;
-    
+    // Center the path in the viewport
     const transform = d3.zoomIdentity
-        .translate((width - offsetX) / 2 - centerX * scale, (height - offsetY) / 2 - centerY * scale)
+        .translate(width / 2 - centerX * scale, height / 2 - centerY * scale)
         .scale(scale);
     
     svg.transition()
@@ -1849,6 +1851,8 @@ function clearPathDisplay() {
         }
         
         buildTree();
+        // Reset zoom/pan to fit-all view like Reset
+        setTimeout(() => zoomToFitAllNodes(), 100);
     }
 }
 
@@ -1873,6 +1877,8 @@ function clearPath() {
     }
     
     buildTree();
+    // Reset zoom/pan to fit-all view like Reset
+    setTimeout(() => zoomToFitAllNodes(), 100);
 }
 
 // Show path panel with text description
@@ -3000,6 +3006,22 @@ function resetView() {
     hideNodeInfo();
     hideFamilyInfo();
     hidePledgeClassInfo();
+    
+    // Clear path and path input fields
+    pathNodes.clear();
+    pathLinks.clear();
+    currentPath = null;
+    const person1Input = document.getElementById('person1');
+    const person2Input = document.getElementById('person2');
+    if (person1Input) {
+        person1Input.value = '';
+        person1Input.removeAttribute('data-actual-name');
+    }
+    if (person2Input) {
+        person2Input.value = '';
+        person2Input.removeAttribute('data-actual-name');
+    }
+    hidePathPanel();
     
     // Reset filters
     document.getElementById('familyFilter').value = 'all';
