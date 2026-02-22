@@ -44,6 +44,11 @@ jobs:
                       if key in LIST_FIELDS and isinstance(value, str):
                           value = [s.strip() for s in value.split(',') if s.strip()]
                       obj[key] = value
+                      
+                  name = list(obj.values())[0]
+                  if name == "":
+                      continue
+                      
                   rows.append(obj)
               return rows
 
