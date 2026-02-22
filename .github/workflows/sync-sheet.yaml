@@ -48,6 +48,11 @@ jobs:
                   name = list(obj.values())[0]
                   if name == "":
                       continue
+
+                  if "redacted?" in obj:
+                      redacted = (obj["redacted?"] != "")
+                      del obj["redacted?"]
+                      obj["redacted"] = redacted
                       
                   rows.append(obj)
               return rows
