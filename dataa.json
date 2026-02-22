@@ -1,0 +1,101 @@
+{
+  "people": [
+    {
+      "name": "Adam Shaw",
+      "bondNumber": "2140",
+      "pledgeClass": "Alpha Mu",
+      "family": "Cheetah",
+      "bigs": [
+        "Marc Sverdlov"
+      ],
+      "littles": [
+        "Elliott Sykes"
+      ]
+    },
+    {
+      "name": "Elliott Sykes",
+      "bondNumber": "",
+      "pledgeClass": "Alpha Xi",
+      "family": "Cheetah",
+      "bigs": [
+        "Adam Shaw"
+      ],
+      "littles": []
+    },
+    {
+      "name": "Alex Ollmann",
+      "bondNumber": "2143",
+      "pledgeClass": "Alpha Mu",
+      "family": "Dark Pink",
+      "bigs": [
+        "Dane Culver"
+      ],
+      "littles": [
+        "Nathan Lee",
+        "Andrew Cuevas"
+      ],
+      "nickname": "Cheeser"
+    },
+    {
+      "name": "Andrew Cuevas",
+      "bondNumber": "2185",
+      "pledgeClass": "Alpha Xi",
+      "family": "Dark Pink",
+      "bigs": [
+        "Alex Ollmann"
+      ],
+      "littles": [],
+      "redacted": true
+    },
+    {
+      "name": "Nathan Lee",
+      "bondNumber": "2169",
+      "pledgeClass": "Alpha Nu",
+      "family": "Dark Pink",
+      "bigs": [
+        "Alex Ollmann"
+      ],
+      "littles": [],
+      "nickname": "Lebron"
+    }
+  ],
+  "pledgeClasses": [
+    {
+      "name": "Alpha Lambda",
+      "semester": "Spring 2023",
+      "pcp": "Sean Iredell",
+      "pcvp": "",
+      "bestPledge": "",
+      "hindTit": "",
+      "pledgeMaster": ""
+    },
+    {
+      "name": "Alpha Mu",
+      "semester": "Fall 2023",
+      "pcp": "Chris Clausen",
+      "pcvp": "Lucas Li",
+      "bestPledge": "Justin Shih",
+      "hindTit": "David Moseley",
+      "pledgeMaster": "Ryan DeMotte"
+    },
+    {
+      "name": "Alpha Nu",
+      "semester": "Spring 2024",
+      "pcp": "Roman Savino",
+      "pcvp": "Max Rubenstein",
+      "bestPledge": "Derek Wu",
+      "hindTit": "Vikram Gedipudi",
+      "pledgeMaster": "Colin Jimmink"
+    },
+    {
+      "name": "Alpha Xi",
+      "semester": "",
+      "pcp": "",
+      "pcvp": "",
+      "bestPledge": "",
+      "hindTit": "",
+      "pledgeMaster": ""
+    }
+  ],
+  "families": []
+}
