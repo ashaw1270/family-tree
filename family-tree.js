@@ -211,7 +211,7 @@ async function init() {
                         // Re-zoom to path and re-highlight it
                         setTimeout(() => {
                             zoomToPath(currentPath);
-                            highlightPathInTree();
+                            highlightPathindree();
                         }, 100);
                         
                         // Don't process further - path should stay
@@ -1566,11 +1566,11 @@ function showPledgeClassInfo(pledgeClassName) {
         details.push(`<strong>Best Pledge:</strong> Unknown`);
     }
     
-    // Hint Tit
-    if (pledgeClassData.hintTit) {
-        details.push(`<strong>Hint Tit:</strong> ${createPersonLink(pledgeClassData.hintTit)}`);
+    // Hind Tit
+    if (pledgeClassData.hindTit) {
+        details.push(`<strong>Hind Tit:</strong> ${createPersonLink(pledgeClassData.hindTit)}`);
     } else {
-        details.push(`<strong>Hint Tit:</strong> Unknown`);
+        details.push(`<strong>Hind Tit:</strong> Unknown`);
     }
     
     // Pledge Master
@@ -1750,7 +1750,7 @@ function findPath() {
             // Zoom to path after tree is rendered
             setTimeout(() => {
                 zoomToPath(path);
-                highlightPathInTree();
+                highlightPathindree();
             }, 300);
             
             return;
@@ -1950,7 +1950,7 @@ function hideErrorPopup() {
 }
 
 // Highlight path in the tree after rendering
-function highlightPathInTree() {
+function highlightPathindree() {
     // Force update node and link styles with transition
     g.selectAll('.node').each(function(d) {
         const node = d3.select(this);
