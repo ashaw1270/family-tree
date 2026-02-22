@@ -1,0 +1,83 @@
+{
+  "people": [
+    {
+      "name": "Adam",
+      "bondNumber": "2010",
+      "pledgeClass": "Alpha",
+      "family": "Cheetah",
+      "bigs": [
+        "Alex Ollman"
+      ],
+      "littles": [
+        "Elliott"
+      ],
+      "nickname": ""
+    },
+    {
+      "name": "Alex Ollman",
+      "bondNumber": "2013",
+      "pledgeClass": "Alpha",
+      "family": "Brown",
+      "bigs": [
+        "Matt",
+        "Connor"
+      ],
+      "littles": [],
+      "nickname": "Cheeser"
+    }
+  ],
+  "pledgeClasses": [
+    {
+      "name": "Adam",
+      "bondNumber": "2010",
+      "pledgeClass": "Alpha",
+      "family": "Cheetah",
+      "bigs": [
+        "Alex Ollman"
+      ],
+      "littles": [
+        "Elliott"
+      ],
+      "nickname": ""
+    },
+    {
+      "name": "Alex Ollman",
+      "bondNumber": "2013",
+      "pledgeClass": "Alpha",
+      "family": "Brown",
+      "bigs": [
+        "Matt",
+        "Connor"
+      ],
+      "littles": [],
+      "nickname": "Cheeser"
+    }
+  ],
+  "families": [
+    {
+      "name": "Adam",
+      "bondNumber": "2010",
+      "pledgeClass": "Alpha",
+      "family": "Cheetah",
+      "bigs": [
+        "Alex Ollman"
+      ],
+      "littles": [
+        "Elliott"
+      ],
+      "nickname": ""
+    },
+    {
+      "name": "Alex Ollman",
+      "bondNumber": "2013",
+      "pledgeClass": "Alpha",
+      "family": "Brown",
+      "bigs": [
+        "Matt",
+        "Connor"
+      ],
+      "littles": [],
+      "nickname": "Cheeser"
+    }
+  ]
+}
