@@ -52,7 +52,8 @@ jobs:
                   if "redacted?" in obj:
                       redacted = (obj["redacted?"] != "")
                       del obj["redacted?"]
-                      obj["redacted"] = redacted
+                      if redacted:
+                          obj["redacted"] = True
                       
                   rows.append(obj)
               return rows
