@@ -1,101 +1,500 @@
 {
-  "people": [
+  "families": [
     {
-      "name": "Adam Shaw",
-      "bondNumber": "2140",
-      "pledgeClass": "Alpha Mu",
-      "family": "Cheetah",
-      "bigs": [
-        "Marc Sverdlov"
-      ],
-      "littles": [
-        "Elliott Sykes"
-      ]
+      "name": "Cheetah",
+      "patriarch": "John"
     },
     {
-      "name": "Elliott Sykes",
-      "bondNumber": "",
-      "pledgeClass": "Alpha Xi",
-      "family": "Cheetah",
-      "bigs": [
-        "Adam Shaw"
-      ],
-      "littles": []
+      "name": "Lion",
+      "patriarch": "Sarah"
     },
     {
-      "name": "Alex Ollmann",
-      "bondNumber": "2143",
-      "pledgeClass": "Alpha Mu",
-      "family": "Dark Pink",
-      "bigs": [
-        "Dane Culver"
-      ],
-      "littles": [
-        "Nathan Lee",
-        "Andrew Cuevas"
-      ],
-      "nickname": "Cheeser"
+      "name": "Tiger",
+      "patriarch": "Ryan"
     },
     {
-      "name": "Andrew Cuevas",
-      "bondNumber": "2185",
-      "pledgeClass": "Alpha Xi",
-      "family": "Dark Pink",
-      "bigs": [
-        "Alex Ollmann"
-      ],
-      "littles": [],
-      "redacted": true
+      "name": "Bear",
+      "patriarch": "Jessica"
     },
     {
-      "name": "Nathan Lee",
-      "bondNumber": "2169",
-      "pledgeClass": "Alpha Nu",
-      "family": "Dark Pink",
-      "bigs": [
-        "Alex Ollmann"
-      ],
-      "littles": [],
-      "nickname": "Lebron"
+      "name": "Wolf",
+      "patriarch": "Alex"
+    },
+    {
+      "name": "Eagle",
+      "patriarch": "Emily"
     }
   ],
   "pledgeClasses": [
     {
-      "name": "Alpha Mu",
-      "semester": "Fall 2023",
-      "pcp": "Chris Clausen",
-      "pcvp": "Lucas Li",
-      "bestPledge": "Justin Shih",
-      "hindTit": "David Moseley",
-      "pledgeMaster": "Ryan DeMotte"
+      "name": "Alpha",
+      "semester": "Fall 2020",
+      "pcp": "John",
+      "pcvp": "Sarah",
+      "bestPledge": "Ryan",
+      "hindTit": "Jessica",
+      "pledgeMaster": "Matt"
     },
     {
-      "name": "Alpha Nu",
-      "semester": "Spring 2024",
-      "pcp": "Roman Savino",
-      "pcvp": "Max Rubenstein",
-      "bestPledge": "Derek Wu",
-      "hindTit": "Vikrum Gedipudi",
-      "pledgeMaster": "Colin Jimmink"
+      "name": "Beta",
+      "semester": "Spring 2021"
     },
     {
-      "name": "Alpha Xi",
-      "semester": "",
-      "pcp": "",
-      "pcvp": "",
-      "bestPledge": "",
-      "hindTit": "",
-      "pledgeMaster": ""
+      "name": "Gamma",
+      "semester": "Fall 2021"
+    },
+    {
+      "name": "Delta",
+      "semester": "Spring 2022"
+    },
+    {
+      "name": "Epsilon",
+      "semester": "Fall 2022"
+    },
+    {
+      "name": "Zeta",
+      "semester": "Spring 2023"
+    },
+    {
+      "name": "Eta",
+      "semester": "Fall 2023"
+    },
+    {
+      "name": "Theta",
+      "semester": "Spring 2024"
     }
   ],
-  "families": [
+  "people": [
     {
-      "name": "Cheetah",
-      "patriarch": "Bayan Sedighian"
+      "name": "John",
+      "family": "Cheetah",
+      "bondNumber": 1,
+      "pledgeClass": "Alpha",
+      "nickname": "Johnny",
+      "bigs": [],
+      "littles": [
+        "Matt"
+      ]
     },
     {
-      "name": "Dark Pink",
-      "patriarch": "Brett Sarem"
+      "name": "Sarah",
+      "family": "Lion",
+      "bondNumber": 2,
+      "pledgeClass": "Alpha",
+      "bigs": [],
+      "littles": [
+        "Mike",
+        "Emily"
+      ]
+    },
+    {
+      "name": "Ryan",
+      "family": "Tiger",
+      "bondNumber": 3,
+      "pledgeClass": "Alpha",
+      "bigs": [],
+      "littles": [
+        "Kevin"
+      ]
+    },
+    {
+      "name": "Jessica",
+      "family": "Bear",
+      "bondNumber": 4,
+      "pledgeClass": "Alpha",
+      "bigs": [],
+      "littles": [
+        "Lisa"
+      ]
+    },
+    {
+      "name": "Matt",
+      "family": "Cheetah",
+      "bondNumber": 5,
+      "pledgeClass": "Beta",
+      "bigs": [
+        "John"
+      ],
+      "littles": [
+        "Adam",
+        "Andrew"
+      ]
+    },
+    {
+      "name": "Mike",
+      "family": "Lion",
+      "bondNumber": 6,
+      "pledgeClass": "Beta",
+      "bigs": [
+        "Sarah"
+      ],
+      "littles": [
+        "Emma"
+      ]
+    },
+    {
+      "name": "Kevin",
+      "family": "Tiger",
+      "bondNumber": 7,
+      "pledgeClass": "Beta",
+      "bigs": [
+        "Ryan"
+      ],
+      "littles": [
+        "James"
+      ]
+    },
+    {
+      "name": "Lisa",
+      "family": "Bear",
+      "bondNumber": 8,
+      "pledgeClass": "Beta",
+      "bigs": [
+        "Jessica"
+      ],
+      "littles": [
+        "Ava",
+        "Olivia"
+      ]
+    },
+    {
+      "name": "Tom",
+      "family": "Wolf",
+      "bondNumber": 9,
+      "pledgeClass": "Beta",
+      "bigs": [],
+      "littles": [
+        "Noah"
+      ]
+    },
+    {
+      "name": "Adam",
+      "family": "Cheetah",
+      "bondNumber": 10,
+      "pledgeClass": "Gamma",
+      "bigs": [
+        "Matt"
+      ],
+      "littles": [
+        "Ben"
+      ]
+    },
+    {
+      "name": "Andrew",
+      "family": "Cheetah",
+      "bondNumber": 11,
+      "pledgeClass": "Gamma",
+      "bigs": [
+        "Matt"
+      ],
+      "littles": []
+    },
+    {
+      "name": "Emma",
+      "family": "Lion",
+      "bondNumber": 12,
+      "pledgeClass": "Gamma",
+      "bigs": [
+        "Mike"
+      ],
+      "littles": [
+        "Sophia",
+        "Lucas"
+      ]
+    },
+    {
+      "name": "James",
+      "family": "Tiger",
+      "bondNumber": 13,
+      "pledgeClass": "Gamma",
+      "bigs": [
+        "Kevin"
+      ],
+      "littles": [
+        "Daniel",
+        "Chloe"
+      ]
+    },
+    {
+      "name": "Olivia",
+      "family": "Bear",
+      "bondNumber": 14,
+      "pledgeClass": "Gamma",
+      "bigs": [
+        "Lisa"
+      ],
+      "littles": [
+        "Grace"
+      ]
+    },
+    {
+      "name": "Noah",
+      "family": "Wolf",
+      "bondNumber": 15,
+      "pledgeClass": "Gamma",
+      "bigs": [
+        "Tom"
+      ],
+      "littles": [
+        "Nathan",
+        "Alex"
+      ]
+    },
+    {
+      "name": "Chris",
+      "family": "Eagle",
+      "bondNumber": 16,
+      "pledgeClass": "Delta",
+      "bigs": [
+        "Emily"
+      ],
+      "littles": [
+        "Mia",
+        "David"
+      ]
+    },
+    {
+      "name": "Sophia",
+      "family": "Lion",
+      "bondNumber": 17,
+      "pledgeClass": "Delta",
+      "bigs": [
+        "Emma"
+      ],
+      "littles": [
+        "Mason"
+      ]
+    },
+    {
+      "name": "Daniel",
+      "family": "Tiger",
+      "bondNumber": 18,
+      "pledgeClass": "Delta",
+      "bigs": [
+        "James"
+      ],
+      "littles": [
+        "Isabella"
+      ]
+    },
+    {
+      "name": "Mia",
+      "family": "Eagle",
+      "bondNumber": 19,
+      "pledgeClass": "Delta",
+      "bigs": [
+        "Lily",
+        "Chris"
+      ],
+      "littles": [
+        "Zoe"
+      ]
+    },
+    {
+      "name": "David",
+      "family": "Eagle",
+      "bondNumber": 20,
+      "pledgeClass": "Epsilon",
+      "bigs": [
+        "Chris"
+      ],
+      "littles": []
+    },
+    {
+      "name": "Alex",
+      "family": "Wolf",
+      "bondNumber": 21,
+      "pledgeClass": "Epsilon",
+      "bigs": [
+        "Noah"
+      ],
+      "littles": [
+        "Logan"
+      ]
+    },
+    {
+      "name": "Emily",
+      "family": "Eagle",
+      "bondNumber": 22,
+      "pledgeClass": "Epsilon",
+      "bigs": [
+        "Sarah"
+      ],
+      "littles": [
+        "Chris",
+        "Lily"
+      ]
+    },
+    {
+      "name": "Ben",
+      "family": "Cheetah",
+      "bondNumber": 23,
+      "pledgeClass": "Epsilon",
+      "bigs": [
+        "Adam"
+      ],
+      "littles": [
+        "Ethan",
+        "Jackson"
+      ]
+    },
+    {
+      "name": "Grace",
+      "family": "Bear",
+      "bondNumber": 24,
+      "pledgeClass": "Epsilon",
+      "bigs": [
+        "Olivia"
+      ],
+      "littles": [
+        "Harper"
+      ]
+    },
+    {
+      "name": "Lucas",
+      "family": "Lion",
+      "bondNumber": 25,
+      "pledgeClass": "Zeta",
+      "bigs": [
+        "Emma"
+      ],
+      "littles": [
+        "Aiden"
+      ]
+    },
+    {
+      "name": "Chloe",
+      "family": "Tiger",
+      "bondNumber": 26,
+      "pledgeClass": "Zeta",
+      "bigs": [
+        "James"
+      ],
+      "littles": [
+        "Charlotte"
+      ]
+    },
+    {
+      "name": "Nathan",
+      "family": "Wolf",
+      "bondNumber": 27,
+      "pledgeClass": "Zeta",
+      "bigs": [
+        "Noah"
+      ],
+      "littles": []
+    },
+    {
+      "name": "Zoe",
+      "family": "Eagle",
+      "bondNumber": 28,
+      "pledgeClass": "Zeta",
+      "bigs": [
+        "Mia"
+      ],
+      "littles": []
+    },
+    {
+      "name": "Ethan",
+      "family": "Cheetah",
+      "bondNumber": 29,
+      "pledgeClass": "Zeta",
+      "bigs": [
+        "Ben"
+      ],
+      "littles": []
+    },
+    {
+      "name": "Ava",
+      "family": "Bear",
+      "bondNumber": 30,
+      "pledgeClass": "Zeta",
+      "bigs": [
+        "Lisa"
+      ],
+      "littles": []
+    },
+    {
+      "name": "Mason",
+      "family": "Lion",
+      "bondNumber": 31,
+      "pledgeClass": "Eta",
+      "bigs": [
+        "Sophia"
+      ],
+      "littles": []
+    },
+    {
+      "name": "Isabella",
+      "family": "Tiger",
+      "bondNumber": 32,
+      "pledgeClass": "Eta",
+      "bigs": [
+        "Daniel"
+      ],
+      "littles": []
+    },
+    {
+      "name": "Logan",
+      "family": "Wolf",
+      "bondNumber": 33,
+      "pledgeClass": "Eta",
+      "bigs": [
+        "Alex"
+      ],
+      "littles": []
+    },
+    {
+      "name": "Lily",
+      "family": "Eagle",
+      "bondNumber": 34,
+      "pledgeClass": "Eta",
+      "bigs": [
+        "Emily"
+      ],
+      "littles": [
+        "Mia"
+      ]
+    },
+    {
+      "name": "Jackson",
+      "family": "Cheetah",
+      "bondNumber": 35,
+      "pledgeClass": "Eta",
+      "bigs": [
+        "Ben"
+      ],
+      "littles": []
+    },
+    {
+      "name": "Harper",
+      "family": "Bear",
+      "bondNumber": 36,
+      "pledgeClass": "Theta",
+      "bigs": [
+        "Grace"
+      ],
+      "littles": []
+    },
+    {
+      "name": "Aiden",
+      "family": "Lion",
+      "bondNumber": 37,
+      "pledgeClass": "Theta",
+      "bigs": [
+        "Lucas"
+      ],
+      "littles": []
+    },
+    {
+      "name": "Charlotte",
+      "family": "Tiger",
+      "bondNumber": 38,
+      "pledgeClass": "Theta",
+      "bigs": [
+        "Chloe"
+      ],
+      "littles": []
     }
   ]
 }
