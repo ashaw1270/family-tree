@@ -30,8 +30,8 @@ jobs:
                   raw = response.read().decode('utf-8')
 
               first_row = {
-                  "people": 2,
-                  "pledgeClasses": 1,
+                  "people": 3,
+                  "pledgeClasses": 2,
                   "families": 0
               }
               first_row_num = first_row[sheet_name]
