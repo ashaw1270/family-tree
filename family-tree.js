@@ -2524,124 +2524,33 @@ function centerTree() {
         .call(zoom.transform, transform);
 }
 
-// Center view on currently visible nodes (without clearing filters)
+// Center view: same zoom/pan as when the active filter was first applied
 function centerView() {
+    if (currentPledgeClass && currentPledgeClass !== 'all') {
+        zoomToPledgeClass(currentPledgeClass);
+        return;
+    }
+    if (currentFamily && currentFamily !== 'all') {
+        zoomToFamily(currentFamily);
+        return;
+    }
+    // Fallback when Center is shown but state is unclear (e.g. during init)
     const nodes = g.selectAll('.node').data();
     if (nodes.length === 0) {
         resetZoom();
         return;
     }
-    
-    // Filter out nodes with invalid coordinates
     const validNodes = nodes.filter(d => d.x !== undefined && d.y !== undefined && !isNaN(d.x) && !isNaN(d.y));
-    
     if (validNodes.length === 0) {
         resetZoom();
         return;
     }
-    
-    // If a pledge class is selected, center on pledge class nodes and their nuclear family
-    if (currentPledgeClass && currentPledgeClass !== 'all') {
-        // Get nodes that should be focused on (pledge class + nuclear family)
-        const focusNodes = validNodes.filter(d => 
-            pledgeClassNodes.has(d.id) || pledgeClassNuclearFamily.has(d.id)
-        );
-        
-        if (focusNodes.length > 0) {
-            const xCoords = focusNodes.map(d => d.x);
-            const yCoords = focusNodes.map(d => d.y);
-            
-            const minX = Math.min(...xCoords);
-            const maxX = Math.max(...xCoords);
-            const minY = Math.min(...yCoords);
-            const maxY = Math.max(...yCoords);
-            
-            const centerX = (minX + maxX) / 2;
-            const centerY = (minY + maxY) / 2;
-            const spanX = maxX - minX || width;
-            const spanY = maxY - minY || height;
-            
-            // Add padding around the focus nodes (less aggressive than zoomToPledgeClass)
-            const padding = 150;
-            const scale = Math.min(width / (spanX + padding * 2), height / (spanY + padding * 2)) * 0.7;
-            
-            // Ensure scale is valid and reasonable
-            if (isNaN(scale) || scale <= 0 || !isFinite(scale) || scale > 10) {
-                // Fallback to simple centering without zoom
-                const transform = d3.zoomIdentity
-                    .translate(width / 2 - centerX, height / 2 - centerY);
-                svg.transition()
-                    .duration(750)
-                    .call(zoom.transform, transform);
-            } else {
-                const transform = d3.zoomIdentity
-                    .translate(width / 2 - centerX * scale, height / 2 - centerY * scale)
-                    .scale(scale);
-                
-                svg.transition()
-                    .duration(750)
-                    .call(zoom.transform, transform);
-            }
-            return;
-        }
-    }
-    
-    // If a family is selected, center on family nodes and their nuclear family
-    if (currentFamily && currentFamily !== 'all') {
-        // Get nodes that should be focused on (family + nuclear family)
-        const focusNodes = validNodes.filter(d => 
-            familyNodes.has(d.id) || familyNuclearFamily.has(d.id)
-        );
-        
-        if (focusNodes.length > 0) {
-            const xCoords = focusNodes.map(d => d.x);
-            const yCoords = focusNodes.map(d => d.y);
-            
-            const minX = Math.min(...xCoords);
-            const maxX = Math.max(...xCoords);
-            const minY = Math.min(...yCoords);
-            const maxY = Math.max(...yCoords);
-            
-            const centerX = (minX + maxX) / 2;
-            const centerY = (minY + maxY) / 2;
-            const spanX = maxX - minX || width;
-            const spanY = maxY - minY || height;
-            
-            // Add padding around the focus nodes (less aggressive than zoomToFamily)
-            const padding = 150;
-            const scale = Math.min(width / (spanX + padding * 2), height / (spanY + padding * 2)) * 0.7;
-            
-            // Ensure scale is valid and reasonable
-            if (isNaN(scale) || scale <= 0 || !isFinite(scale) || scale > 10) {
-                // Fallback to simple centering without zoom
-                const transform = d3.zoomIdentity
-                    .translate(width / 2 - centerX, height / 2 - centerY);
-                svg.transition()
-                    .duration(750)
-                    .call(zoom.transform, transform);
-            } else {
-                const transform = d3.zoomIdentity
-                    .translate(width / 2 - centerX * scale, height / 2 - centerY * scale)
-                    .scale(scale);
-                
-                svg.transition()
-                    .duration(750)
-                    .call(zoom.transform, transform);
-            }
-            return;
-        }
-    }
-    
-    // Default behavior: center on all visible nodes without zoom
     const xCoords = validNodes.map(d => d.x);
     const yCoords = validNodes.map(d => d.y);
-    
     const centerX = (Math.min(...xCoords) + Math.max(...xCoords)) / 2;
     const centerY = (Math.min(...yCoords) + Math.max(...yCoords)) / 2;
-    
     const transform = d3.zoomIdentity
         .translate(width / 2 - centerX, height / 2 - centerY);
-    
     svg.transition()
         .duration(750)
         .call(zoom.transform, transform);
