@@ -15,30 +15,25 @@ jobs:
       - name: Fetch and convert sheet data
         run: |
           python3 << 'EOF'
-          import urllib.request, json, re
+          import urllib.request, json, csv, io
 
           SHEET_ID = "1u2MgA42nh8EVz8NdYSQc59wI9vAdpq-RuGGcJIgVDWQ"
           LIST_FIELDS = {"bigs", "littles"}  # columns to treat as comma-delimited lists
 
           def fetch_sheet(sheet_name):
-              url = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?tqx=out:json&sheet={sheet_name}"
-              with urllib.request.urlopen(url) as response:
-                  raw = response.read().decode('utf-8')
-              json_str = re.search(r'google\.visualization\.Query\.setResponse\((.*)\);', raw, re.DOTALL).group(1)
-              data = json.loads(json_str)
-              cols = [col['label'] for col in data['table']['cols']]
-              rows = []
-              for row in data['table']['rows']:
-                  if row is None:
-                      continue
-                  obj = {}
-                  for i, cell in enumerate(row['c']):
-                      value = cell['v'] if cell and cell.get('v') is not None else ''
-                      if cols[i] in LIST_FIELDS and isinstance(value, str):
-                          value = [s.strip() for s in value.split(',') if s.strip()]
-                      obj[cols[i]] = value
-                  rows.append(obj)
-              return rows
+            url = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?tqx=out:csv&sheet={sheet_name}"
+            with urllib.request.urlopen(url) as response:
+                raw = response.read().decode('utf-8')
+            reader = csv.DictReader(io.StringIO(raw))
+            rows = []
+            for row in reader:
+                obj = {}
+                for key, value in row.items():
+                    if key in LIST_FIELDS and isinstance(value, str):
+                        value = [s.strip() for s in value.split(',') if s.strip()]
+                    obj[key] = value
+                rows.append(obj)
+            return rows
 
           output = {
               "people": fetch_sheet("people"),
