@@ -29,7 +29,6 @@
     {
       "name": "Alpha",
       "semester": "Fall 2020",
-      "numPledges": 4,
       "PCP": "John",
       "PCVP": "Sarah",
       "bestPledge": "Ryan",
@@ -37,38 +36,31 @@
     },
     {
       "name": "Beta",
-      "semester": "Spring 2021",
-      "numPledges": 5
+      "semester": "Spring 2021"
     },
     {
       "name": "Gamma",
-      "semester": "Fall 2021",
-      "numPledges": 6
+      "semester": "Fall 2021"
     },
     {
       "name": "Delta",
-      "semester": "Spring 2022",
-      "numPledges": 4
+      "semester": "Spring 2022"
     },
     {
       "name": "Epsilon",
-      "semester": "Fall 2022",
-      "numPledges": 5
+      "semester": "Fall 2022"
     },
     {
       "name": "Zeta",
-      "semester": "Spring 2023",
-      "numPledges": 6
+      "semester": "Spring 2023"
     },
     {
       "name": "Eta",
-      "semester": "Fall 2023",
-      "numPledges": 5
+      "semester": "Fall 2023"
     },
     {
       "name": "Theta",
-      "semester": "Spring 2024",
-      "numPledges": 3
+      "semester": "Spring 2024"
     }
   ],
   "people": [

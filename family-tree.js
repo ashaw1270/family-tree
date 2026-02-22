@@ -1538,9 +1538,12 @@ function showPledgeClassInfo(pledgeClassName) {
     
     nameEl.textContent = pledgeClassName + ' Pledge Class';
     
+    // Compute number of pledges from people who have this pledge class
+    const numPledges = treeData.people?.filter(p => p.pledgeClass === pledgeClassName).length ?? 0;
+    
     let details = [];
     details.push(`<strong>Semester:</strong> ${pledgeClassData.semester || 'Unknown'}`);
-    details.push(`<strong>Number of Pledges:</strong> ${pledgeClassData.numPledges || 0}`);
+    details.push(`<strong>Number of Pledges:</strong> ${numPledges}`);
     
     // PCP - make clickable
     if (pledgeClassData.PCP) {
