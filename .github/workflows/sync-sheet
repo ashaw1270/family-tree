@@ -1,0 +1,61 @@
+name: Sync Google Sheet to JSON
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # Runs every hour
+  workflow_dispatch:       # Allows manual trigger from GitHub UI
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Fetch and convert sheet data
+        run: |
+          python3 << 'EOF'
+          import urllib.request, json, re
+
+          SHEET_ID = "1u2MgA42nh8EVz8NdYSQc59wI9vAdpq-RuGGcJIgVDWQ"
+          LIST_FIELDS = {"bigs", "littles"}  # columns to treat as comma-delimited lists
+
+          def fetch_sheet(sheet_name):
+              url = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?tqx=out:json&sheet={sheet_name}"
+              with urllib.request.urlopen(url) as response:
+                  raw = response.read().decode('utf-8')
+              json_str = re.search(r'google\.visualization\.Query\.setResponse\((.*)\);', raw, re.DOTALL).group(1)
+              data = json.loads(json_str)
+              cols = [col['label'] for col in data['table']['cols']]
+              rows = []
+              for row in data['table']['rows']:
+                  if row is None:
+                      continue
+                  obj = {}
+                  for i, cell in enumerate(row['c']):
+                      value = cell['v'] if cell and cell.get('v') is not None else ''
+                      if cols[i] in LIST_FIELDS and isinstance(value, str):
+                          value = [s.strip() for s in value.split(',') if s.strip()]
+                      obj[cols[i]] = value
+                  rows.append(obj)
+              return rows
+
+          output = {
+              "people": fetch_sheet("people"),
+              "pledgeClasses": fetch_sheet("pledgeClasses"),
+              "families": fetch_sheet("families"),
+          }
+
+          with open('dataa.json', 'w') as f:
+              json.dump(output, f, indent=2)
+
+          print("Done.")
+          EOF
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/site-data.json
+          git diff --staged --quiet || git commit -m "Sync data from Google Sheet"
+          git push
