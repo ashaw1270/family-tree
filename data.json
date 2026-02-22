@@ -1,21 +1,6 @@
 {
   "people": [
     {
-      "name": "Connor Hughes",
-      "bondNumber": "2158",
-      "pledgeClass": "Alpha Nu",
-      "family": "Ash",
-      "bigs": [
-        "Jai Makhija"
-      ],
-      "littles": [
-        "Naveen Prabhath (type real name",
-        "not nickname)"
-      ],
-      "nickname": "",
-      "redacted?": ""
-    },
-    {
       "name": "",
       "bondNumber": "",
       "pledgeClass": "",
@@ -92,19 +77,6 @@
     }
   ],
   "pledgeClasses": [
-    {
-      "name": "Naveen Prabhath",
-      "bondNumber": "1111",
-      "pledgeClass": "Alpha Omicron",
-      "family": "Ash",
-      "bigs": [
-        "Connor Hughes",
-        "Roman Savino"
-      ],
-      "littles": [],
-      "nickname": "Spud Bruh",
-      "redacted?": ""
-    },
     {
       "name": "Connor Hughes",
       "bondNumber": "2158",
