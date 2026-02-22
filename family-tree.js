@@ -1295,6 +1295,34 @@ function selectPersonByName(personName) {
     }
 }
 
+// Search for a person by name or nickname (partial, case-insensitive) and select them like a node click
+function searchAndSelectPerson() {
+    const input = document.getElementById('personSearch');
+    if (!input || !treeData || !treeData.people) return;
+    const query = (input.value || '').trim();
+    if (!query) return;
+    const q = query.toLowerCase();
+    const people = treeData.people;
+    const exactName = people.find(p => p.name.toLowerCase() === q);
+    if (exactName) {
+        selectPersonByName(exactName.name);
+        return;
+    }
+    const exactNick = people.find(p => (p.nickname || '').toLowerCase() === q);
+    if (exactNick) {
+        selectPersonByName(exactNick.name);
+        return;
+    }
+    const partial = people.filter(p =>
+        p.name.toLowerCase().includes(q) || (p.nickname || '').toLowerCase().includes(q)
+    );
+    if (partial.length === 0) {
+        showErrorPopup('No person found matching "' + query + '"');
+        return;
+    }
+    selectPersonByName(partial[0].name);
+}
+
 // Helper function to select a family (triggers family filter)
 function selectFamily(familyName) {
     const familyFilter = document.getElementById('familyFilter');
@@ -2025,6 +2053,8 @@ function populateFamilyFilter() {
     // Setup filtered autocomplete for path finder inputs
     setupFilteredAutocomplete('person1');
     setupFilteredAutocomplete('person2');
+    // Search person: same dropdown, and on select immediately select that person in the tree
+    setupFilteredAutocomplete('personSearch', (name) => selectPersonByName(name));
 }
 
 // Populate pledge class filter dropdown
@@ -2093,7 +2123,8 @@ function populateFamilyLegend() {
 }
 
 // Setup filtered autocomplete for input fields
-function setupFilteredAutocomplete(inputId) {
+// onSelectCallback(name): optional, called when user picks a person (e.g. to select that person in the tree)
+function setupFilteredAutocomplete(inputId, onSelectCallback) {
     const input = document.getElementById(inputId);
     if (!input) return;
     
@@ -2117,6 +2148,16 @@ function setupFilteredAutocomplete(inputId) {
     
     let selectedIndex = -1;
     let filteredNames = [];
+    
+    function applySelection(name) {
+        input.setAttribute('data-actual-name', name);
+        input.value = formatNameWithNickname(name);
+        dropdown.classList.remove('show');
+        selectedIndex = -1;
+        if (typeof onSelectCallback === 'function') {
+            onSelectCallback(name);
+        }
+    }
     
     // Function to filter and show dropdown
     function showDropdown(query) {
@@ -2155,12 +2196,7 @@ function setupFilteredAutocomplete(inputId) {
             // Display name with nickname in dropdown
             item.textContent = formatNameWithNickname(name);
             item.addEventListener('click', () => {
-                // Store the actual name in data attribute for matching
-                input.setAttribute('data-actual-name', name);
-                // Display the formatted name with nickname in the input
-                input.value = formatNameWithNickname(name);
-                dropdown.classList.remove('show');
-                selectedIndex = -1;
+                applySelection(name);
             });
             dropdown.appendChild(item);
         });
@@ -2217,14 +2253,10 @@ function setupFilteredAutocomplete(inputId) {
                 highlightItem(selectedIndex);
             }
         } else if (e.key === 'Enter') {
-            e.preventDefault();
             if (selectedIndex >= 0 && selectedIndex < items.length) {
-                const name = filteredNames[selectedIndex];
-                // Store the actual name in data attribute for matching
-                input.setAttribute('data-actual-name', name);
-                // Display the formatted name with nickname in the input
-                input.value = formatNameWithNickname(name);
-                hideDropdown();
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                applySelection(filteredNames[selectedIndex]);
             }
         } else if (e.key === 'Escape') {
             hideDropdown();

@@ -707,6 +707,14 @@
             </div>
             
             <div class="controls-section">
+                <h3 class="section-title">Search Person</h3>
+                <div class="path-finder">
+                    <input type="text" id="personSearch" placeholder="Type a name..." autocomplete="off" onkeydown="if(event.key==='Enter') searchAndSelectPerson()">
+                    <button onclick="searchAndSelectPerson()">Go</button>
+                </div>
+            </div>
+            
+            <div class="controls-section">
                 <h3 class="section-title">Find Path</h3>
                 <div class="path-finder">
                     <input type="text" id="person1" placeholder="Person 1" autocomplete="off">
