@@ -24,7 +24,14 @@ jobs:
           LIST_FIELDS = {"bigs", "littles"}  # columns to treat as comma-delimited lists
 
           def fetch_sheet(sheet_name):
-              url = f"https://docs.google.com/spreadsheets/d/e/{SHEET_ID}/pub?output=csv&sheet={sheet_name}"
+              gid_dict = {
+                  "people": 0,
+                  "pledgeClasses": 941699657,
+                  "families": 770554282
+              }
+              gid = gid_dict[sheet_name]
+          
+              url = f"https://docs.google.com/spreadsheets/d/e/{SHEET_ID}/pub?output=csv&gid={gid}"
               req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
               with urllib.request.urlopen(req) as response:
                   raw = response.read().decode('utf-8')
