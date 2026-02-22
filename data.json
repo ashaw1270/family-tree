@@ -61,169 +61,41 @@
   ],
   "pledgeClasses": [
     {
-      "name": "Connor Hughes",
-      "bondNumber": "2158",
-      "pledgeClass": "Alpha Nu",
-      "family": "Ash",
-      "bigs": [
-        "Jai Makhija"
-      ],
-      "littles": [
-        "Naveen Prabhath (type real name",
-        "not nickname)"
-      ]
+      "name": "Alpha Mu",
+      "semester": "Fall 2023",
+      "pcp": "Chris Clausen",
+      "pcvp": "Lucas Li",
+      "bestPledge": "Justin Shih",
+      "hindTit": "David Moseley",
+      "pledgeMaster": "Ryan DeMotte"
     },
     {
-      "name": "Adam Shaw",
-      "bondNumber": "2140",
-      "pledgeClass": "Alpha Mu",
-      "family": "Cheetah",
-      "bigs": [
-        "Marc Sverdlov"
-      ],
-      "littles": [
-        "Elliott Sykes"
-      ]
+      "name": "Alpha Nu",
+      "semester": "Spring 2024",
+      "pcp": "Roman Savino",
+      "pcvp": "Max Rubenstein",
+      "bestPledge": "Derek Wu",
+      "hindTit": "Vikrum Gedipudi",
+      "pledgeMaster": "Colin Jimmink"
     },
     {
-      "name": "Elliott Sykes",
-      "bondNumber": "",
-      "pledgeClass": "Alpha Xi",
-      "family": "Cheetah",
-      "bigs": [
-        "Adam Shaw"
-      ],
-      "littles": []
-    },
-    {
-      "name": "Alex Ollmann",
-      "bondNumber": "2143",
-      "pledgeClass": "Alpha Mu",
-      "family": "Dark Pink",
-      "bigs": [
-        "Dane Culver"
-      ],
-      "littles": [
-        "Nathan Lee",
-        "Andrew Cuevas"
-      ],
-      "nickname": "Cheeser"
-    },
-    {
-      "name": "Andrew Cuevas",
-      "bondNumber": "2185",
-      "pledgeClass": "Alpha Xi",
-      "family": "Dark Pink",
-      "bigs": [
-        "Alex Ollmann"
-      ],
-      "littles": [],
-      "redacted": true
-    },
-    {
-      "name": "Nathan Lee",
-      "bondNumber": "2169",
-      "pledgeClass": "Alpha Nu",
-      "family": "Dark Pink",
-      "bigs": [
-        "Alex Ollmann"
-      ],
-      "littles": [],
-      "nickname": "Lebron"
+      "name": "Alpha Xi",
+      "semester": "",
+      "pcp": "",
+      "pcvp": "",
+      "bestPledge": "",
+      "hindTit": "",
+      "pledgeMaster": ""
     }
   ],
   "families": [
     {
-      "name": "Examples:",
-      "bondNumber": "",
-      "pledgeClass": "",
-      "family": "",
-      "bigs": [],
-      "littles": [],
-      "redacted": true
+      "name": "Cheetah",
+      "patriarch": "Bayan Sedighian"
     },
     {
-      "name": "Naveen Prabhath",
-      "bondNumber": "1111",
-      "pledgeClass": "Alpha Omicron",
-      "family": "Ash",
-      "bigs": [
-        "Connor Hughes",
-        "Roman Savino"
-      ],
-      "littles": [],
-      "nickname": "Spud Bruh"
-    },
-    {
-      "name": "Connor Hughes",
-      "bondNumber": "2158",
-      "pledgeClass": "Alpha Nu",
-      "family": "Ash",
-      "bigs": [
-        "Jai Makhija"
-      ],
-      "littles": [
-        "Naveen Prabhath (type real name",
-        "not nickname)"
-      ]
-    },
-    {
-      "name": "Adam Shaw",
-      "bondNumber": "2140",
-      "pledgeClass": "Alpha Mu",
-      "family": "Cheetah",
-      "bigs": [
-        "Marc Sverdlov"
-      ],
-      "littles": [
-        "Elliott Sykes"
-      ]
-    },
-    {
-      "name": "Elliott Sykes",
-      "bondNumber": "",
-      "pledgeClass": "Alpha Xi",
-      "family": "Cheetah",
-      "bigs": [
-        "Adam Shaw"
-      ],
-      "littles": []
-    },
-    {
-      "name": "Alex Ollmann",
-      "bondNumber": "2143",
-      "pledgeClass": "Alpha Mu",
-      "family": "Dark Pink",
-      "bigs": [
-        "Dane Culver"
-      ],
-      "littles": [
-        "Nathan Lee",
-        "Andrew Cuevas"
-      ],
-      "nickname": "Cheeser"
-    },
-    {
-      "name": "Andrew Cuevas",
-      "bondNumber": "2185",
-      "pledgeClass": "Alpha Xi",
-      "family": "Dark Pink",
-      "bigs": [
-        "Alex Ollmann"
-      ],
-      "littles": [],
-      "redacted": true
-    },
-    {
-      "name": "Nathan Lee",
-      "bondNumber": "2169",
-      "pledgeClass": "Alpha Nu",
-      "family": "Dark Pink",
-      "bigs": [
-        "Alex Ollmann"
-      ],
-      "littles": [],
-      "nickname": "Lebron"
+      "name": "Dark Pink",
+      "patriarch": "Brett Sarem"
     }
   ]
 }
