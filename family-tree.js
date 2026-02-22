@@ -63,20 +63,29 @@ function getContrastingTextColor(backgroundColor) {
     return luminance < 0.5 ? '#ffffff' : '#000000';
 }
 
+// Helper: true if person exists and has redacted: true (optional field in JSON)
+function isRedacted(personName) {
+    if (!personName || !treeData?.people) return false;
+    const person = treeData.people.find(p => p.name === personName);
+    return !!(person && person.redacted);
+}
+
 // Helper function to format name with nickname in quotes after first word
 // Example: "John Adams" with nickname 'Johnny' -> 'John "Johnny" Adams'
+// Redacted persons always display as "Redacted".
 function formatNameWithNickname(personName) {
     if (!personName) return '';
-    
+    if (isRedacted(personName)) return 'Redacted';
+
     // Find the person in the data to get their nickname
     const person = treeData.people.find(p => p.name === personName);
     if (!person || !person.nickname) {
         return personName; // No nickname, return name as is
     }
-    
+
     const nickname = person.nickname;
     const nameParts = personName.trim().split(/\s+/);
-    
+
     if (nameParts.length === 1) {
         // Single word name: 'John' -> 'John "Johnny"'
         return `${nameParts[0]} "${nickname}"`;
@@ -88,44 +97,50 @@ function formatNameWithNickname(personName) {
 
 // Helper function to get name without nickname (for pop-up titles)
 function getNameWithoutNickname(personName) {
-    // Just return the name as is - nicknames are shown separately in pop-ups
+    if (isRedacted(personName)) return 'Redacted';
     return personName;
 }
 
 // Helper function to get nickname for a person (or name if no nickname)
 function getNicknameOrName(personName) {
     if (!personName) return '';
+    if (isRedacted(personName)) return 'Redacted';
     const person = treeData.people.find(p => p.name === personName);
     return person?.nickname || personName;
 }
 
 // Helper function to extract actual name from input value
-// Handles cases where user types formatted name, actual name, or nickname
+// Handles cases where user types formatted name, actual name, or nickname.
+// Redacted persons are only matched when the user types "Redacted".
 function extractActualName(inputValue) {
-    if (!inputValue) return '';
-    
+    if (!inputValue || !treeData?.people) return '';
+
     const trimmed = inputValue.trim();
-    
-    // First, try to find exact match by actual name
-    const exactMatch = treeData.people.find(p => p.name === trimmed);
+    if (!trimmed) return '';
+
+    // Typing "Redacted" resolves to the first redacted person (for path finding, etc.)
+    if (trimmed.toLowerCase() === 'redacted') {
+        const firstRedacted = treeData.people.find(p => p.redacted);
+        return firstRedacted ? firstRedacted.name : trimmed;
+    }
+
+    // Do not resolve redacted persons by real name or nickname
+    const exactMatch = treeData.people.find(p => !p.redacted && p.name === trimmed);
     if (exactMatch) return exactMatch.name;
-    
-    // Try to find match by formatted name (with nickname)
-    const matchByFormatted = treeData.people.find(p => formatNameWithNickname(p.name) === trimmed);
+
+    const matchByFormatted = treeData.people.find(p => !p.redacted && formatNameWithNickname(p.name) === trimmed);
     if (matchByFormatted) return matchByFormatted.name;
-    
-    // Try to find match by nickname
-    const matchByNickname = treeData.people.find(p => p.nickname && p.nickname.toLowerCase() === trimmed.toLowerCase());
+
+    const matchByNickname = treeData.people.find(p => !p.redacted && p.nickname && p.nickname.toLowerCase() === trimmed.toLowerCase());
     if (matchByNickname) return matchByNickname.name;
-    
-    // Try partial match - check if input contains actual name
+
     const partialMatch = treeData.people.find(p => {
+        if (p.redacted) return false;
         const nameLower = p.name.toLowerCase();
         return trimmed.toLowerCase().includes(nameLower) || nameLower.includes(trimmed.toLowerCase());
     });
     if (partialMatch) return partialMatch.name;
-    
-    // If no match found, return the input value as-is (will be checked in findPath)
+
     return trimmed;
 }
 
@@ -1295,7 +1310,8 @@ function selectPersonByName(personName) {
     }
 }
 
-// Search for a person by name or nickname (partial, case-insensitive) and select them like a node click
+// Search for a person by name or nickname (partial, case-insensitive) and select them like a node click.
+// Redacted persons are not findable by their real name or nickname; they can only be found via "redacted".
 function searchAndSelectPerson() {
     const input = document.getElementById('personSearch');
     if (!input || !treeData || !treeData.people) return;
@@ -1303,19 +1319,29 @@ function searchAndSelectPerson() {
     if (!query) return;
     const q = query.toLowerCase();
     const people = treeData.people;
-    const exactName = people.find(p => p.name.toLowerCase() === q);
+    // Exclude redacted from name/nickname matches so their real name is never revealed by search
+    const exactName = people.find(p => !p.redacted && p.name.toLowerCase() === q);
     if (exactName) {
         selectPersonByName(exactName.name);
         return;
     }
-    const exactNick = people.find(p => (p.nickname || '').toLowerCase() === q);
+    const exactNick = people.find(p => !p.redacted && (p.nickname || '').toLowerCase() === q);
     if (exactNick) {
         selectPersonByName(exactNick.name);
         return;
     }
-    const partial = people.filter(p =>
-        p.name.toLowerCase().includes(q) || (p.nickname || '').toLowerCase().includes(q)
-    );
+    // Allow finding redacted persons only by typing "redacted"
+    if (q === 'redacted') {
+        const redactedPeople = people.filter(p => p.redacted);
+        if (redactedPeople.length > 0) {
+            selectPersonByName(redactedPeople[0].name);
+            return;
+        }
+    }
+    const partial = people.filter(p => {
+        if (p.redacted) return false;
+        return p.name.toLowerCase().includes(q) || (p.nickname || '').toLowerCase().includes(q);
+    });
     if (partial.length === 0) {
         showErrorPopup('No person found matching "' + query + '"');
         return;
@@ -1390,8 +1416,8 @@ function showNodeInfo(node) {
     
     let details = [];
     
-    // Nickname - show first if it exists
-    if (node.nickname) {
+    // Nickname - show first if it exists (never show for redacted persons)
+    if (node.nickname && !isRedacted(node.name)) {
         details.push(`<strong>Nickname:</strong> ${node.nickname}`);
     }
     
@@ -2167,16 +2193,19 @@ function setupFilteredAutocomplete(inputId, onSelectCallback) {
         }
         
         const queryLower = query.toLowerCase().trim();
-        // Filter by name, formatted name with nickname, and nickname directly
+        // Filter by name, formatted name with nickname, and nickname directly.
+        // Redacted persons only match when the user types "redacted".
         filteredNames = allNames.filter(name => {
+            const person = treeData.people.find(p => p.name === name);
+            if (person?.redacted) {
+                return queryLower.includes('redacted');
+            }
             const nameLower = name.toLowerCase();
             const formattedName = formatNameWithNickname(name);
             const formattedNameLower = formattedName.toLowerCase();
-            // Also check nickname directly
-            const person = treeData.people.find(p => p.name === name);
             const nicknameLower = person?.nickname?.toLowerCase() || '';
-            return nameLower.includes(queryLower) || 
-                   formattedNameLower.includes(queryLower) || 
+            return nameLower.includes(queryLower) ||
+                   formattedNameLower.includes(queryLower) ||
                    nicknameLower.includes(queryLower);
         });
         
