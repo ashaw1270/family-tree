@@ -1,16 +1,6 @@
 {
   "people": [
     {
-      "name": "",
-      "bondNumber": "",
-      "pledgeClass": "",
-      "family": "",
-      "bigs": [],
-      "littles": [],
-      "nickname": "",
-      "redacted?": ""
-    },
-    {
       "name": "Adam Shaw",
       "bondNumber": "2140",
       "pledgeClass": "Alpha Mu",
@@ -89,16 +79,6 @@
         "Naveen Prabhath (type real name",
         "not nickname)"
       ],
-      "nickname": "",
-      "redacted?": ""
-    },
-    {
-      "name": "",
-      "bondNumber": "",
-      "pledgeClass": "",
-      "family": "",
-      "bigs": [],
-      "littles": [],
       "nickname": "",
       "redacted?": ""
     },
@@ -204,16 +184,6 @@
         "Naveen Prabhath (type real name",
         "not nickname)"
       ],
-      "nickname": "",
-      "redacted?": ""
-    },
-    {
-      "name": "",
-      "bondNumber": "",
-      "pledgeClass": "",
-      "family": "",
-      "bigs": [],
-      "littles": [],
       "nickname": "",
       "redacted?": ""
     },
