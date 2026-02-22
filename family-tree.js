@@ -194,10 +194,31 @@ async function init() {
                     const infoPanel = document.getElementById('infoPanel');
                     const personPopupWasShowing = infoPanel && infoPanel.classList.contains('show');
                     
+                    // Check if path is showing
+                    const pathIsShowing = currentPath !== null && currentPath.length > 0;
+                    
                     // Always hide node info (person popup)
                     hideNodeInfo();
                     
-                    // Clear path if showing
+                    // If path is showing, keep it and re-zoom to it instead of clearing
+                    if (pathIsShowing) {
+                        // Keep path panel visible
+                        const pathPanel = document.getElementById('pathPanel');
+                        if (pathPanel) {
+                            pathPanel.classList.add('show');
+                        }
+                        
+                        // Re-zoom to path and re-highlight it
+                        setTimeout(() => {
+                            zoomToPath(currentPath);
+                            highlightPathInTree();
+                        }, 100);
+                        
+                        // Don't process further - path should stay
+                        return;
+                    }
+                    
+                    // Clear path if showing (only if we're not keeping it)
                     clearPathDisplay();
                     
                     // If person popup was showing, keep filter popup open and zoom to it
@@ -763,8 +784,8 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
                 return;
             }
             
-            // Clear path if showing (when clicking on any node)
-            clearPathDisplay();
+            // Don't clear path if showing - keep path when clicking on nodes
+            // clearPathDisplay(); // Removed - path should persist when clicking nodes
             
             // Don't close family info - keep it open so both panels can be visible
             
@@ -1758,6 +1779,23 @@ function zoomToPath(path) {
     
     if (pathNodeData.length === 0) return;
 
+    // Get path panel dimensions to account for it in zoom calculations
+    const pathPanel = document.getElementById('pathPanel');
+    let panelWidth = 400; // Default based on max-width CSS
+    let panelHeight = 200; // Estimated default height
+    const panelPadding = 20; // Padding around panel (matches CSS right/bottom: 20px)
+    
+    if (pathPanel) {
+        // Panel should already be visible when zoomToPath is called, but check anyway
+        if (pathPanel.classList.contains('show')) {
+            const rect = pathPanel.getBoundingClientRect();
+            if (rect.width > 0) panelWidth = rect.width;
+            if (rect.height > 0) panelHeight = rect.height;
+        }
+        // If not visible, use CSS defaults (max-width: 400px, min-width: 300px)
+        // We'll use 400px as a safe estimate
+    }
+
     const xCoords = pathNodeData.map(d => d.x);
     const yCoords = pathNodeData.map(d => d.y);
     
@@ -1771,10 +1809,24 @@ function zoomToPath(path) {
     const spanX = maxX - minX || width;
     const spanY = maxY - minY || height;
     
-    const scale = Math.min(width / spanX, height / spanY) * 0.8;
+    // Account for path panel in available space
+    // Panel is in lower right (bottom: 20px, right: 20px)
+    // So we need to reduce available width and height
+    const availableWidth = width - (panelWidth + panelPadding * 2);
+    const availableHeight = height - (panelHeight + panelPadding * 2);
+    
+    // Calculate scale based on available space (with some padding)
+    const scaleX = availableWidth / spanX;
+    const scaleY = availableHeight / spanY;
+    const scale = Math.min(scaleX, scaleY) * 0.8;
+    
+    // Adjust center to account for panel taking up space in lower right
+    // Shift center left and up to keep path visible
+    const offsetX = (panelWidth + panelPadding) / 2;
+    const offsetY = (panelHeight + panelPadding) / 2;
     
     const transform = d3.zoomIdentity
-        .translate(width / 2 - centerX * scale, height / 2 - centerY * scale)
+        .translate((width - offsetX) / 2 - centerX * scale, (height - offsetY) / 2 - centerY * scale)
         .scale(scale);
     
     svg.transition()
