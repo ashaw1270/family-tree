@@ -1449,7 +1449,7 @@ function showFamilyInfo(familyName, memberCount) {
     
     // Find family data
     const familyData = treeData.families?.find(f => f.name === familyName);
-    const leader = familyData?.leader || 'Unknown';
+    const patriarch = familyData?.patriarch || 'Unknown';
     
     // Get family color scheme
     const familyColor = getFamilyColor(familyName);
@@ -1468,11 +1468,11 @@ function showFamilyInfo(familyName, memberCount) {
     nameEl.textContent = familyName + ' Fam';
     
     let details = [];
-    // Leader
-    if (leader !== 'Unknown') {
-        details.push(`<strong>Leader:</strong> ${createPersonLink(leader)}`);
+    // Patriarch
+    if (patriarch !== 'Unknown') {
+        details.push(`<strong>Patriarch:</strong> ${createPersonLink(patriarch)}`);
     } else {
-        details.push(`<strong>Leader:</strong> ${leader}`);
+        details.push(`<strong>Patriarch:</strong> ${patriarch}`);
     }
     details.push(`<strong>Number of Pledges:</strong> ${memberCount}`);
     

@@ -2,27 +2,27 @@
   "families": [
     {
       "name": "Cheetah",
-      "leader": "John"
+      "patriarch": "John"
     },
     {
       "name": "Lion",
-      "leader": "Sarah"
+      "patriarch": "Sarah"
     },
     {
       "name": "Tiger",
-      "leader": "Ryan"
+      "patriarch": "Ryan"
     },
     {
       "name": "Bear",
-      "leader": "Jessica"
+      "patriarch": "Jessica"
     },
     {
       "name": "Wolf",
-      "leader": "Alex"
+      "patriarch": "Alex"
     },
     {
       "name": "Eagle",
-      "leader": "Emily"
+      "patriarch": "Emily"
     }
   ],
   "pledgeClasses": [
