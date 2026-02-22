@@ -28,9 +28,17 @@ jobs:
               req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
               with urllib.request.urlopen(req) as response:
                   raw = response.read().decode('utf-8')
+
+              first_row = {
+                  "people": 2,
+                  "pledgeClasses": 1,
+                  "families": 0
+              }
+              first_row_num = first_row[sheet_name]
+                  
               reader = csv.DictReader(io.StringIO(raw))
               rows = []
-              for row in list(reader)[1:]:  # exclude the example row
+              for row in list(reader)[first_row_num:]:  # exclude examples
                   obj = {}
                   for key, value in row.items():
                       if key in LIST_FIELDS and isinstance(value, str):
