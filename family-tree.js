@@ -324,27 +324,24 @@ function buildTree(preservePath = false, animate = false) {
     const adjacencyList = new Map();
     const allPeople = new Set();
 
-    // Collect all people
+    // Collect all people and build relationships from their bigs/littles
     treeData.people.forEach(person => {
         allPeople.add(person.name);
         nodeMap.set(person.name, person);
-        adjacencyList.set(person.name, { littles: [], bigs: [] });
+        // Use bigs and littles directly from person object, defaulting to empty arrays
+        adjacencyList.set(person.name, { 
+            littles: person.littles || [], 
+            bigs: person.bigs || [] 
+        });
     });
 
-    // Build relationships (graph structure, not strict tree)
+    // Build links from relationships (graph structure, not strict tree)
     const links = [];
-    treeData.relationships.forEach(rel => {
-        if (!adjacencyList.has(rel.big)) {
-            adjacencyList.set(rel.big, { littles: [], bigs: [] });
-        }
-        if (!adjacencyList.has(rel.little)) {
-            adjacencyList.set(rel.little, { littles: [], bigs: [] });
-        }
-        
-        adjacencyList.get(rel.big).littles.push(rel.little);
-        adjacencyList.get(rel.little).bigs.push(rel.big);
-        
-        links.push({ source: rel.big, target: rel.little });
+    treeData.people.forEach(person => {
+        const littles = person.littles || [];
+        littles.forEach(little => {
+            links.push({ source: person.name, target: little });
+        });
     });
 
     // Create nodes array
@@ -1266,20 +1263,11 @@ function selectPersonByName(personName) {
         return;
     }
     
-    // Build adjacency list to get bigs and littles
-    const adjacencyList = new Map();
-    treeData.relationships.forEach(rel => {
-        if (!adjacencyList.has(rel.big)) {
-            adjacencyList.set(rel.big, { littles: [], bigs: [] });
-        }
-        if (!adjacencyList.has(rel.little)) {
-            adjacencyList.set(rel.little, { littles: [], bigs: [] });
-        }
-        adjacencyList.get(rel.big).littles.push(rel.little);
-        adjacencyList.get(rel.little).bigs.push(rel.big);
-    });
-    
-    const adj = adjacencyList.get(personName) || { littles: [], bigs: [] };
+    // Get bigs and littles directly from person data
+    const adj = {
+        littles: personData.littles || [],
+        bigs: personData.bigs || []
+    };
     
     // Create node object
     const node = {
@@ -1703,19 +1691,20 @@ function findPath() {
         return;
     }
 
-    // Build adjacency list
+    // Build adjacency list from person bigs and littles
     const adjacencyList = new Map();
     
-    treeData.relationships.forEach(rel => {
-        if (!adjacencyList.has(rel.big)) {
-            adjacencyList.set(rel.big, []);
+    treeData.people.forEach(person => {
+        const connections = [];
+        // Add littles as connections
+        if (person.littles) {
+            person.littles.forEach(little => connections.push(little));
         }
-        if (!adjacencyList.has(rel.little)) {
-            adjacencyList.set(rel.little, []);
+        // Add bigs as connections
+        if (person.bigs) {
+            person.bigs.forEach(big => connections.push(big));
         }
-        
-        adjacencyList.get(rel.big).push(rel.little);
-        adjacencyList.get(rel.little).push(rel.big);
+        adjacencyList.set(person.name, connections);
     });
 
     // BFS to find shortest path
@@ -1893,17 +1882,20 @@ function showPathPanel(path) {
         const current = path[i];
         const next = path[i + 1];
         
-        // Determine relationship direction
-        const relationship = treeData.relationships.find(r => 
-            (r.big === current && r.little === next) ||
-            (r.big === next && r.little === current)
-        );
+        // Determine relationship direction by checking person's bigs and littles
+        const currentPerson = treeData.people.find(p => p.name === current);
+        const nextPerson = treeData.people.find(p => p.name === next);
         
-        if (relationship) {
-            if (relationship.big === current) {
+        if (currentPerson && nextPerson) {
+            const isCurrentBig = currentPerson.littles && currentPerson.littles.includes(next);
+            const isCurrentLittle = currentPerson.bigs && currentPerson.bigs.includes(next);
+            
+            if (isCurrentBig) {
                 pathDescription += `${i + 1}. ${createPersonLink(current)}'s little is ${createPersonLink(next)}\n`;
-            } else {
+            } else if (isCurrentLittle) {
                 pathDescription += `${i + 1}. ${createPersonLink(current)}'s big is ${createPersonLink(next)}\n`;
+            } else {
+                pathDescription += `${i + 1}. ${createPersonLink(current)} → ${createPersonLink(next)}\n`;
             }
         } else {
             pathDescription += `${i + 1}. ${createPersonLink(current)} → ${createPersonLink(next)}\n`;
@@ -2350,14 +2342,16 @@ document.getElementById('familyFilter').addEventListener('change', function() {
         });
         
         // Find nuclear family (bigs and littles) of family members
-        treeData.relationships.forEach(rel => {
-            // If the big is in the family, add the little to nuclear family
-            if (familyNodes.has(rel.big)) {
-                familyNuclearFamily.add(rel.little);
-            }
-            // If the little is in the family, add the big to nuclear family
-            if (familyNodes.has(rel.little)) {
-                familyNuclearFamily.add(rel.big);
+        treeData.people.forEach(person => {
+            if (familyNodes.has(person.name)) {
+                // Add this person's littles to nuclear family
+                if (person.littles) {
+                    person.littles.forEach(little => familyNuclearFamily.add(little));
+                }
+                // Add this person's bigs to nuclear family
+                if (person.bigs) {
+                    person.bigs.forEach(big => familyNuclearFamily.add(big));
+                }
             }
         });
         
@@ -2421,14 +2415,16 @@ document.getElementById('pledgeClassFilter').addEventListener('change', function
         });
         
         // Find nuclear family (bigs and littles) of pledge class members
-        treeData.relationships.forEach(rel => {
-            // If the big is in the pledge class, add the little to nuclear family
-            if (pledgeClassNodes.has(rel.big)) {
-                pledgeClassNuclearFamily.add(rel.little);
-            }
-            // If the little is in the pledge class, add the big to nuclear family
-            if (pledgeClassNodes.has(rel.little)) {
-                pledgeClassNuclearFamily.add(rel.big);
+        treeData.people.forEach(person => {
+            if (pledgeClassNodes.has(person.name)) {
+                // Add this person's littles to nuclear family
+                if (person.littles) {
+                    person.littles.forEach(little => pledgeClassNuclearFamily.add(little));
+                }
+                // Add this person's bigs to nuclear family
+                if (person.bigs) {
+                    person.bigs.forEach(big => pledgeClassNuclearFamily.add(big));
+                }
             }
         });
         
