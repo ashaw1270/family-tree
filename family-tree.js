@@ -63,6 +63,72 @@ function getContrastingTextColor(backgroundColor) {
     return luminance < 0.5 ? '#ffffff' : '#000000';
 }
 
+// Helper function to format name with nickname in parentheses after first word
+// Example: "John Adams" with nickname "Johnny" -> "John (Johnny) Adams"
+function formatNameWithNickname(personName) {
+    if (!personName) return '';
+    
+    // Find the person in the data to get their nickname
+    const person = treeData.people.find(p => p.name === personName);
+    if (!person || !person.nickname) {
+        return personName; // No nickname, return name as is
+    }
+    
+    const nickname = person.nickname;
+    const nameParts = personName.trim().split(/\s+/);
+    
+    if (nameParts.length === 1) {
+        // Single word name: "John" -> "John (Johnny)"
+        return `${nameParts[0]} (${nickname})`;
+    } else {
+        // Multiple words: "John Adams" -> "John (Johnny) Adams"
+        return `${nameParts[0]} (${nickname}) ${nameParts.slice(1).join(' ')}`;
+    }
+}
+
+// Helper function to get name without nickname (for pop-up titles)
+function getNameWithoutNickname(personName) {
+    // Just return the name as is - nicknames are shown separately in pop-ups
+    return personName;
+}
+
+// Helper function to get nickname for a person (or name if no nickname)
+function getNicknameOrName(personName) {
+    if (!personName) return '';
+    const person = treeData.people.find(p => p.name === personName);
+    return person?.nickname || personName;
+}
+
+// Helper function to extract actual name from input value
+// Handles cases where user types formatted name, actual name, or nickname
+function extractActualName(inputValue) {
+    if (!inputValue) return '';
+    
+    const trimmed = inputValue.trim();
+    
+    // First, try to find exact match by actual name
+    const exactMatch = treeData.people.find(p => p.name === trimmed);
+    if (exactMatch) return exactMatch.name;
+    
+    // Try to find match by formatted name (with nickname)
+    const matchByFormatted = treeData.people.find(p => formatNameWithNickname(p.name) === trimmed);
+    if (matchByFormatted) return matchByFormatted.name;
+    
+    // Try to find match by nickname
+    const matchByNickname = treeData.people.find(p => p.nickname && p.nickname.toLowerCase() === trimmed.toLowerCase());
+    if (matchByNickname) return matchByNickname.name;
+    
+    // Try partial match - check if input contains actual name
+    const partialMatch = treeData.people.find(p => {
+        const nameLower = p.name.toLowerCase();
+        return trimmed.toLowerCase().includes(nameLower) || nameLower.includes(trimmed.toLowerCase());
+    });
+    if (partialMatch) return partialMatch.name;
+    
+    // If no match found, return the input value as-is (will be checked in findPath)
+    return trimmed;
+}
+
 // Initialize the visualization
 async function init() {
     // Load data
@@ -766,7 +832,7 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
         .attr('text-anchor', 'middle')
         .attr('dominant-baseline', 'middle')
         .attr('dy', 0)
-        .text(d => d.name)
+        .text(d => getNicknameOrName(d.name))
         .style('font-weight', d => {
             // Slightly bolder for highlighted node labels
             if (pledgeClassNodes.has(d.id) || familyNodes.has(d.id)) return '700';
@@ -1157,7 +1223,8 @@ function addFamilyLabels(nodes, fadeIn = false) {
 
 // Helper function to create a clickable link for a person
 function createPersonLink(personName) {
-    return `<a href="#" class="info-link person-link" data-person="${personName}">${personName}</a>`;
+    const displayName = getNicknameOrName(personName);
+    return `<a href="#" class="info-link person-link" data-person="${personName}">${displayName}</a>`;
 }
 
 // Helper function to create a clickable link for a family
@@ -1281,7 +1348,8 @@ function showNodeInfo(node) {
     
     panel.style.top = topOffset + 'px';
 
-    nameEl.textContent = node.name;
+    // Use name without nickname in the title
+    nameEl.textContent = getNameWithoutNickname(node.name);
     
     let details = [];
     
@@ -1592,8 +1660,11 @@ function highlightNode(nodeId) {
 
 // Find shortest path between two people
 function findPath() {
-    const person1 = document.getElementById('person1').value.trim();
-    const person2 = document.getElementById('person2').value.trim();
+    // Get actual names from data attributes if available, otherwise extract from input value
+    const person1Input = document.getElementById('person1');
+    const person2Input = document.getElementById('person2');
+    const person1 = person1Input.getAttribute('data-actual-name') || extractActualName(person1Input.value);
+    const person2 = person2Input.getAttribute('data-actual-name') || extractActualName(person2Input.value);
 
     if (!person1 || !person2) {
         alert('Please enter both names');
@@ -1735,8 +1806,12 @@ function clearPath() {
     pathNodes.clear();
     pathLinks.clear();
     currentPath = null;
-    document.getElementById('person1').value = '';
-    document.getElementById('person2').value = '';
+    const person1Input = document.getElementById('person1');
+    const person2Input = document.getElementById('person2');
+    person1Input.value = '';
+    person2Input.value = '';
+    person1Input.removeAttribute('data-actual-name');
+    person2Input.removeAttribute('data-actual-name');
     hidePathPanel();
     
     // Show family legend when path is cleared (unless pledge class is selected)
@@ -1991,9 +2066,18 @@ function setupFilteredAutocomplete(inputId) {
         }
         
         const queryLower = query.toLowerCase().trim();
-        filteredNames = allNames.filter(name => 
-            name.toLowerCase().includes(queryLower)
-        );
+        // Filter by name, formatted name with nickname, and nickname directly
+        filteredNames = allNames.filter(name => {
+            const nameLower = name.toLowerCase();
+            const formattedName = formatNameWithNickname(name);
+            const formattedNameLower = formattedName.toLowerCase();
+            // Also check nickname directly
+            const person = treeData.people.find(p => p.name === name);
+            const nicknameLower = person?.nickname?.toLowerCase() || '';
+            return nameLower.includes(queryLower) || 
+                   formattedNameLower.includes(queryLower) || 
+                   nicknameLower.includes(queryLower);
+        });
         
         if (filteredNames.length === 0) {
             dropdown.classList.remove('show');
@@ -2008,9 +2092,13 @@ function setupFilteredAutocomplete(inputId) {
         filteredNames.forEach((name, index) => {
             const item = document.createElement('div');
             item.className = 'autocomplete-item';
-            item.textContent = name;
+            // Display name with nickname in dropdown
+            item.textContent = formatNameWithNickname(name);
             item.addEventListener('click', () => {
-                input.value = name;
+                // Store the actual name in data attribute for matching
+                input.setAttribute('data-actual-name', name);
+                // Display the formatted name with nickname in the input
+                input.value = formatNameWithNickname(name);
                 dropdown.classList.remove('show');
                 selectedIndex = -1;
             });
@@ -2071,7 +2159,11 @@ function setupFilteredAutocomplete(inputId) {
         } else if (e.key === 'Enter') {
             e.preventDefault();
             if (selectedIndex >= 0 && selectedIndex < items.length) {
-                input.value = filteredNames[selectedIndex];
+                const name = filteredNames[selectedIndex];
+                // Store the actual name in data attribute for matching
+                input.setAttribute('data-actual-name', name);
+                // Display the formatted name with nickname in the input
+                input.value = formatNameWithNickname(name);
                 hideDropdown();
             }
         } else if (e.key === 'Escape') {
