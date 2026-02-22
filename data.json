@@ -11,8 +11,7 @@
       "littles": [
         "Elliott Sykes"
       ],
-      "nickname": "",
-      "redacted": false
+      "nickname": ""
     },
     {
       "name": "Elliott Sykes",
@@ -23,8 +22,7 @@
         "Adam Shaw"
       ],
       "littles": [],
-      "nickname": "",
-      "redacted": false
+      "nickname": ""
     },
     {
       "name": "Alex Ollmann",
@@ -38,8 +36,7 @@
         "Nathan Lee",
         "Andrew Cuevas"
       ],
-      "nickname": "Cheeser",
-      "redacted": false
+      "nickname": "Cheeser"
     },
     {
       "name": "Andrew Cuevas",
@@ -62,8 +59,7 @@
         "Alex Ollmann"
       ],
       "littles": [],
-      "nickname": "Lebron",
-      "redacted": false
+      "nickname": "Lebron"
     }
   ],
   "pledgeClasses": [
@@ -79,8 +75,7 @@
         "Naveen Prabhath (type real name",
         "not nickname)"
       ],
-      "nickname": "",
-      "redacted": false
+      "nickname": ""
     },
     {
       "name": "Adam Shaw",
@@ -93,8 +88,7 @@
       "littles": [
         "Elliott Sykes"
       ],
-      "nickname": "",
-      "redacted": false
+      "nickname": ""
     },
     {
       "name": "Elliott Sykes",
@@ -105,8 +99,7 @@
         "Adam Shaw"
       ],
       "littles": [],
-      "nickname": "",
-      "redacted": false
+      "nickname": ""
     },
     {
       "name": "Alex Ollmann",
@@ -120,8 +113,7 @@
         "Nathan Lee",
         "Andrew Cuevas"
       ],
-      "nickname": "Cheeser",
-      "redacted": false
+      "nickname": "Cheeser"
     },
     {
       "name": "Andrew Cuevas",
@@ -144,8 +136,7 @@
         "Alex Ollmann"
       ],
       "littles": [],
-      "nickname": "Lebron",
-      "redacted": false
+      "nickname": "Lebron"
     }
   ],
   "families": [
@@ -169,8 +160,7 @@
         "Roman Savino"
       ],
       "littles": [],
-      "nickname": "Spud Bruh",
-      "redacted": false
+      "nickname": "Spud Bruh"
     },
     {
       "name": "Connor Hughes",
@@ -184,8 +174,7 @@
         "Naveen Prabhath (type real name",
         "not nickname)"
       ],
-      "nickname": "",
-      "redacted": false
+      "nickname": ""
     },
     {
       "name": "Adam Shaw",
@@ -198,8 +187,7 @@
       "littles": [
         "Elliott Sykes"
       ],
-      "nickname": "",
-      "redacted": false
+      "nickname": ""
     },
     {
       "name": "Elliott Sykes",
@@ -210,8 +198,7 @@
         "Adam Shaw"
       ],
       "littles": [],
-      "nickname": "",
-      "redacted": false
+      "nickname": ""
     },
     {
       "name": "Alex Ollmann",
@@ -225,8 +212,7 @@
         "Nathan Lee",
         "Andrew Cuevas"
       ],
-      "nickname": "Cheeser",
-      "redacted": false
+      "nickname": "Cheeser"
     },
     {
       "name": "Andrew Cuevas",
@@ -249,8 +235,7 @@
         "Alex Ollmann"
       ],
       "littles": [],
-      "nickname": "Lebron",
-      "redacted": false
+      "nickname": "Lebron"
     }
   ]
 }
