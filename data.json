@@ -12,7 +12,7 @@
         "Elliott Sykes"
       ],
       "nickname": "",
-      "redacted?": ""
+      "redacted": false
     },
     {
       "name": "Elliott Sykes",
@@ -24,7 +24,7 @@
       ],
       "littles": [],
       "nickname": "",
-      "redacted?": ""
+      "redacted": false
     },
     {
       "name": "Alex Ollmann",
@@ -39,7 +39,7 @@
         "Andrew Cuevas"
       ],
       "nickname": "Cheeser",
-      "redacted?": ""
+      "redacted": false
     },
     {
       "name": "Andrew Cuevas",
@@ -51,7 +51,7 @@
       ],
       "littles": [],
       "nickname": "",
-      "redacted?": "TRUE"
+      "redacted": true
     },
     {
       "name": "Nathan Lee",
@@ -63,7 +63,7 @@
       ],
       "littles": [],
       "nickname": "Lebron",
-      "redacted?": ""
+      "redacted": false
     }
   ],
   "pledgeClasses": [
@@ -80,7 +80,7 @@
         "not nickname)"
       ],
       "nickname": "",
-      "redacted?": ""
+      "redacted": false
     },
     {
       "name": "Adam Shaw",
@@ -94,7 +94,7 @@
         "Elliott Sykes"
       ],
       "nickname": "",
-      "redacted?": ""
+      "redacted": false
     },
     {
       "name": "Elliott Sykes",
@@ -106,7 +106,7 @@
       ],
       "littles": [],
       "nickname": "",
-      "redacted?": ""
+      "redacted": false
     },
     {
       "name": "Alex Ollmann",
@@ -121,7 +121,7 @@
         "Andrew Cuevas"
       ],
       "nickname": "Cheeser",
-      "redacted?": ""
+      "redacted": false
     },
     {
       "name": "Andrew Cuevas",
@@ -133,7 +133,7 @@
       ],
       "littles": [],
       "nickname": "",
-      "redacted?": "TRUE"
+      "redacted": true
     },
     {
       "name": "Nathan Lee",
@@ -145,7 +145,7 @@
       ],
       "littles": [],
       "nickname": "Lebron",
-      "redacted?": ""
+      "redacted": false
     }
   ],
   "families": [
@@ -157,7 +157,7 @@
       "bigs": [],
       "littles": [],
       "nickname": "",
-      "redacted?": "For redacted people, still fill in information to keep tree intact. Write \"TRUE\" in box if redacted."
+      "redacted": true
     },
     {
       "name": "Naveen Prabhath",
@@ -170,7 +170,7 @@
       ],
       "littles": [],
       "nickname": "Spud Bruh",
-      "redacted?": ""
+      "redacted": false
     },
     {
       "name": "Connor Hughes",
@@ -185,7 +185,7 @@
         "not nickname)"
       ],
       "nickname": "",
-      "redacted?": ""
+      "redacted": false
     },
     {
       "name": "Adam Shaw",
@@ -199,7 +199,7 @@
         "Elliott Sykes"
       ],
       "nickname": "",
-      "redacted?": ""
+      "redacted": false
     },
     {
       "name": "Elliott Sykes",
@@ -211,7 +211,7 @@
       ],
       "littles": [],
       "nickname": "",
-      "redacted?": ""
+      "redacted": false
     },
     {
       "name": "Alex Ollmann",
@@ -226,7 +226,7 @@
         "Andrew Cuevas"
       ],
       "nickname": "Cheeser",
-      "redacted?": ""
+      "redacted": false
     },
     {
       "name": "Andrew Cuevas",
@@ -238,7 +238,7 @@
       ],
       "littles": [],
       "nickname": "",
-      "redacted?": "TRUE"
+      "redacted": true
     },
     {
       "name": "Nathan Lee",
@@ -250,7 +250,7 @@
       ],
       "littles": [],
       "nickname": "Lebron",
-      "redacted?": ""
+      "redacted": false
     }
   ]
 }
