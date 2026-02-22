@@ -29,8 +29,8 @@
     {
       "name": "Alpha",
       "semester": "Fall 2020",
-      "PCP": "John",
-      "PCVP": "Sarah",
+      "pcp": "John",
+      "pcvp": "Sarah",
       "bestPledge": "Ryan",
       "hintTit": "Jessica"
     },

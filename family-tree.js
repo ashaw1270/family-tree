@@ -1546,15 +1546,15 @@ function showPledgeClassInfo(pledgeClassName) {
     details.push(`<strong>Number of Pledges:</strong> ${numPledges}`);
     
     // PCP - make clickable
-    if (pledgeClassData.PCP) {
-        details.push(`<strong>PCP:</strong> ${createPersonLink(pledgeClassData.PCP)}`);
+    if (pledgeClassData.pcp) {
+        details.push(`<strong>PCP:</strong> ${createPersonLink(pledgeClassData.pcp)}`);
     } else {
         details.push(`<strong>PCP:</strong> Unknown`);
     }
     
     // PCVP - make clickable
-    if (pledgeClassData.PCVP) {
-        details.push(`<strong>PCVP:</strong> ${createPersonLink(pledgeClassData.PCVP)}`);
+    if (pledgeClassData.pcvp) {
+        details.push(`<strong>PCVP:</strong> ${createPersonLink(pledgeClassData.pcvp)}`);
     } else {
         details.push(`<strong>PCVP:</strong> Unknown`);
     }
