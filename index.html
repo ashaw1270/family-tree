@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phi Delt Family Tree</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .controls {
+            padding: 20px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            align-items: start;
+        }
+
+        .controls-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .section-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #667eea;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 0;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .filters-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .control-group label {
+            font-weight: 600;
+            color: #495057;
+            min-width: 100px;
+            font-size: 14px;
+        }
+
+        .view-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        select, input, button {
+            padding: 10px 15px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        select {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            padding: 10px 20px;
+            white-space: nowrap;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button.secondary {
+            background: #6c757d;
+        }
+
+        button.secondary:hover {
+            background: #5a6268;
+        }
+
+        .path-finder {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .path-finder input {
+            width: 140px;
+        }
+
+        .path-finder .arrow {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .autocomplete-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 10000;
+            display: none;
+            min-width: 140px;
+            margin-top: 4px;
+        }
+
+        .autocomplete-dropdown.show {
+            display: block;
+        }
+
+        .autocomplete-item {
+            padding: 10px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .autocomplete-item:last-child {
+            border-bottom: none;
+        }
+
+        .autocomplete-item:hover,
+        .autocomplete-item.highlighted {
+            background: #f0f4ff;
+        }
+
+        .visualization-container {
+            position: relative;
+            width: 100%;
+            height: calc(100vh - 300px);
+            min-height: 600px;
+            overflow: hidden;
+            background: #f8f9fa;
+        }
+
+        #tree-svg {
+            width: 100%;
+            height: 100%;
+            cursor: grab;
+        }
+
+        #tree-svg:active {
+            cursor: grabbing;
+        }
+
+        .node {
+            cursor: pointer;
+        }
+
+        .node rect {
+            fill: #fff;
+            stroke: #667eea;
+            stroke-width: 3px;
+            transition: all 0.3s;
+        }
+
+        .node:hover rect {
+            stroke-width: 5px;
+        }
+
+        .node.selected rect {
+            fill: #667eea;
+            stroke: #764ba2;
+            stroke-width: 4px;
+        }
+
+        .node.highlighted rect {
+            fill: #ffd700;
+            stroke: #ff8c00;
+            stroke-width: 4px;
+        }
+
+        .node.path-node rect {
+            fill: #ff6b6b;
+            stroke: #c92a2a;
+            stroke-width: 5px;
+        }
+
+        .node.pledge-class-node rect {
+            fill: #ffd700 !important;
+            stroke: #ff8c00 !important;
+            stroke-width: 5px !important;
+        }
+
+        .link {
+            fill: none;
+            stroke: #adb5bd;
+            stroke-width: 2px;
+        }
+
+        .link.highlighted {
+            stroke: #ff6b6b;
+            stroke-width: 4px;
+            stroke-dasharray: 5,5;
+        }
+
+        .link.path-link {
+            stroke: #ff6b6b;
+            stroke-width: 4px;
+        }
+
+        .node-label {
+            font-size: 12px;
+            font-weight: 600;
+            fill: #495057;
+            pointer-events: none;
+            text-anchor: middle;
+            dominant-baseline: middle;
+        }
+
+        .family-legend {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            z-index: 1001;
+            border: 2px solid #e9ecef;
+            min-width: 200px;
+        }
+
+        .family-legend h4 {
+            margin: 0 0 12px 0;
+            color: #667eea;
+            font-size: 16px;
+            font-weight: 700;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 8px;
+        }
+
+        .legend-items {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 6px 10px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .legend-item:hover {
+            background: #f8f9fa;
+            transform: translateX(3px);
+        }
+
+        .legend-color-box {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            border: 2px solid;
+            flex-shrink: 0;
+        }
+
+        .legend-item-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #495057;
+        }
+
+
+        .zoom-controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .zoom-controls button {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 20px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .info-panel {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            max-width: 350px;
+            min-width: 280px;
+            z-index: 1001;
+            display: none;
+            border: 2px solid #667eea;
+        }
+
+        .info-panel.show {
+            display: block;
+        }
+
+        .info-panel h3 {
+            margin-bottom: 15px;
+            color: #667eea;
+            font-size: 1.4em;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .info-panel p {
+            margin: 8px 0;
+            color: #495057;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .info-panel p strong {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .info-panel .info-link,
+        .family-info-panel .info-link,
+        #pledgeClassInfoPanel .info-link {
+            color: #667eea;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: 600;
+            padding: 0px 3px;
+            margin: 0 2px;
+            border-radius: 2px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            transition: all 0.2s ease;
+            display: inline-block;
+            line-height: 1.2;
+            vertical-align: baseline;
+        }
+
+        .info-panel .info-link:hover,
+        .family-info-panel .info-link:hover,
+        #pledgeClassInfoPanel .info-link:hover {
+            color: #764ba2;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+            border-color: rgba(102, 126, 234, 0.5);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(102, 126, 234, 0.2);
+        }
+
+        .path-content .info-link {
+            color: #667eea;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: 600;
+            padding: 0px 3px;
+            margin: 0 2px;
+            border-radius: 2px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            transition: all 0.2s ease;
+            display: inline-block;
+            line-height: 1.2;
+            vertical-align: baseline;
+        }
+
+        .family-info-panel {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            max-width: 350px;
+            min-width: 280px;
+            z-index: 1002;
+            display: none;
+            border: 2px solid #764ba2;
+        }
+
+        .family-info-panel.show {
+            display: block;
+        }
+
+        .family-info-panel h3 {
+            margin-bottom: 15px;
+            color: #764ba2;
+            font-size: 1.4em;
+            border-bottom: 2px solid #764ba2;
+            padding-bottom: 10px;
+        }
+
+        .family-info-panel p {
+            margin: 8px 0;
+            color: #495057;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .family-info-panel p strong {
+            color: #764ba2;
+            font-weight: 600;
+        }
+
+        #pledgeClassInfoPanel {
+            border-color: #ff6b6b;
+        }
+
+        #pledgeClassInfoPanel h3 {
+            color: #ff6b6b;
+            border-bottom-color: #ff6b6b;
+        }
+
+        #pledgeClassInfoPanel p strong {
+            color: #ff6b6b;
+        }
+
+
+        .path-panel {
+            position: absolute;
+            top: 80px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 0;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            max-width: 400px;
+            min-width: 300px;
+            z-index: 1001;
+            display: none;
+            border: 2px solid #667eea;
+        }
+
+        .path-panel.show {
+            display: block;
+        }
+
+        .path-panel-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .path-panel-header h3 {
+            margin: 0;
+            font-size: 1.2em;
+        }
+
+        .close-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            line-height: 1;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .path-content {
+            padding: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .path-content pre {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 14px;
+            line-height: 1.8;
+            color: #495057;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .path-content .info-link:hover {
+            color: #764ba2;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+            border-color: rgba(102, 126, 234, 0.5);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(102, 126, 234, 0.2);
+        }
+
+        .error-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 0;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            z-index: 10000;
+            display: none;
+            min-width: 400px;
+            max-width: 500px;
+            border: 2px solid #ff6b6b;
+        }
+
+        .error-popup.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -45%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        .error-popup-header {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .error-popup-header h3 {
+            margin: 0;
+            font-size: 1.3em;
+        }
+
+        .error-popup-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            line-height: 1;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .error-popup-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .error-popup-content {
+            padding: 25px;
+            color: #495057;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .error-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            display: none;
+        }
+
+        .error-popup-overlay.show {
+            display: block;
+            animation: fadeInOverlay 0.3s ease;
+        }
+
+        @keyframes fadeInOverlay {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Phi Delt Family Tree</h1>
+        </div>
+        
+        <div class="controls">
+            <div class="controls-section">
+                <h3 class="section-title">Filters</h3>
+                <div class="filters-group">
+                    <div class="control-group">
+                        <label for="familyFilter">Family:</label>
+                        <select id="familyFilter">
+                            <option value="all">All Families</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="pledgeClassFilter">Pledge Class:</label>
+                        <select id="pledgeClassFilter">
+                            <option value="all">All Pledge Classes</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="controls-section">
+                <h3 class="section-title">View</h3>
+                <div class="view-buttons">
+                    <button id="centerButton" onclick="centerView()" style="display: none;">Center</button>
+                    <button onclick="resetView()">Reset</button>
+                </div>
+            </div>
+            
+            <div class="controls-section">
+                <h3 class="section-title">Find Path</h3>
+                <div class="path-finder">
+                    <input type="text" id="person1" placeholder="Person 1" autocomplete="off">
+                    <span class="arrow">→</span>
+                    <input type="text" id="person2" placeholder="Person 2" autocomplete="off">
+                    <button onclick="findPath()">Find</button>
+                    <button onclick="clearPath()" class="secondary">Clear</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="visualization-container">
+            <svg id="tree-svg"></svg>
+            
+            <div class="zoom-controls">
+                <button onclick="zoomIn()" title="Zoom In">+</button>
+                <button onclick="zoomOut()" title="Zoom Out">−</button>
+            </div>
+            
+            <div class="family-legend" id="familyLegend">
+                <h4>Families</h4>
+                <div class="legend-items" id="legendItems"></div>
+            </div>
+            
+            <div class="info-panel" id="infoPanel">
+                <h3 id="infoName"></h3>
+                <p id="infoDetails"></p>
+            </div>
+            
+            <div class="family-info-panel" id="familyInfoPanel">
+                <h3 id="familyInfoName"></h3>
+                <p id="familyInfoDetails"></p>
+            </div>
+            
+            <div class="family-info-panel" id="pledgeClassInfoPanel">
+                <h3 id="pledgeClassInfoName"></h3>
+                <p id="pledgeClassInfoDetails"></p>
+            </div>
+            
+            <div class="path-panel" id="pathPanel">
+                <div class="path-panel-header">
+                    <h3>Path Found</h3>
+                    <button onclick="clearPath()" class="close-btn" title="Close">×</button>
+                </div>
+                <div class="path-content">
+                    <pre id="pathText"></pre>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+    <!-- Error Popup -->
+    <div class="error-popup-overlay" id="errorPopupOverlay" onclick="hideErrorPopup()"></div>
+    <div class="error-popup" id="errorPopup">
+        <div class="error-popup-header">
+            <h3>Error</h3>
+            <button onclick="hideErrorPopup()" class="error-popup-close" title="Close">×</button>
+        </div>
+        <div class="error-popup-content" id="errorPopupContent">
+        </div>
+    </div>
+    
+    <script src="family-tree.js"></script>
+</body>
+</html>
+
