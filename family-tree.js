@@ -26,7 +26,7 @@ const familyColors = {
     'Bear': { fill: '#8B4513', stroke: '#6B3410' },          // Brown
     'Wolf': { fill: '#708090', stroke: '#556B7A' },         // Slate gray
     'Eagle': { fill: '#4A90E2', stroke: '#3A70B2' },        // Blue
-    'default': { fill: '#fff', stroke: '#667eea' }          // Default for no family
+    'default': { fill: '#fff', stroke: '#629dc7' }          // Default for no family
 };
 
 // Get family color
@@ -1695,7 +1695,7 @@ function highlightNode(nodeId) {
             const rect = node.select('rect');
             const text = node.select('text');
             // Apply selected styling (purple/blue color) - this overrides other styles
-            const fillColor = '#667eea';
+            const fillColor = '#629dc7';
             rect.style('fill', fillColor);
             rect.style('stroke', '#764ba2');
             rect.style('stroke-width', '4px');
