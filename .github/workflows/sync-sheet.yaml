@@ -49,6 +49,9 @@ jobs:
                   if name == "":
                       continue
 
+                  if "nickname" in obj and obj["nickname"] == "":
+                      del obj["nickname"]
+
                   if "redacted?" in obj:
                       redacted = (obj["redacted?"] != "")
                       del obj["redacted?"]
