@@ -1314,25 +1314,25 @@ function showNodeInfo(node) {
     // Big Brother(s) - make clickable
     if (node.bigs && node.bigs.length > 0) {
         if (node.bigs.length === 1) {
-            details.push(`<strong>Big Brother:</strong> ${createPersonLink(node.bigs[0])}`);
+            details.push(`<strong>Big:</strong> ${createPersonLink(node.bigs[0])}`);
         } else {
             const bigLinks = node.bigs.map(big => createPersonLink(big)).join(', ');
-            details.push(`<strong>Big Brothers:</strong> ${bigLinks}`);
+            details.push(`<strong>Bigs:</strong> ${bigLinks}`);
         }
     } else {
-        details.push(`<strong>Big Brother:</strong> Unknown`);
+        details.push(`<strong>Big:</strong> Unknown`);
     }
     
     // Little Brother(s) - make clickable
     if (node.littles && node.littles.length > 0) {
         if (node.littles.length === 1) {
-            details.push(`<strong>Little Brother:</strong> ${createPersonLink(node.littles[0])}`);
+            details.push(`<strong>Little:</strong> ${createPersonLink(node.littles[0])}`);
         } else {
             const littleLinks = node.littles.map(little => createPersonLink(little)).join(', ');
-            details.push(`<strong>Little Brothers:</strong> ${littleLinks}`);
+            details.push(`<strong>Littles:</strong> ${littleLinks}`);
         }
     } else {
-        details.push(`<strong>Little Brothers:</strong> None`);
+        details.push(`<strong>Little:</strong> None`);
     }
 
     detailsEl.innerHTML = details.join('<br>');
