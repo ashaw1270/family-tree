@@ -1474,7 +1474,7 @@ function showFamilyInfo(familyName, memberCount) {
     } else {
         details.push(`<strong>Patriarch:</strong> ${patriarch}`);
     }
-    details.push(`<strong>Number of Pledges:</strong> ${memberCount}`);
+    details.push(`<strong>Number of Members:</strong> ${memberCount}`);
     
     detailsEl.innerHTML = details.join('<br>');
     
