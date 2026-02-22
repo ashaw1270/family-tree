@@ -211,31 +211,18 @@ async function init() {
                     
                     // Check if path is showing
                     const pathIsShowing = currentPath !== null && currentPath.length > 0;
-                    
+
                     // Always hide node info (person popup)
                     hideNodeInfo();
-                    
-                    // If path is showing, keep it and re-zoom to it instead of clearing
+
+                    // If path is showing, clear it and reset zoom/pan when clicking whitespace
                     if (pathIsShowing) {
-                        // Keep path panel visible
-                        const pathPanel = document.getElementById('pathPanel');
-                        if (pathPanel) {
-                            pathPanel.classList.add('show');
-                        }
-                        
-                        // Re-zoom to path and re-highlight it
-                        setTimeout(() => {
-                            zoomToPath(currentPath);
-                            highlightPathindree();
-                        }, 100);
-                        
-                        // Don't process further - path should stay
+                        clearPathDisplay();
                         return;
                     }
-                    
-                    // Clear path if showing (only if we're not keeping it)
+
                     clearPathDisplay();
-                    
+
                     // If person popup was showing, keep filter popup open and zoom to it
                     if (personPopupWasShowing) {
                         // If a family filter is active, keep family popup open and zoom to family
