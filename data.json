@@ -29,7 +29,7 @@
     {
       "name": "Alpha",
       "semester": "Fall 2020",
-      "numberOfMembers": 4,
+      "numPledges": 4,
       "PCP": "John",
       "PCVP": "Sarah",
       "bestPledge": "Ryan",
@@ -38,37 +38,37 @@
     {
       "name": "Beta",
       "semester": "Spring 2021",
-      "numberOfMembers": 5
+      "numPledges": 5
     },
     {
       "name": "Gamma",
       "semester": "Fall 2021",
-      "numberOfMembers": 6
+      "numPledges": 6
     },
     {
       "name": "Delta",
       "semester": "Spring 2022",
-      "numberOfMembers": 4
+      "numPledges": 4
     },
     {
       "name": "Epsilon",
       "semester": "Fall 2022",
-      "numberOfMembers": 5
+      "numPledges": 5
     },
     {
       "name": "Zeta",
       "semester": "Spring 2023",
-      "numberOfMembers": 6
+      "numPledges": 6
     },
     {
       "name": "Eta",
       "semester": "Fall 2023",
-      "numberOfMembers": 5
+      "numPledges": 5
     },
     {
       "name": "Theta",
       "semester": "Spring 2024",
-      "numberOfMembers": 3
+      "numPledges": 3
     }
   ],
   "people": [

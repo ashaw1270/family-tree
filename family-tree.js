@@ -1474,7 +1474,7 @@ function showFamilyInfo(familyName, memberCount) {
     } else {
         details.push(`<strong>Leader:</strong> ${leader}`);
     }
-    details.push(`<strong>Number of Members:</strong> ${memberCount}`);
+    details.push(`<strong>Number of Pledges:</strong> ${memberCount}`);
     
     detailsEl.innerHTML = details.join('<br>');
     
@@ -1540,7 +1540,7 @@ function showPledgeClassInfo(pledgeClassName) {
     
     let details = [];
     details.push(`<strong>Semester:</strong> ${pledgeClassData.semester || 'Unknown'}`);
-    details.push(`<strong>Number of Members:</strong> ${pledgeClassData.numberOfMembers || 0}`);
+    details.push(`<strong>Number of Pledges:</strong> ${pledgeClassData.numPledges || 0}`);
     
     // PCP - make clickable
     if (pledgeClassData.PCP) {
