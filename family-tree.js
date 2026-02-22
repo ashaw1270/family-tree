@@ -1374,21 +1374,21 @@ function showNodeInfo(node) {
         details.push(`<strong>Bond Number:</strong> Unknown`);
     }
     
-    // Pledge Class - make clickable
+    // Pledge Class
     if (node.pledgeClass) {
         details.push(`<strong>Pledge Class:</strong> ${createPledgeClassLink(node.pledgeClass)}`);
     } else {
         details.push(`<strong>Pledge Class:</strong> Unknown`);
     }
     
-    // Family - make clickable
+    // Family
     if (node.family) {
         details.push(`<strong>Family:</strong> ${createFamilyLink(node.family)}`);
     } else {
         details.push(`<strong>Family:</strong> Unknown`);
     }
     
-    // Big Brother(s) - make clickable
+    // Big Brother(s)
     if (node.bigs && node.bigs.length > 0) {
         if (node.bigs.length === 1) {
             details.push(`<strong>Big:</strong> ${createPersonLink(node.bigs[0])}`);
@@ -1400,7 +1400,7 @@ function showNodeInfo(node) {
         details.push(`<strong>Big:</strong> Unknown`);
     }
     
-    // Little Brother(s) - make clickable
+    // Little Brother(s)
     if (node.littles && node.littles.length > 0) {
         if (node.littles.length === 1) {
             details.push(`<strong>Little:</strong> ${createPersonLink(node.littles[0])}`);
@@ -1468,7 +1468,7 @@ function showFamilyInfo(familyName, memberCount) {
     nameEl.textContent = familyName + ' Fam';
     
     let details = [];
-    // Leader - make clickable if not "Unknown"
+    // Leader
     if (leader !== 'Unknown') {
         details.push(`<strong>Leader:</strong> ${createPersonLink(leader)}`);
     } else {
@@ -1545,32 +1545,39 @@ function showPledgeClassInfo(pledgeClassName) {
     details.push(`<strong>Semester:</strong> ${pledgeClassData.semester || 'Unknown'}`);
     details.push(`<strong>Number of Pledges:</strong> ${numPledges}`);
     
-    // PCP - make clickable
+    // PCP
     if (pledgeClassData.pcp) {
         details.push(`<strong>PCP:</strong> ${createPersonLink(pledgeClassData.pcp)}`);
     } else {
         details.push(`<strong>PCP:</strong> Unknown`);
     }
     
-    // PCVP - make clickable
+    // PCVP
     if (pledgeClassData.pcvp) {
         details.push(`<strong>PCVP:</strong> ${createPersonLink(pledgeClassData.pcvp)}`);
     } else {
         details.push(`<strong>PCVP:</strong> Unknown`);
     }
     
-    // Best Pledge - make clickable
+    // Best Pledge
     if (pledgeClassData.bestPledge) {
         details.push(`<strong>Best Pledge:</strong> ${createPersonLink(pledgeClassData.bestPledge)}`);
     } else {
         details.push(`<strong>Best Pledge:</strong> Unknown`);
     }
     
-    // Hint Tit - make clickable
+    // Hint Tit
     if (pledgeClassData.hintTit) {
         details.push(`<strong>Hint Tit:</strong> ${createPersonLink(pledgeClassData.hintTit)}`);
     } else {
         details.push(`<strong>Hint Tit:</strong> Unknown`);
+    }
+    
+    // Pledge Master
+    if (pledgeClassData.pledgeMaster) {
+        details.push(`<strong>Pledge Master:</strong> ${createPersonLink(pledgeClassData.pledgeMaster)}`);
+    } else {
+        details.push(`<strong>Pledge Master:</strong> Unknown`);
     }
     
     detailsEl.innerHTML = details.join('<br>');
