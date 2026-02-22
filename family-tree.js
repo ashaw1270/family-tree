@@ -63,8 +63,8 @@ function getContrastingTextColor(backgroundColor) {
     return luminance < 0.5 ? '#ffffff' : '#000000';
 }
 
-// Helper function to format name with nickname in parentheses after first word
-// Example: "John Adams" with nickname "Johnny" -> "John (Johnny) Adams"
+// Helper function to format name with nickname in quotes after first word
+// Example: "John Adams" with nickname 'Johnny' -> 'John "Johnny" Adams'
 function formatNameWithNickname(personName) {
     if (!personName) return '';
     
@@ -78,11 +78,11 @@ function formatNameWithNickname(personName) {
     const nameParts = personName.trim().split(/\s+/);
     
     if (nameParts.length === 1) {
-        // Single word name: "John" -> "John (Johnny)"
-        return `${nameParts[0]} (${nickname})`;
+        // Single word name: 'John' -> 'John "Johnny"'
+        return `${nameParts[0]} "${nickname}"`;
     } else {
-        // Multiple words: "John Adams" -> "John (Johnny) Adams"
-        return `${nameParts[0]} (${nickname}) ${nameParts.slice(1).join(' ')}`;
+        // Multiple words: 'John Adams' -> 'John "Johnny" Adams'
+        return `${nameParts[0]} "${nickname}" ${nameParts.slice(1).join(' ')}`;
     }
 }
 
