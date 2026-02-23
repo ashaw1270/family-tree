@@ -386,6 +386,26 @@ function buildTree(preservePath = false, animate = false) {
 }
 
 
+// Measure label width for layout (same font as .node-label: 14px, weight 600)
+function measureNodeLabelWidth(node) {
+    const label = getNicknameOrName(node.name);
+    if (!label) return 40;
+    if (!g || !g.node()) return label.length * 8;
+    try {
+        const temp = g.append('text')
+            .attr('class', 'node-label')
+            .style('font-size', '14px')
+            .style('font-weight', '600')
+            .style('visibility', 'hidden')
+            .text(label);
+        const w = temp.node().getBBox().width;
+        temp.remove();
+        return w;
+    } catch (e) {
+        return label.length * 8;
+    }
+}
+
 // Calculate graph layout: each family is laid out primarily vertically (chains stacked by depth)
 function calculateGraphLayout(nodes, links) {
     const nodeMap = new Map();
@@ -435,8 +455,15 @@ function calculateGraphLayout(nodes, links) {
         childrenMap.get(src.id).push(tgt.id);
     });
 
+    // Estimate each node's box width from label (text + modest padding for rect)
+    const labelPadding = 60;
+    const minGap = 8;
+    nodes.forEach(node => {
+        const textWidth = measureNodeLabelWidth(node);
+        node.estimatedWidth = textWidth + labelPadding;
+    });
+
     const layerHeight = 140;
-    const nodeSpacing = 155;
     const familyGap = 80;
     const startY = height / 4;
 
@@ -444,14 +471,12 @@ function calculateGraphLayout(nodes, links) {
     const familyKeys = Array.from(familyToNodes.keys()).sort((a, b) => a.localeCompare(b));
     const familyWidths = [];
     const familyBaseX = [];
-    const familyMinUnitX = [];
 
-    // For each family: assign unitX so that siblings are horizontally spaced and parent is centered over its littles
+    // For each family: assign unitX (order), then pixel localX with leaves placed first, parents centered over littles
     for (const familyKey of familyKeys) {
         const familyNodesList = familyToNodes.get(familyKey);
         const internalTargets = familyToInternalTargets.get(familyKey) || new Set();
         const childrenMap = familyToChildren.get(familyKey) || new Map();
-        // Sort each node's children by name for stable layout
         childrenMap.forEach((kids, id) => {
             kids.sort((a, b) => a.localeCompare(b));
         });
@@ -462,7 +487,7 @@ function calculateGraphLayout(nodes, links) {
         let nextUnitX = 0;
 
         function placeSubtree(node) {
-            if (node.unitX !== undefined) return; // already placed (e.g. multiple bigs)
+            if (node.unitX !== undefined) return;
             const littles = (childrenMap.get(node.id) || []).filter(id => nodeMap.get(id));
             if (littles.length === 0) {
                 node.unitX = nextUnitX;
@@ -479,14 +504,36 @@ function calculateGraphLayout(nodes, links) {
 
         for (const r of roots) {
             placeSubtree(r);
-            nextUnitX += 1; // gap between root subtrees
+            nextUnitX += 1;
         }
 
-        const minUX = Math.min(...familyNodesList.map(n => n.unitX));
-        const maxUX = Math.max(...familyNodesList.map(n => n.unitX));
-        familyMinUnitX.push(minUX);
-        const span = Math.max(1, maxUX - minUX + 1);
-        familyWidths.push(span * nodeSpacing);
+        // Leaves = nodes with no littles in this family; place them left-to-right with dynamic spacing
+        const littlesInFamily = (node) => (childrenMap.get(node.id) || []).map(id => nodeMap.get(id)).filter(n => n && (n.family || 'default') === familyKey);
+        const leaves = familyNodesList.filter(n => littlesInFamily(n).length === 0);
+        leaves.sort((a, b) => a.unitX - b.unitX);
+
+        const leafLocalX = [];
+        leafLocalX[0] = 0;
+        for (let i = 1; i < leaves.length; i++) {
+            const wPrev = leaves[i - 1].estimatedWidth;
+            const wCur = leaves[i].estimatedWidth;
+            leafLocalX[i] = leafLocalX[i - 1] + (wPrev + wCur) / 2 + minGap;
+        }
+        leaves.forEach((n, i) => { n.localX = leafLocalX[i]; });
+
+        // Parents: place at center of their littles (process by depth descending so children have localX first)
+        const byDepth = familyNodesList.slice().sort((a, b) => (b.depth || 0) - (a.depth || 0));
+        byDepth.forEach(node => {
+            const kids = littlesInFamily(node);
+            if (kids.length > 0) {
+                node.localX = kids.reduce((sum, c) => sum + c.localX, 0) / kids.length;
+            }
+        });
+
+        const allLeft = familyNodesList.map(n => n.localX - n.estimatedWidth / 2);
+        const allRight = familyNodesList.map(n => n.localX + n.estimatedWidth / 2);
+        const familyWidth = Math.max(...allRight) - Math.min(...allLeft);
+        familyWidths.push(familyWidth);
     }
 
     // Place families side by side and center the block
@@ -501,13 +548,13 @@ function calculateGraphLayout(nodes, links) {
         familyBaseX[i] += offset;
     }
 
-    // Convert unitX to pixel x,y per node
+    // Convert localX to global x,y per node
     for (let f = 0; f < familyKeys.length; f++) {
         const familyNodesList = familyToNodes.get(familyKeys[f]);
+        const leftEdge = Math.min(...familyNodesList.map(n => n.localX - n.estimatedWidth / 2));
         const baseX = familyBaseX[f];
-        const minUX = familyMinUnitX[f];
         familyNodesList.forEach(node => {
-            node.x = baseX + (node.unitX - minUX) * nodeSpacing;
+            node.x = baseX + node.localX - leftEdge;
             node.y = startY + (node.depth || 0) * layerHeight;
         });
     }
