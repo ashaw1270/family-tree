@@ -406,6 +406,49 @@ function measureNodeLabelWidth(node) {
     }
 }
 
+// Order family keys so that families with cross-family links are placed adjacent (minimizes long edges).
+function orderFamiliesByConnectivity(allFamilyKeys, familyCrossLinks) {
+    if (allFamilyKeys.length <= 1) return allFamilyKeys.slice();
+    const placed = [];
+    const unplaced = new Set(allFamilyKeys);
+
+    const totalCrossWeight = (key) => {
+        const m = familyCrossLinks.get(key);
+        if (!m) return 0;
+        return Array.from(m.values()).reduce((s, n) => s + n, 0);
+    };
+    const weightBetween = (a, b) => (familyCrossLinks.get(a)?.get(b) || 0);
+
+    // Start with the family that has the most cross-family links
+    let best = allFamilyKeys[0];
+    let bestWeight = totalCrossWeight(best);
+    allFamilyKeys.forEach(k => {
+        const w = totalCrossWeight(k);
+        if (w > bestWeight) { bestWeight = w; best = k; }
+    });
+    placed.push(best);
+    unplaced.delete(best);
+
+    while (unplaced.size > 0) {
+        let bestF = null;
+        let bestScore = -1;
+        unplaced.forEach(f => {
+            const score = placed.reduce((s, p) => s + weightBetween(f, p), 0);
+            if (score > bestScore) { bestScore = score; bestF = f; }
+        });
+        if (bestF === null) bestF = Array.from(unplaced).sort((a, b) => a.localeCompare(b))[0];
+        unplaced.delete(bestF);
+        const leftWeight = weightBetween(bestF, placed[0]);
+        const rightWeight = weightBetween(bestF, placed[placed.length - 1]);
+        if (leftWeight >= rightWeight) {
+            placed.unshift(bestF);
+        } else {
+            placed.push(bestF);
+        }
+    }
+    return placed;
+}
+
 // Calculate graph layout: each family is laid out primarily vertically (chains stacked by depth)
 function calculateGraphLayout(nodes, links) {
     const nodeMap = new Map();
@@ -455,6 +498,24 @@ function calculateGraphLayout(nodes, links) {
         childrenMap.get(src.id).push(tgt.id);
     });
 
+    // Cross-family link counts: order families so connected ones are adjacent (minimize long edges)
+    const familyCrossLinks = new Map(); // familyKey -> Map(otherFamilyKey -> count)
+    graphLinks.forEach(link => {
+        const src = link.source;
+        const tgt = link.target;
+        const k1 = src.family || 'default';
+        const k2 = tgt.family || 'default';
+        if (k1 === k2) return;
+        if (!familyCrossLinks.has(k1)) familyCrossLinks.set(k1, new Map());
+        if (!familyCrossLinks.has(k2)) familyCrossLinks.set(k2, new Map());
+        const m1 = familyCrossLinks.get(k1);
+        const m2 = familyCrossLinks.get(k2);
+        m1.set(k2, (m1.get(k2) || 0) + 1);
+        m2.set(k1, (m2.get(k1) || 0) + 1);
+    });
+    const allFamilyKeys = Array.from(familyToNodes.keys());
+    const familyKeys = orderFamiliesByConnectivity(allFamilyKeys, familyCrossLinks);
+
     // Estimate each node's box width from label (text + modest padding for rect)
     const labelPadding = 60;
     const minGap = 8;
@@ -467,8 +528,6 @@ function calculateGraphLayout(nodes, links) {
     const familyGap = 80;
     const startY = height / 4;
 
-    // Sort family keys for stable placement
-    const familyKeys = Array.from(familyToNodes.keys()).sort((a, b) => a.localeCompare(b));
     const familyWidths = [];
     const familyBaseX = [];
 
