@@ -59,7 +59,7 @@ jobs:
                   if "nickname" in obj and obj["nickname"] == "":
                       del obj["nickname"]
 
-                  if "family" in obj and obj["family"] == "":
+                  if "family" in obj:
                       family = obj["family"]
                       del obj["family"]
                       obj["families"] = family
