@@ -415,11 +415,9 @@ function buildTree(preservePath = false, animate = false) {
         }
         depth = calculateDepth(name);
 
-        // Support multiple families: use families array or single family; primary for layout
-        const families = Array.isArray(person?.families) && person.families.length > 0
-            ? person.families
-            : (person?.family ? [person.family] : []);
-        const primaryFamily = person?.family || families[0] || null;
+        // Families: always an array; primary (first) is used for layout
+        const families = Array.isArray(person?.families) ? person.families : [];
+        const primaryFamily = families[0] || null;
 
         return {
             id: name,
@@ -1382,10 +1380,8 @@ function selectPersonByName(personName) {
         bigs: personData.bigs || []
     };
     
-    // Support multiple families
-    const families = Array.isArray(personData.families) && personData.families.length > 0
-        ? personData.families
-        : (personData.family ? [personData.family] : []);
+    // Families: always an array from JSON
+    const families = Array.isArray(personData.families) ? personData.families : [];
     const primaryFamily = families[0] || null;
 
     // Create node object
@@ -2175,10 +2171,8 @@ function populateFamilyFilter() {
     const families = new Set();
     
     treeData.people.forEach(person => {
-        if (Array.isArray(person.families) && person.families.length > 0) {
+        if (Array.isArray(person.families)) {
             person.families.forEach(f => families.add(f));
-        } else if (person.family) {
-            families.add(person.family);
         }
     });
     
@@ -2230,10 +2224,8 @@ function populateFamilyLegend() {
     // Get all unique families (from family and families)
     const families = new Set();
     treeData.people.forEach(person => {
-        if (Array.isArray(person.families) && person.families.length > 0) {
+        if (Array.isArray(person.families)) {
             person.families.forEach(f => families.add(f));
-        } else if (person.family) {
-            families.add(person.family);
         }
     });
     
@@ -2437,7 +2429,7 @@ function zoomToFamily(familyName) {
     const allNodes = g.selectAll('.node').data();
     
     // Find nodes belonging to this family
-    const familyNodes = allNodes.filter(d => d.family === familyName);
+    const familyNodes = allNodes.filter(d => d.families && d.families.includes(familyName));
     
     if (familyNodes.length === 0) {
         console.log('No nodes found for family:', familyName);
@@ -2535,10 +2527,7 @@ document.getElementById('familyFilter').addEventListener('change', function() {
         familyNuclearFamily.clear();
         
         treeData.people.forEach(person => {
-            const inFamily = Array.isArray(person.families) && person.families.length > 0
-                ? person.families.includes(selectedFamily)
-                : person.family === selectedFamily;
-            if (inFamily) {
+            if (Array.isArray(person.families) && person.families.includes(selectedFamily)) {
                 familyNodes.add(person.name);
             }
         });
