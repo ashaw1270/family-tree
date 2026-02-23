@@ -2024,6 +2024,13 @@ function populatePledgeClassFilter() {
     });
 }
 
+// Toggle family legend collapsed state (collapse to small tab / expand from tab)
+function toggleFamilyLegendCollapse() {
+    const legend = document.getElementById('familyLegend');
+    if (!legend) return;
+    legend.classList.toggle('family-legend-collapsed');
+}
+
 // Populate family legend
 function populateFamilyLegend() {
     const legendContainer = document.getElementById('legendItems');

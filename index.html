@@ -289,6 +289,70 @@
             min-width: 200px;
         }
 
+        .family-legend-collapsed {
+            padding: 8px 12px;
+            min-width: 0;
+        }
+
+        .family-legend-collapsed .family-legend-content {
+            display: none;
+        }
+
+        .family-legend-expand-tab {
+            display: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: 2px solid #e9ecef;
+            background: rgba(255, 255, 255, 0.98);
+            color: #629dc7;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .family-legend-expand-tab:hover {
+            background: #629dc7;
+            color: #fff;
+        }
+
+        .family-legend-collapsed .family-legend-expand-tab {
+            display: block;
+        }
+
+        .family-legend-content {
+            display: block;
+        }
+
+        .family-legend-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .family-legend-collapse-btn {
+            flex-shrink: 0;
+            width: 26px;
+            height: 26px;
+            padding: 0;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            background: #f8f9fa;
+            color: #495057;
+            font-size: 18px;
+            line-height: 1;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .family-legend-collapse-btn:hover {
+            background: #e9ecef;
+            color: #629dc7;
+        }
+
         .family-legend h4 {
             margin: 0 0 12px 0;
             color: #629dc7;
@@ -296,6 +360,12 @@
             font-weight: 700;
             border-bottom: 2px solid #e9ecef;
             padding-bottom: 8px;
+        }
+
+        .family-legend-header h4 {
+            margin: 0;
+            border-bottom: none;
+            padding-bottom: 0;
         }
 
         .legend-items {
@@ -734,8 +804,14 @@
             </div>
             
             <div class="family-legend" id="familyLegend">
-                <h4>Families</h4>
-                <div class="legend-items" id="legendItems"></div>
+                <div class="family-legend-content">
+                    <div class="family-legend-header">
+                        <h4>Families</h4>
+                        <button type="button" class="family-legend-collapse-btn" onclick="toggleFamilyLegendCollapse()" title="Collapse">−</button>
+                    </div>
+                    <div class="legend-items" id="legendItems"></div>
+                </div>
+                <button type="button" class="family-legend-expand-tab" id="familyLegendExpandTab" onclick="toggleFamilyLegendCollapse()" title="Show families">Families</button>
             </div>
             
             <div class="info-panel" id="infoPanel">
