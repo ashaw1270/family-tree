@@ -908,64 +908,90 @@
       "name": "JT Waugh",
       "bondNumber": "2094",
       "pledgeClass": "Alpha Kappa",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Dark Pink",
+      "bigs": [
+        "Morgan Hill-Edgar"
+      ],
+      "littles": [
+        "Mason Deaver",
+        "Max Rubenstein"
+      ]
     },
     {
       "name": "Brendon Zimmer",
       "bondNumber": "2095",
       "pledgeClass": "Alpha Kappa",
-      "family": "",
-      "bigs": [],
+      "family": "Plaid",
+      "bigs": [
+        "Marcus Ruiz"
+      ],
       "littles": []
     },
     {
       "name": "Ben Polaski",
       "bondNumber": "2096",
       "pledgeClass": "Alpha Kappa",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Gold",
+      "bigs": [
+        "Hayes Waycaster"
+      ],
+      "littles": [
+        "Alex Weir",
+        "Carter Woltz"
+      ]
     },
     {
       "name": "Luke Wang",
       "bondNumber": "2097",
       "pledgeClass": "Alpha Kappa",
-      "family": "",
-      "bigs": [],
+      "family": "Black",
+      "bigs": [
+        "Taliesin Tenerelli"
+      ],
       "littles": []
     },
     {
       "name": "Shad Lundal",
       "bondNumber": "2098",
       "pledgeClass": "Alpha Kappa",
-      "family": "",
-      "bigs": [],
+      "family": "Gold",
+      "bigs": [
+        "Colin Jimmink"
+      ],
       "littles": []
     },
     {
       "name": "Trevor Verbiest",
       "bondNumber": "2099",
       "pledgeClass": "Alpha Kappa",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Chrome",
+      "bigs": [
+        "Max Trauner"
+      ],
+      "littles": [
+        "Diego Zepeda"
+      ]
     },
     {
       "name": "Adam Chang",
       "bondNumber": "2100",
       "pledgeClass": "Alpha Kappa",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Platinum",
+      "bigs": [
+        "Victor Ogden"
+      ],
+      "littles": [
+        "Lucas Li"
+      ]
     },
     {
       "name": "Mansher Malik",
       "bondNumber": "2101",
       "pledgeClass": "Alpha Kappa",
-      "family": "",
-      "bigs": [],
+      "family": "Cheetah",
+      "bigs": [
+        "Ethan Hoffman"
+      ],
       "littles": []
     },
     {
@@ -980,8 +1006,10 @@
       "name": "Daniel Chun",
       "bondNumber": "2103",
       "pledgeClass": "Alpha Kappa",
-      "family": "",
-      "bigs": [],
+      "family": "Platinum",
+      "bigs": [
+        "Heath Palluck"
+      ],
       "littles": []
     },
     {
@@ -996,104 +1024,150 @@
       "name": "Adam Tung",
       "bondNumber": "2105",
       "pledgeClass": "Alpha Kappa",
-      "family": "",
-      "bigs": [],
+      "family": "Dark Pink",
+      "bigs": [
+        "Ryan Chou"
+      ],
       "littles": []
     },
     {
       "name": "Michael Saunders",
       "bondNumber": "2106",
       "pledgeClass": "Alpha Kappa",
-      "family": "",
-      "bigs": [],
+      "family": "Gold",
+      "bigs": [
+        "Ryan DeMotte"
+      ],
       "littles": []
     },
     {
       "name": "Evan Skirgaudas",
       "bondNumber": "2107",
       "pledgeClass": "Alpha Kappa",
-      "family": "",
-      "bigs": [],
+      "family": "Dark Pink",
+      "bigs": [
+        "Leo Zhang"
+      ],
       "littles": []
     },
     {
       "name": "Aryan Dutta",
       "bondNumber": "2108",
       "pledgeClass": "Alpha Kappa",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Gold",
+      "bigs": [
+        "Ryan DeMotte"
+      ],
+      "littles": [
+        "Ekamresh Vasude",
+        "Anshul Vij"
+      ]
     },
     {
       "name": "Gurdeep Barring",
       "bondNumber": "2109",
       "pledgeClass": "Alpha Kappa",
-      "family": "",
-      "bigs": [],
+      "family": "Dark Pink",
+      "bigs": [
+        "Sagan Gor"
+      ],
       "littles": []
     },
     {
       "name": "Jai Makhija",
       "bondNumber": "2110",
       "pledgeClass": "Alpha Kappa",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Black",
+      "bigs": [
+        "Sean Wilcox"
+      ],
+      "littles": [
+        "Connor Hughes",
+        "Ahmed Kareem"
+      ]
     },
     {
       "name": "Albert Chung",
       "bondNumber": "2111",
       "pledgeClass": "Alpha Kappa",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Cheetah",
+      "bigs": [
+        "Augie Sommers"
+      ],
+      "littles": [
+        "Joey Choi",
+        "James Kwon"
+      ]
     },
     {
       "name": "Evan Pruett",
       "bondNumber": "2112",
       "pledgeClass": "Alpha Kappa",
-      "family": "",
-      "bigs": [],
+      "family": "Cheetah",
+      "bigs": [
+        "Henry McGonnigal"
+      ],
       "littles": []
     },
     {
       "name": "Sean Iredell",
       "bondNumber": "2113",
       "pledgeClass": "Alpha Lambda",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Platinum",
+      "bigs": [
+        "John Huskins"
+      ],
+      "littles": [
+        "Chaz Berelson"
+      ]
     },
     {
       "name": "Evan Danu",
       "bondNumber": "2114",
       "pledgeClass": "Alpha Lambda",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Cheetah",
+      "bigs": [
+        "Ethan Hoffman"
+      ],
+      "littles": [
+        "Tanush Sanghai",
+        "Nathaniel Gonzalez",
+        "Greg Louis"
+      ]
     },
     {
       "name": "Sean Jackson",
       "bondNumber": "2115",
       "pledgeClass": "Alpha Lambda",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Chrome",
+      "bigs": [
+        "Adrian Reynoso"
+      ],
+      "littles": [
+        "Chris Clausen",
+        "Vedant Kenkare"
+      ]
     },
     {
       "name": "Sammy Fromberg",
       "bondNumber": "2116",
       "pledgeClass": "Alpha Lambda",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Platinum",
+      "bigs": [
+        "Heath Palluck"
+      ],
+      "littles": [
+        "Raffi Avedissian"
+      ]
     },
     {
       "name": "Martin Petersen",
       "bondNumber": "2117",
       "pledgeClass": "Alpha Lambda",
-      "family": "",
-      "bigs": [],
+      "family": "Black",
+      "bigs": [
+        "Ari Rose-Marquez"
+      ],
       "littles": []
     },
     {
@@ -1108,121 +1182,164 @@
       "name": "Dane Christiensen",
       "bondNumber": "2119",
       "pledgeClass": "Alpha Lambda",
-      "family": "",
-      "bigs": [],
+      "family": "Cheetah",
+      "bigs": [
+        "Sammy Barr"
+      ],
       "littles": []
     },
     {
       "name": "Ben Crotty",
       "bondNumber": "2120",
       "pledgeClass": "Alpha Lambda",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Black",
+      "bigs": [
+        "Josiah Clark"
+      ],
+      "littles": [
+        "Ali Bhatti"
+      ]
     },
     {
       "name": "Ben Papp",
       "bondNumber": "2121",
       "pledgeClass": "Alpha Lambda",
-      "family": "",
-      "bigs": [],
+      "family": "Dark Pink",
+      "bigs": [
+        "Greg Sarandi"
+      ],
       "littles": []
     },
     {
       "name": "Zack Mazaheri",
       "bondNumber": "2122",
       "pledgeClass": "Alpha Lambda",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Cheetah",
+      "bigs": [
+        "Augie Sommers"
+      ],
+      "littles": [
+        "Harry Stiles"
+      ]
     },
     {
       "name": "Carter Woltz",
       "bondNumber": "2123",
       "pledgeClass": "Alpha Lambda",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Gold",
+      "bigs": [
+        "Ben Polaski"
+      ],
+      "littles": [
+        "Scott Hills"
+      ]
     },
     {
       "name": "Judah Adkins",
       "bondNumber": "2124",
       "pledgeClass": "Alpha Lambda",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Dark Pink",
+      "bigs": [
+        "Manny Adelstein"
+      ],
+      "littles": [
+        "Max Reinardy"
+      ]
     },
     {
       "name": "Teja Kanumuru",
       "bondNumber": "2125",
       "pledgeClass": "Alpha Lambda",
-      "family": "",
-      "bigs": [],
+      "family": "Black",
+      "bigs": [
+        "Marc Huang"
+      ],
       "littles": []
     },
     {
       "name": "Aan Gupta",
       "bondNumber": "2126",
       "pledgeClass": "Alpha Lambda",
-      "family": "",
-      "bigs": [],
+      "family": "Black",
+      "bigs": [
+        "Avi Jaiswel"
+      ],
       "littles": []
     },
     {
       "name": "Mason Deaver",
       "bondNumber": "2127",
       "pledgeClass": "Alpha Lambda",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Dark Pink",
+      "bigs": [
+        "JT Waugh"
+      ],
+      "littles": [
+        "Dhruv Sureka",
+        "Anush Patel"
+      ]
     },
     {
       "name": "Blake Zaragoza",
       "bondNumber": "2128",
       "pledgeClass": "Alpha Lambda",
-      "family": "",
-      "bigs": [],
+      "family": "Green",
+      "bigs": [
+        "Dane Gramstrup"
+      ],
       "littles": []
     },
     {
       "name": "Dylan Lionelli",
       "bondNumber": "2129",
       "pledgeClass": "Alpha Lambda",
-      "family": "",
-      "bigs": [],
+      "family": "Black",
+      "bigs": [
+        "Evan Henderson"
+      ],
       "littles": []
     },
     {
       "name": "Sam Otey",
       "bondNumber": "2130",
       "pledgeClass": "Alpha Lambda",
-      "family": "",
-      "bigs": [],
+      "family": "Chrome",
+      "bigs": [
+        "Andrew Levy"
+      ],
       "littles": []
     },
     {
       "name": "Dante Brundage",
       "bondNumber": "2131",
       "pledgeClass": "Alpha Lambda",
-      "family": "",
-      "bigs": [],
+      "family": "Dark Pink",
+      "bigs": [
+        "Dane Culver"
+      ],
       "littles": []
     },
     {
       "name": "Sam Socorro",
       "bondNumber": "2132",
       "pledgeClass": "Alpha Lambda",
-      "family": "",
-      "bigs": [],
+      "family": "Gold",
+      "bigs": [
+        "Truman Costello"
+      ],
       "littles": []
     },
     {
       "name": "Parker Bond",
       "bondNumber": "2133",
       "pledgeClass": "Alpha Lambda",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Fire",
+      "bigs": [
+        "Lucien LaScala"
+      ],
+      "littles": [
+        "Ben Feldman"
+      ]
     },
     {
       "name": "Mark Matthews",
@@ -1236,49 +1353,78 @@
       "name": "Chris Clausen",
       "bondNumber": "2135",
       "pledgeClass": "Alpha Mu",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Chrome",
+      "bigs": [
+        "Sean Jackson"
+      ],
+      "littles": [
+        "Sam Benn",
+        "Carlos Karaptian",
+        "Pi Chaudhry"
+      ]
     },
     {
       "name": "Lucas Li",
       "bondNumber": "2136",
       "pledgeClass": "Alpha Mu",
-      "family": "",
-      "bigs": [],
+      "family": "Platinum",
+      "bigs": [
+        "Adam Chang"
+      ],
       "littles": []
     },
     {
       "name": "Justin Shih",
       "bondNumber": "2137",
       "pledgeClass": "Alpha Mu",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Gold",
+      "bigs": [
+        "Ryan DeMotte"
+      ],
+      "littles": [
+        "Andrew Chen",
+        "Paul Hoang"
+      ]
     },
     {
       "name": "Matthew Ginsburg",
       "bondNumber": "2138",
       "pledgeClass": "Alpha Mu",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Fire",
+      "bigs": [
+        "Lucien LaScala"
+      ],
+      "littles": [
+        "Ryan Fuerte",
+        "Kethan Kaira"
+      ]
     },
     {
       "name": "Alex Gramajo",
       "bondNumber": "2139",
       "pledgeClass": "Alpha Mu",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Gold",
+      "bigs": [
+        "Adam Oliva"
+      ],
+      "littles": [
+        "Vikram Gedipudi",
+        "Lucas Massa",
+        "Cooper Queen",
+        "Daelyn Smith"
+      ]
     },
     {
       "name": "Adam Shaw",
       "bondNumber": "2140",
       "pledgeClass": "Alpha Mu",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Cheetah",
+      "bigs": [
+        "Marc Svedlov"
+      ],
+      "littles": [
+        "Elliot Sykes"
+      ]
     },
     {
       "name": "Redacted",
@@ -1292,64 +1438,89 @@
       "name": "Alex Weir",
       "bondNumber": "2142",
       "pledgeClass": "Alpha Mu",
-      "family": "",
-      "bigs": [],
+      "family": "Gold",
+      "bigs": [
+        "Ben Polaski"
+      ],
       "littles": []
     },
     {
       "name": "Alex \"Cheeser\" Ollmann",
       "bondNumber": "2143",
       "pledgeClass": "Alpha Mu",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Dark Pink",
+      "bigs": [
+        "Dane Culver"
+      ],
+      "littles": [
+        "Nathan Lee"
+      ]
     },
     {
       "name": "Dhruv Sureka",
       "bondNumber": "2144",
       "pledgeClass": "Alpha Mu",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Dark Pink",
+      "bigs": [
+        "Mason Deaver"
+      ],
+      "littles": [
+        "Matheus Brocchi"
+      ]
     },
     {
       "name": "Tanush Sanghai",
       "bondNumber": "2145",
       "pledgeClass": "Alpha Mu",
-      "family": "",
-      "bigs": [],
+      "family": "Cheetah",
+      "bigs": [
+        "Evan Danu"
+      ],
       "littles": []
     },
     {
       "name": "Ali Bhatti",
       "bondNumber": "2146",
       "pledgeClass": "Alpha Mu",
-      "family": "",
-      "bigs": [],
+      "family": "Black",
+      "bigs": [
+        "Ben Crotty"
+      ],
       "littles": []
     },
     {
       "name": "Scott Hills",
       "bondNumber": "2147",
       "pledgeClass": "Alpha Mu",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Gold",
+      "bigs": [
+        "Carter Woltz"
+      ],
+      "littles": [
+        "Grant Franey"
+      ]
     },
     {
       "name": "Diego Zepeda",
       "bondNumber": "2148",
       "pledgeClass": "Alpha Mu",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Chrome",
+      "bigs": [
+        "Trevor Verbiest"
+      ],
+      "littles": [
+        "Reese Oberkfell",
+        "Noah Prim"
+      ]
     },
     {
       "name": "Andy Lee",
       "bondNumber": "2149",
       "pledgeClass": "Alpha Mu",
-      "family": "",
-      "bigs": [],
+      "family": "Black",
+      "bigs": [
+        "Ari Rose-Marquez"
+      ],
       "littles": []
     },
     {
@@ -1364,105 +1535,156 @@
       "name": "Joey Choi",
       "bondNumber": "2151",
       "pledgeClass": "Alpha Mu",
-      "family": "",
-      "bigs": [],
+      "family": "Cheetah",
+      "bigs": [
+        "Albert Chung"
+      ],
       "littles": []
     },
     {
       "name": "David Moseley",
       "bondNumber": "2152",
       "pledgeClass": "Alpha Mu",
-      "family": "",
-      "bigs": [],
+      "family": "Gold",
+      "bigs": [
+        "Colin Jimmink"
+      ],
       "littles": []
     },
     {
       "name": "Roman Savino",
       "bondNumber": "2153",
       "pledgeClass": "Alpha Nu",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Cheetah",
+      "bigs": [
+        "Sammy Barr"
+      ],
+      "littles": [
+        "Lev Miller",
+        "Naveen Prabhath"
+      ]
     },
     {
       "name": "Max Rubenstein",
       "bondNumber": "2154",
       "pledgeClass": "Alpha Nu",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Dark Pink",
+      "bigs": [
+        "JT Waugh"
+      ],
+      "littles": [
+        "Jake Marks",
+        "Sam Benn",
+        "Cameron Chitayat"
+      ]
     },
     {
       "name": "Derek Wu",
       "bondNumber": "2155",
       "pledgeClass": "Alpha Nu",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Cheetah",
+      "bigs": [
+        "Tanush Sanghai"
+      ],
+      "littles": [
+        "Sam Frausto"
+      ]
     },
     {
       "name": "Shad Bello",
       "bondNumber": "2156",
       "pledgeClass": "Alpha Nu",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Gold",
+      "bigs": [
+        "Colin Jimmink"
+      ],
+      "littles": [
+        "Michael Hein"
+      ]
     },
     {
       "name": "Jack Goldfeder",
       "bondNumber": "2157",
       "pledgeClass": "Alpha Nu",
-      "family": "",
-      "bigs": [],
+      "family": "Gold",
+      "bigs": [
+        "Ryan DeMotte"
+      ],
       "littles": []
     },
     {
       "name": "Connor Hughes",
       "bondNumber": "2158",
       "pledgeClass": "Alpha Nu",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Black",
+      "bigs": [
+        "Jai Makhija"
+      ],
+      "littles": [
+        "Naveen Prabhath",
+        "Nicholas Moriarty"
+      ]
     },
     {
       "name": "Ahmed Kareem",
       "bondNumber": "2159",
       "pledgeClass": "Alpha Nu",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Cheetah",
+      "bigs": [
+        "Sammy Barr",
+        "Jai Makhija"
+      ],
+      "littles": [
+        "Michael Lemos",
+        "John Worden"
+      ]
     },
     {
       "name": "Max Reinardy",
       "bondNumber": "2160",
       "pledgeClass": "Alpha Nu",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Dark Pink",
+      "bigs": [
+        "Judah Adkins"
+      ],
+      "littles": [
+        "David Renini"
+      ]
     },
     {
       "name": "Noah Neri",
       "bondNumber": "2161",
       "pledgeClass": "Alpha Nu",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Dark Pink",
+      "bigs": [
+        "Leo Zhang"
+      ],
+      "littles": [
+        "Anthony Colin"
+      ]
     },
     {
       "name": "Nathaniel Gonzalez",
       "bondNumber": "2162",
       "pledgeClass": "Alpha Nu",
-      "family": "",
-      "bigs": [],
+      "family": "Cheetah",
+      "bigs": [
+        "Evan Danu"
+      ],
       "littles": []
     },
     {
       "name": "Matheus Brocchi",
       "bondNumber": "2163",
       "pledgeClass": "Alpha Nu",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Dark Pink",
+      "bigs": [
+        "Dhruv Sureka"
+      ],
+      "littles": [
+        "Reuben Busick-White",
+        "Wael Guedoudou"
+      ]
     },
     {
       "name": "Redacted",
@@ -1476,161 +1698,215 @@
       "name": "Vincent Schmidtke",
       "bondNumber": "2165",
       "pledgeClass": "Alpha Nu",
-      "family": "",
-      "bigs": [],
+      "family": "Fire",
+      "bigs": [
+        "Marshall McInerney"
+      ],
       "littles": []
     },
     {
       "name": "Nate Gillette",
       "bondNumber": "2166",
       "pledgeClass": "Alpha Nu",
-      "family": "",
-      "bigs": [],
+      "family": "Fire",
+      "bigs": [
+        "Marshall McInerney"
+      ],
       "littles": []
     },
     {
       "name": "Pi Chaudhry",
       "bondNumber": "2167",
       "pledgeClass": "Alpha Nu",
-      "family": "",
-      "bigs": [],
+      "family": "Chrome",
+      "bigs": [
+        "Chris Clausen"
+      ],
       "littles": []
     },
     {
       "name": "Camden Chin",
       "bondNumber": "2168",
       "pledgeClass": "Alpha Nu",
-      "family": "",
-      "bigs": [],
+      "family": "Gold",
+      "bigs": [
+        "Adam Oliva"
+      ],
       "littles": []
     },
     {
-      "name": "Nathan \"Lebron\" Lee",
+      "name": "Nathan Lee",
       "bondNumber": "2169",
       "pledgeClass": "Alpha Nu",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Dark Pink",
+      "bigs": [
+        "Alex Ollmann"
+      ],
+      "littles": [],
+      "nickname": "Lebron"
     },
     {
       "name": "James Kwon",
       "bondNumber": "2170",
       "pledgeClass": "Alpha Nu",
-      "family": "",
-      "bigs": [],
+      "family": "Cheetah",
+      "bigs": [
+        "Albert Chung"
+      ],
       "littles": []
     },
     {
       "name": "Vedant Kenkare",
       "bondNumber": "2171",
       "pledgeClass": "Alpha Nu",
-      "family": "",
-      "bigs": [],
+      "family": "Chrome",
+      "bigs": [
+        "Sean Jackson"
+      ],
       "littles": []
     },
     {
       "name": "Noiel Yacob",
       "bondNumber": "2172",
       "pledgeClass": "Alpha Nu",
-      "family": "",
-      "bigs": [],
+      "family": "Black",
+      "bigs": [
+        "Alvaro Valerio"
+      ],
       "littles": []
     },
     {
       "name": "Ekamresh Vasude",
       "bondNumber": "2173",
       "pledgeClass": "Alpha Nu",
-      "family": "",
-      "bigs": [],
+      "family": "Gold",
+      "bigs": [
+        "Aryan Dutta"
+      ],
       "littles": []
     },
     {
       "name": "Anush Patel",
       "bondNumber": "2174",
       "pledgeClass": "Alpha Nu",
-      "family": "",
-      "bigs": [],
+      "family": "Dark Pink",
+      "bigs": [
+        "Mason Deaver"
+      ],
       "littles": []
     },
     {
-      "name": "Anush Vij",
+      "name": "Anshul Vij",
       "bondNumber": "2175",
       "pledgeClass": "Alpha Nu",
-      "family": "",
-      "bigs": [],
+      "family": "Gold",
+      "bigs": [
+        "Aryan Dutta"
+      ],
       "littles": []
     },
     {
       "name": "Vikram Gedipudi",
       "bondNumber": "2176",
       "pledgeClass": "Alpha Nu",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Gold",
+      "bigs": [
+        "Alex Gramajo"
+      ],
+      "littles": [
+        "Cooper Smith",
+        "Michael Lemos",
+        "Michael Cahn"
+      ]
     },
     {
       "name": "Raffi Avedissian",
       "bondNumber": "2177",
       "pledgeClass": "Alpha Xi",
-      "family": "",
-      "bigs": [],
+      "family": "Platinum",
+      "bigs": [
+        "Sammy Fromberg"
+      ],
       "littles": []
     },
     {
       "name": "Michael Cahn",
       "bondNumber": "2178",
       "pledgeClass": "Alpha Xi",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Gold",
+      "bigs": [
+        "Vikram Gedipudi"
+      ],
+      "littles": [
+        "Robert Jamison"
+      ]
     },
     {
       "name": "Paul Hoang",
       "bondNumber": "2179",
       "pledgeClass": "Alpha Xi",
-      "family": "",
-      "bigs": [],
+      "family": "Gold, Black",
+      "bigs": [
+        "Justin Shih",
+        "Ali Bhatti"
+      ],
       "littles": []
     },
     {
       "name": "Elliott Sykes",
       "bondNumber": "2180",
       "pledgeClass": "Alpha Xi",
-      "family": "",
-      "bigs": [],
+      "family": "Cheetah",
+      "bigs": [
+        "Adam Shaw"
+      ],
       "littles": []
     },
     {
       "name": "Chaz Berelson",
       "bondNumber": "2181",
       "pledgeClass": "Alpha Xi",
-      "family": "",
-      "bigs": [],
+      "family": "Chrome",
+      "bigs": [
+        "Sean Iredell"
+      ],
       "littles": []
     },
     {
       "name": "Greg Louis",
       "bondNumber": "2182",
       "pledgeClass": "Alpha Xi",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Cheetah",
+      "bigs": [
+        "Evan Danu"
+      ],
+      "littles": [
+        "Matteo Trocherie-Rey"
+      ]
     },
     {
       "name": "Reese Oberkfell",
       "bondNumber": "2183",
       "pledgeClass": "Alpha Xi",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Chrome",
+      "bigs": [
+        "Diego Zepeda"
+      ],
+      "littles": [
+        "Sawyer Sugarman"
+      ]
     },
     {
       "name": "Kethan Kaira",
       "bondNumber": "2184",
       "pledgeClass": "Alpha Xi",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Fire",
+      "bigs": [
+        "Matt Ginsburg"
+      ],
+      "littles": [
+        "Ethan Karten"
+      ]
     },
     {
       "name": "Redacted",
@@ -1644,8 +1920,10 @@
       "name": "Ben Feldman",
       "bondNumber": "2186",
       "pledgeClass": "Alpha Xi",
-      "family": "",
-      "bigs": [],
+      "family": "Fire",
+      "bigs": [
+        "Parker Bond"
+      ],
       "littles": []
     },
     {
@@ -1660,216 +1938,284 @@
       "name": "Reagan Dawley",
       "bondNumber": "2188",
       "pledgeClass": "Alpha Xi",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Fire",
+      "bigs": [
+        "Marshall McInerney"
+      ],
+      "littles": [
+        "Sam DeRusha"
+      ]
     },
     {
       "name": "Lucas Massa",
       "bondNumber": "2189",
       "pledgeClass": "Alpha Xi",
-      "family": "",
-      "bigs": [],
+      "family": "Gold",
+      "bigs": [
+        "Alex Gramajo"
+      ],
       "littles": []
     },
     {
       "name": "Reuben Busick-White",
       "bondNumber": "2190",
       "pledgeClass": "Alpha Xi",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Dark Pink",
+      "bigs": [
+        "Matheus Brocchi"
+      ],
+      "littles": [
+        "Matthew Cohen"
+      ]
     },
     {
       "name": "Oubai Hassabelrasoul",
       "bondNumber": "2191",
       "pledgeClass": "Alpha Xi",
-      "family": "",
-      "bigs": [],
+      "family": "Gold",
+      "bigs": [
+        "Alex Weir"
+      ],
       "littles": []
     },
     {
       "name": "Harry Stiles",
       "bondNumber": "2192",
       "pledgeClass": "Alpha Xi",
-      "family": "",
-      "bigs": [],
+      "family": "Cheetah",
+      "bigs": [
+        "Zack Mazaheri"
+      ],
       "littles": []
     },
     {
       "name": "Michael Lemos",
       "bondNumber": "2193",
       "pledgeClass": "Alpha Omicron",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Gold",
+      "bigs": [
+        "Vikram Gedipudi"
+      ],
+      "littles": [
+        "Sam DeRusha"
+      ]
     },
     {
       "name": "Grant Franey",
       "bondNumber": "2194",
       "pledgeClass": "Alpha Omicron",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Gold",
+      "bigs": [
+        "Scott Hills"
+      ],
+      "littles": [
+        "Keegan Ramsay"
+      ]
     },
     {
       "name": "Carlos Karaptian",
       "bondNumber": "2195",
       "pledgeClass": "Alpha Omicron",
-      "family": "",
-      "bigs": [],
+      "family": "Chrome",
+      "bigs": [
+        "Chris Clausen"
+      ],
       "littles": []
     },
     {
       "name": "Jake Marks",
       "bondNumber": "2196",
       "pledgeClass": "Alpha Omicron",
-      "family": "",
-      "bigs": [],
+      "family": "Dark Pink",
+      "bigs": [
+        "Max Rubenstein"
+      ],
       "littles": []
     },
     {
       "name": "Matteo Trocherie-Rey",
       "bondNumber": "2197",
       "pledgeClass": "Alpha Omicron",
-      "family": "",
-      "bigs": [],
+      "family": "Cheetah",
+      "bigs": [
+        "Greg Louis"
+      ],
       "littles": []
     },
     {
       "name": "Redacted",
       "bondNumber": "2198",
       "pledgeClass": "Alpha Omicron",
-      "family": "",
-      "bigs": [],
+      "family": "Fire",
+      "bigs": [
+        "Ben Feldman"
+      ],
       "littles": []
     },
     {
       "name": "Wael Guedoudou",
       "bondNumber": "2199",
       "pledgeClass": "Alpha Omicron",
-      "family": "",
-      "bigs": [],
+      "family": "Dark Pink",
+      "bigs": [
+        "Matheus Brocchi"
+      ],
       "littles": []
     },
     {
       "name": "Ryan Fuerte",
       "bondNumber": "2200",
       "pledgeClass": "Alpha Omicron",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Fire",
+      "bigs": [
+        "Matt Ginsburg"
+      ],
+      "littles": [],
+      "nickname": "Bob"
     },
     {
       "name": "Cooper Queen",
       "bondNumber": "2201",
       "pledgeClass": "Alpha Omicron",
-      "family": "",
-      "bigs": [],
+      "family": "Gold",
+      "bigs": [
+        "Alex Gramajo"
+      ],
       "littles": []
     },
     {
       "name": "David Renini",
       "bondNumber": "2202",
       "pledgeClass": "Alpha Omicron",
-      "family": "",
-      "bigs": [],
+      "family": "Dark Pink",
+      "bigs": [
+        "Max Reinardy"
+      ],
       "littles": []
     },
     {
       "name": "Naveen Prabhath",
       "bondNumber": "2203",
       "pledgeClass": "Alpha Omicron",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Black",
+      "bigs": [
+        "Connor Hughes"
+      ],
+      "littles": [],
+      "nickname": "Spud Bruh"
     },
     {
       "name": "Sam Benn",
       "bondNumber": "2204",
       "pledgeClass": "Alpha Pi",
-      "family": "",
-      "bigs": [],
+      "family": "Chrome, Dark Pink",
+      "bigs": [
+        "Chris Clausen",
+        "Max Rubenstein"
+      ],
       "littles": []
     },
     {
       "name": "Sam DeRusha",
       "bondNumber": "2205",
       "pledgeClass": "Alpha Pi",
-      "family": "",
-      "bigs": [],
+      "family": "Fire, Gold",
+      "bigs": [
+        "Reagan Dawley",
+        "Michael Lemos"
+      ],
       "littles": []
     },
     {
       "name": "Edward Zhang",
       "bondNumber": "2206",
       "pledgeClass": "Alpha Pi",
-      "family": "",
-      "bigs": [],
+      "family": "Black",
+      "bigs": [
+        "Ali Bhatti"
+      ],
       "littles": []
     },
     {
       "name": "Lev Miller",
       "bondNumber": "2207",
       "pledgeClass": "Alpha Pi",
-      "family": "",
-      "bigs": [],
+      "family": "Cheetah",
+      "bigs": [
+        "Roman Savino"
+      ],
       "littles": []
     },
     {
       "name": "Sawyer Sugarman",
       "bondNumber": "2208",
       "pledgeClass": "Alpha Pi",
-      "family": "",
-      "bigs": [],
+      "family": "Chrome",
+      "bigs": [
+        "Reese Oberkfell"
+      ],
       "littles": []
     },
     {
       "name": "Keegan Ramsay",
       "bondNumber": "2209",
       "pledgeClass": "Alpha Pi",
-      "family": "",
-      "bigs": [],
+      "family": "Gold",
+      "bigs": [
+        "Grant Franey"
+      ],
       "littles": []
     },
     {
       "name": "Robert Jamison",
       "bondNumber": "2210",
       "pledgeClass": "Alpha Pi",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Gold",
+      "bigs": [
+        "Michael Cahn"
+      ],
+      "littles": [],
+      "nickname": "The Lion"
     },
     {
       "name": "Ethan Karten",
       "bondNumber": "2211",
       "pledgeClass": "Alpha Pi",
-      "family": "",
-      "bigs": [],
+      "family": "Fire",
+      "bigs": [
+        "Kethan Kaira"
+      ],
       "littles": []
     },
     {
       "name": "Michael Kawan",
       "bondNumber": "2212",
       "pledgeClass": "Alpha Pi",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Black",
+      "bigs": [
+        "Alvaro Valerio"
+      ],
+      "littles": [],
+      "nickname": "Kartman"
     },
     {
       "name": "Eisa Bhatti",
       "bondNumber": "2213",
       "pledgeClass": "Alpha Pi",
-      "family": "",
-      "bigs": [],
+      "family": "Black",
+      "bigs": [
+        "Ali Bhatti"
+      ],
       "littles": []
     },
     {
       "name": "John Worden",
       "bondNumber": "2214",
       "pledgeClass": "Alpha Pi",
-      "family": "",
-      "bigs": [],
+      "family": "Cheetah",
+      "bigs": [
+        "Ahmed Kareem"
+      ],
       "littles": []
     },
     {
@@ -1884,81 +2230,103 @@
       "name": "Sam Frausto",
       "bondNumber": "2216",
       "pledgeClass": "Alpha Pi",
-      "family": "",
-      "bigs": [],
+      "family": "Cheetah",
+      "bigs": [
+        "Derek Wu"
+      ],
       "littles": []
     },
     {
       "name": "Daelyn Smith",
       "bondNumber": "2217",
       "pledgeClass": "Alpha Pi",
-      "family": "",
-      "bigs": [],
+      "family": "Gold",
+      "bigs": [
+        "Alex Gramajo"
+      ],
       "littles": []
     },
     {
       "name": "Matthew Cohen",
       "bondNumber": "2218",
       "pledgeClass": "Alpha Pi",
-      "family": "",
-      "bigs": [],
+      "family": "Dark Pink",
+      "bigs": [
+        "Reuben Busick-White"
+      ],
       "littles": []
     },
     {
       "name": "Michael Hein",
       "bondNumber": "2219",
       "pledgeClass": "Alpha Pi",
-      "family": "",
-      "bigs": [],
+      "family": "Gold",
+      "bigs": [
+        "Shad Bello"
+      ],
       "littles": []
     },
     {
       "name": "Andrew Chen",
       "bondNumber": "2220",
       "pledgeClass": "Alpha Pi",
-      "family": "",
-      "bigs": [],
+      "family": "Gold",
+      "bigs": [
+        "Justin Shih"
+      ],
       "littles": []
     },
     {
       "name": "Anthony Colin",
       "bondNumber": "2221",
       "pledgeClass": "Alpha Pi",
-      "family": "",
-      "bigs": [],
+      "family": "Dark Pink",
+      "bigs": [
+        "Noah Neri"
+      ],
       "littles": []
     },
     {
       "name": "Cameron Chitiyat",
       "bondNumber": "2222",
       "pledgeClass": "Alpha Pi",
-      "family": "",
-      "bigs": [],
+      "family": "Dark Pink",
+      "bigs": [
+        "Max Rubenstein"
+      ],
       "littles": []
     },
     {
       "name": "Cooper Smith",
       "bondNumber": "2223",
       "pledgeClass": "Alpha Pi",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Gold",
+      "bigs": [
+        "Vikram Gedipudi"
+      ],
+      "littles": [],
+      "nickname": "Chico"
     },
     {
       "name": "Noah Prim",
       "bondNumber": "2224",
       "pledgeClass": "Alpha Pi",
-      "family": "",
-      "bigs": [],
+      "family": "Chrome",
+      "bigs": [
+        "Diego Zepeda"
+      ],
       "littles": []
     },
     {
       "name": "Nicholas Moriarty",
       "bondNumber": "2225",
       "pledgeClass": "Alpha Pi",
-      "family": "",
-      "bigs": [],
-      "littles": []
+      "family": "Black",
+      "bigs": [
+        "Connor Hughes"
+      ],
+      "littles": [],
+      "nickname": "Nick Mo"
     }
   ],
   "pledgeClasses": [],
