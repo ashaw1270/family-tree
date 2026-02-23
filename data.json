@@ -4,25 +4,47 @@
       "name": "Steven Verona",
       "bondNumber": 1981,
       "pledgeClass": "Alpha Epsilon",
-      "bigs": [],
-      "littles": [],
-      "families": []
+      "bigs": [
+        "Andre Stanton"
+      ],
+      "littles": [
+        "Jacob Rodier"
+      ],
+      "families": [
+        "Gold"
+      ]
     },
     {
       "name": "Josh Rana",
       "bondNumber": 1982,
       "pledgeClass": "Alpha Epsilon",
-      "bigs": [],
-      "littles": [],
-      "families": []
+      "bigs": [
+        "Kevin Nikroo"
+      ],
+      "littles": [
+        "Parker Weiss",
+        "Max Trauner",
+        "Adrian Reynoso",
+        "Andrew Levy"
+      ],
+      "families": [
+        "Chrome"
+      ]
     },
     {
       "name": "Jack Litwin",
       "bondNumber": 1983,
       "pledgeClass": "Alpha Epsilon",
-      "bigs": [],
-      "littles": [],
-      "families": []
+      "bigs": [
+        "Paul Rodriguez-Anter"
+      ],
+      "littles": [
+        "Josiah Clark",
+        "Dung Van"
+      ],
+      "families": [
+        "Black"
+      ]
     },
     {
       "name": "Divij Kapoor",
@@ -36,9 +58,19 @@
       "name": "Sagan Gor",
       "bondNumber": 1985,
       "pledgeClass": "Alpha Epsilon",
-      "bigs": [],
-      "littles": [],
-      "families": []
+      "bigs": [
+        "Sam Bennett"
+      ],
+      "littles": [
+        "Greg Sarandi",
+        "Lucca Cidale",
+        "Dane Culver",
+        "Gurdeep Barring",
+        "Connor Bobis"
+      ],
+      "families": [
+        "Dark Pink"
+      ]
     },
     {
       "name": "Sam Guillemette",
@@ -1390,13 +1422,14 @@
       "families": []
     },
     {
-      "name": "Dung \"Jaden\" Van",
+      "name": "Dung Van",
       "bondNumber": 2087,
       "pledgeClass": "Alpha Iota",
       "bigs": [
         "Jack Litwin"
       ],
       "littles": [],
+      "nickname": "Jaden",
       "families": [
         "Black"
       ]
