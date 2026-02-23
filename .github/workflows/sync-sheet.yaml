@@ -21,7 +21,7 @@ jobs:
           import urllib.request, json, csv, io
 
           SHEET_ID = "2PACX-1vQmJlun6fT1zQynJG_395ufU3s7eWj1zmQ9ZpK6wKXdEbGGRJDWeKo0TlTYNzxEmbq5eHFXDekY8eE6"
-          LIST_FIELDS = {"bigs", "littles"}  # columns to treat as comma-delimited lists
+          LIST_FIELDS = {"bigs", "littles", "family"}  # columns to treat as comma-delimited lists
 
           def fetch_sheet(sheet_name):
               gid_dict = {
@@ -59,6 +59,11 @@ jobs:
                   if "nickname" in obj and obj["nickname"] == "":
                       del obj["nickname"]
 
+                  if "family" in obj and obj["family"] == "":
+                      family = obj["family"]
+                      del obj["family"]
+                      obj["families"] = family
+
                   if "redacted?" in obj:
                       redacted = (obj["redacted?"] != "")
                       del obj["redacted?"]
@@ -74,7 +79,7 @@ jobs:
               "families": fetch_sheet("families"),
           }
 
-          with open('dataa.json', 'w') as f:
+          with open('data.json', 'w') as f:
               json.dump(output, f, indent=2)
 
           print("Done.")
@@ -84,6 +89,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add dataa.json
+          git add data.json
           git diff --staged --quiet || git commit -m "Sync data from Google Sheet"
           git push
