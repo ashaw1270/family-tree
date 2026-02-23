@@ -532,10 +532,10 @@ function calculateGraphLayout(nodes, links) {
         }
     }
 
-    // Calculate final positions with proper spacing to prevent overlaps
-    const layerHeight = 200;
-    const nodeSpacing = 150; // Base spacing between nodes
-    const familyGap = 100; // Extra spacing when transitioning between different families
+    // Calculate final positions with proper spacing to prevent overlaps (sized for larger node boxes)
+    const layerHeight = 140;
+    const nodeSpacing = 120; // Base spacing between nodes (min width for node rect + padding)
+    const familyGap = 80; // Extra spacing when transitioning between different families
     const startY = height / 4;
     
     // Position nodes in clean hierarchical grid, maintaining optimized order
@@ -812,9 +812,9 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
             // Get current text width to calculate new rectangle size
             const textNode = text.node();
             if (textNode) {
-                const textWidth = textNode.getBBox().width || d.name.length * 7;
-                const baseWidth = textWidth + 20;
-                const baseHeight = 24;
+                const textWidth = textNode.getBBox().width || d.name.length * 8;
+                const baseWidth = textWidth + 36;
+                const baseHeight = 34;
                 if (pledgeClassNodes.has(d.id) || familyNodes.has(d.id)) {
                     rect.attr('width', baseWidth + 8).attr('height', baseHeight + 4)
                         .attr('x', -(baseWidth + 8) / 2).attr('y', -(baseHeight + 4) / 2);
@@ -830,9 +830,9 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
             // Get current text width to calculate rectangle size
             const textNode = text.node();
             if (textNode) {
-                const textWidth = textNode.getBBox().width || d.name.length * 7;
-                const baseWidth = textWidth + 20;
-                const baseHeight = 24;
+                const textWidth = textNode.getBBox().width || d.name.length * 8;
+                const baseWidth = textWidth + 36;
+                const baseHeight = 34;
                 if (pathNodes.has(d.id)) {
                     rect.attr('width', baseWidth + 4).attr('height', baseHeight + 2)
                         .attr('x', -(baseWidth + 4) / 2).attr('y', -(baseHeight + 2) / 2);
@@ -897,9 +897,9 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
     node.each(function(d) {
         const currentNode = d3.select(this);
         const textNode = currentNode.select('text').node();
-        const textWidth = textNode ? textNode.getBBox().width : d.name.length * 7;
-        const baseWidth = textWidth + 20;
-        const baseHeight = 24;
+        const textWidth = textNode ? textNode.getBBox().width : d.name.length * 8;
+        const baseWidth = textWidth + 36;
+        const baseHeight = 34;
         
         let rectWidth, rectHeight;
         if (pathNodes.has(d.id)) {
