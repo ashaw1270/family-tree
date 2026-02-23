@@ -37,6 +37,56 @@ function getFamilyColor(familyName) {
     return familyColors['default'];
 }
 
+// Ensure SVG defs contain linear gradients for each (family1, family2) pair used by nodes (left half / right half).
+// Order follows tree layout: left family in tree = left half of node.
+function ensureFamilyGradients(nodes) {
+    const pairs = new Set();
+    nodes.forEach(n => {
+        if (n.families && n.families.length >= 2) {
+            const ordered = n.familyOrderByPosition || n.families.slice(0, 2);
+            const key = JSON.stringify(ordered);
+            pairs.add(key);
+        }
+    });
+    const defs = svg.select('defs');
+    pairs.forEach(p => {
+        const [f1, f2] = JSON.parse(p);
+        const id = `gradient-${f1}-${f2}`.replace(/\s+/g, '_');
+        if (defs.select(`#${id}`).empty()) {
+            const c1 = getFamilyColor(f1).fill;
+            const c2 = getFamilyColor(f2).fill;
+            defs.append('linearGradient')
+                .attr('id', id)
+                .attr('x1', '0%').attr('y1', '0%')
+                .attr('x2', '100%').attr('y2', '0%')
+                .selectAll('stop')
+                .data([
+                    { offset: '0%', color: c1 },
+                    { offset: '50%', color: c1 },
+                    { offset: '50%', color: c2 },
+                    { offset: '100%', color: c2 }
+                ])
+                .enter().append('stop')
+                .attr('offset', d => d.offset)
+                .attr('stop-color', d => d.color);
+        }
+    });
+}
+
+// Get fill for a node: gradient url for two families (left = family on left in tree, right = family on right).
+function getNodeFill(d, context) {
+    if (context === 'path' && pathNodes.has(d.id)) return '#ff6b6b';
+    if (context === 'pledge' && pledgeClassNodes.has(d.id)) return '#ffd700';
+    if (d.families && d.families.length >= 2) {
+        const ordered = d.familyOrderByPosition || d.families.slice(0, 2);
+        const [a, b] = ordered;
+        const id = `gradient-${a}-${b}`.replace(/\s+/g, '_');
+        return `url(#${id})`;
+    }
+    const familyColor = getFamilyColor(d.family);
+    return familyColor.fill;
+}
+
 // Calculate relative luminance of a color (0-1, where 1 is brightest)
 function getLuminance(hexColor) {
     // Remove # if present
@@ -365,10 +415,17 @@ function buildTree(preservePath = false, animate = false) {
         }
         depth = calculateDepth(name);
 
+        // Support multiple families: use families array or single family; primary for layout
+        const families = Array.isArray(person?.families) && person.families.length > 0
+            ? person.families
+            : (person?.family ? [person.family] : []);
+        const primaryFamily = person?.family || families[0] || null;
+
         return {
             id: name,
             name: name,
-            family: person?.family || null,
+            family: primaryFamily,
+            families: families,
             bondNumber: person?.bondNumber || null,
             pledgeClass: person?.pledgeClass || null,
             nickname: person?.nickname || null,
@@ -618,6 +675,19 @@ function calculateGraphLayout(nodes, links) {
         });
     }
 
+    // For two-family nodes: order families by layout position (left column = left half of node)
+    const familyCenterX = new Map();
+    for (let f = 0; f < familyKeys.length; f++) {
+        familyCenterX.set(familyKeys[f], familyBaseX[f] + familyWidths[f] / 2);
+    }
+    nodes.forEach(node => {
+        if (node.families && node.families.length >= 2) {
+            const two = node.families.slice(0, 2);
+            node.familyOrderByPosition = [...two].sort((a, b) =>
+                (familyCenterX.get(a) ?? 0) - (familyCenterX.get(b) ?? 0));
+        }
+    });
+
     return { nodes, links: graphLinks };
 }
 
@@ -650,6 +720,9 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
     // Clear previous
     g.selectAll('.link').remove();
     g.selectAll('.node').remove();
+
+    // Ensure gradients exist for two-family nodes (left/right half colors)
+    ensureFamilyGradients(nodes);
 
     // Draw links
     const link = g.selectAll('.link')
@@ -957,32 +1030,25 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
             rectHeight = baseHeight;
         }
         
-        // Determine fill color
+        // Determine fill: gradient (left/right colors) for two families, else single family color
         let fillColor;
         if (pathNodes.has(d.id)) {
             fillColor = '#ff6b6b';
         } else if (pledgeClassNodes.has(d.id)) {
             fillColor = '#ffd700'; // Gold
-        } else if (familyNodes.has(d.id)) {
-            const familyColor = getFamilyColor(d.family);
-            fillColor = familyColor.fill;
         } else {
-            const familyColor = getFamilyColor(d.family);
-            fillColor = familyColor.fill;
+            fillColor = getNodeFill(d, 'normal');
         }
         
-        // Determine stroke color
+        // Stroke: use first family when node has multiple families
+        const primaryColor = getFamilyColor(d.family);
         let strokeColor;
         if (pathNodes.has(d.id)) {
             strokeColor = '#c92a2a';
         } else if (pledgeClassNodes.has(d.id)) {
             strokeColor = '#ff8c00'; // Orange
-        } else if (familyNodes.has(d.id)) {
-            const familyColor = getFamilyColor(d.family);
-            strokeColor = familyColor.stroke;
         } else {
-            const familyColor = getFamilyColor(d.family);
-            strokeColor = familyColor.stroke;
+            strokeColor = primaryColor.stroke;
         }
         
         // Determine stroke width
@@ -1005,8 +1071,9 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
             .style('stroke', strokeColor)
             .style('stroke-width', strokeWidth);
         
-        // Set text color based on background color for readability
-        const textColor = getContrastingTextColor(fillColor);
+        // Set text color: for two-family nodes use primary family fill for contrast
+        const bgForContrast = (d.families && d.families.length >= 2) ? primaryColor.fill : (typeof fillColor === 'string' && fillColor.startsWith('url(') ? primaryColor.fill : fillColor);
+        const textColor = getContrastingTextColor(bgForContrast);
         currentNode.select('text')
             .style('fill', textColor);
     });
@@ -1315,11 +1382,18 @@ function selectPersonByName(personName) {
         bigs: personData.bigs || []
     };
     
+    // Support multiple families
+    const families = Array.isArray(personData.families) && personData.families.length > 0
+        ? personData.families
+        : (personData.family ? [personData.family] : []);
+    const primaryFamily = families[0] || null;
+
     // Create node object
     const node = {
         id: personName,
         name: personName,
-        family: personData.family || null,
+        family: primaryFamily,
+        families: families,
         bondNumber: personData.bondNumber || null,
         pledgeClass: personData.pledgeClass || null,
         nickname: personData.nickname || null,
@@ -1466,9 +1540,14 @@ function showNodeInfo(node) {
         details.push(`<strong>Pledge Class:</strong> Unknown`);
     }
     
-    // Family
-    if (node.family) {
-        details.push(`<strong>Family:</strong> ${createFamilyLink(node.family)}`);
+    // Family / Families
+    if (node.families && node.families.length > 0) {
+        if (node.families.length === 1) {
+            details.push(`<strong>Family:</strong> ${createFamilyLink(node.families[0])}`);
+        } else {
+            const familyLinks = node.families.map(f => createFamilyLink(f)).join(', ');
+            details.push(`<strong>Families:</strong> ${familyLinks}`);
+        }
     } else {
         details.push(`<strong>Family:</strong> Unknown`);
     }
@@ -1733,15 +1812,16 @@ function highlightNode(nodeId) {
             rect.style('stroke', '#ff8c00');
             rect.style('stroke-width', '5px');
         } else {
-            // Family-based styling
-            const familyColor = getFamilyColor(d.family);
-            fillColor = familyColor.fill;
+            // Family-based styling (gradient for two families)
+            fillColor = getNodeFill(d, 'normal');
+            const primaryColor = getFamilyColor(d.family);
             rect.style('fill', fillColor);
-            rect.style('stroke', familyColor.stroke);
+            rect.style('stroke', primaryColor.stroke);
             rect.style('stroke-width', '3px');
         }
-        // Update text color for readability
-        text.style('fill', getContrastingTextColor(fillColor));
+        // Update text color for readability (use primary fill when gradient)
+        const bgForContrast = (d.families && d.families.length >= 2) ? getFamilyColor(d.family).fill : fillColor;
+        text.style('fill', getContrastingTextColor(typeof bgForContrast === 'string' && bgForContrast.startsWith('url(') ? getFamilyColor(d.family).fill : bgForContrast));
     });
     
     // If nodeId is provided, add selected class and styling to that node
@@ -2095,7 +2175,9 @@ function populateFamilyFilter() {
     const families = new Set();
     
     treeData.people.forEach(person => {
-        if (person.family) {
+        if (Array.isArray(person.families) && person.families.length > 0) {
+            person.families.forEach(f => families.add(f));
+        } else if (person.family) {
             families.add(person.family);
         }
     });
@@ -2145,10 +2227,12 @@ function populateFamilyLegend() {
     // Clear existing items
     legendContainer.innerHTML = '';
     
-    // Get all unique families
+    // Get all unique families (from family and families)
     const families = new Set();
     treeData.people.forEach(person => {
-        if (person.family) {
+        if (Array.isArray(person.families) && person.families.length > 0) {
+            person.families.forEach(f => families.add(f));
+        } else if (person.family) {
             families.add(person.family);
         }
     });
@@ -2451,7 +2535,10 @@ document.getElementById('familyFilter').addEventListener('change', function() {
         familyNuclearFamily.clear();
         
         treeData.people.forEach(person => {
-            if (person.family === selectedFamily) {
+            const inFamily = Array.isArray(person.families) && person.families.length > 0
+                ? person.families.includes(selectedFamily)
+                : person.family === selectedFamily;
+            if (inFamily) {
                 familyNodes.add(person.name);
             }
         });
@@ -2861,19 +2948,19 @@ function highlightFamilyInTree() {
                     const textWidth = textNode.getBBox().width || d.name.length * 7;
                     const baseWidth = textWidth + 20;
                     const baseHeight = 24;
-                    const familyColor = getFamilyColor(d.family);
-                    const fillColor = familyColor.fill;
+                    const fillColor = getNodeFill(d, 'normal'); // Gradient for two families
+                    const primaryColor = getFamilyColor(d.family);
                     // Apply highlighting immediately using style() to override CSS
                     rect
-                        .style('fill', fillColor) // Family color
-                        .style('stroke', familyColor.stroke) // Family color
+                        .style('fill', fillColor)
+                        .style('stroke', primaryColor.stroke)
                         .style('stroke-width', '6px') // Moderately thicker stroke
                         .attr('width', baseWidth + 6)
                         .attr('height', baseHeight + 3)
                         .attr('x', -(baseWidth + 6) / 2)
                         .attr('y', -(baseHeight + 3) / 2);
-                    // Update text color for readability
-                    text.style('fill', getContrastingTextColor(fillColor));
+                    const bgForContrast = (d.families && d.families.length >= 2) ? primaryColor.fill : fillColor;
+                    text.style('fill', getContrastingTextColor(typeof bgForContrast === 'string' && bgForContrast.startsWith('url(') ? primaryColor.fill : bgForContrast));
                 }
             }
             // Ensure full opacity for family nodes
@@ -2884,7 +2971,7 @@ function highlightFamilyInTree() {
                     .style('font-weight', '700');
             }
         } else if (!familyNodes.has(nodeId) && !pathNodes.has(nodeId)) {
-            // Ensure non-highlighted nodes have family-based styling
+            // Ensure non-highlighted nodes have family-based styling (gradient for two families)
             const rect = node.select('rect');
             const text = node.select('text');
             if (rect.size() > 0 && text.size() > 0) {
@@ -2893,18 +2980,18 @@ function highlightFamilyInTree() {
                     const textWidth = textNode.getBBox().width || d.name.length * 7;
                     const baseWidth = textWidth + 20;
                     const baseHeight = 24;
-                    const familyColor = getFamilyColor(d.family);
-                    const fillColor = familyColor.fill;
+                    const fillColor = getNodeFill(d, 'normal');
+                    const primaryColor = getFamilyColor(d.family);
                     rect
                         .style('fill', fillColor)
-                        .style('stroke', familyColor.stroke)
+                        .style('stroke', primaryColor.stroke)
                         .style('stroke-width', '3px')
                         .attr('width', baseWidth)
                         .attr('height', baseHeight)
                         .attr('x', -baseWidth / 2)
                         .attr('y', -baseHeight / 2);
-                    // Update text color for readability
-                    text.style('fill', getContrastingTextColor(fillColor));
+                    const bgForContrast = (d.families && d.families.length >= 2) ? primaryColor.fill : fillColor;
+                    text.style('fill', getContrastingTextColor(typeof bgForContrast === 'string' && bgForContrast.startsWith('url(') ? primaryColor.fill : bgForContrast));
                 }
             }
             // Fade non-family nodes if a family is selected

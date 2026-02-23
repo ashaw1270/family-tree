@@ -78,7 +78,7 @@
     { "name": "Ruby Foster", "family": "Eagle", "bondNumber": 57, "pledgeClass": "Eta", "bigs": ["Nora Foster"], "littles": [] },
     { "name": "Theo Barrett", "family": "Lion", "bondNumber": 58, "pledgeClass": "Iota", "bigs": ["Henry Barrett"], "littles": [] },
     { "name": "Maya Abrams", "family": "Cheetah", "bondNumber": 59, "pledgeClass": "Theta", "bigs": ["Caleb Abrams"], "littles": [] },
-    { "name": "Sam Evans", "family": "Wolf", "bondNumber": 60, "pledgeClass": "Beta", "bigs": ["Matt Abrams", "Noah Evans"], "littles": [] },
+    { "name": "Sam Evans", "family": "Wolf", "families": ["Cheetah", "Wolf"], "bondNumber": 60, "pledgeClass": "Beta", "bigs": ["Matt Abrams", "Noah Evans"], "littles": [] },
     { "name": "Quinn Foster", "family": "Eagle", "bondNumber": 61, "pledgeClass": "Beta", "bigs": ["Emily Foster"], "littles": [] },
     { "name": "Nina Davis", "family": "Bear", "bondNumber": 62, "pledgeClass": "Gamma", "bigs": ["Lisa Davis"], "littles": [] },
     { "name": "Kate Abrams", "family": "Cheetah", "bondNumber": 63, "pledgeClass": "Beta", "bigs": ["John Abrams"], "littles": [] },
