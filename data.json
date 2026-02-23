@@ -44,33 +44,57 @@
       "name": "Sam Guillemette",
       "bondNumber": 1986,
       "pledgeClass": "Alpha Epsilon",
-      "bigs": [],
-      "littles": [],
-      "families": []
+      "bigs": [
+        "Terry Mulaney"
+      ],
+      "littles": [
+        "Sebastian Kabassa",
+        "Elijah Ruano"
+      ],
+      "families": [
+        "Green"
+      ]
     },
     {
       "name": "Anant Vasudevan",
       "bondNumber": 1987,
       "pledgeClass": "Alpha Epsilon",
-      "bigs": [],
-      "littles": [],
-      "families": []
+      "bigs": [
+        "Nick Boveri"
+      ],
+      "littles": [
+        "Jack Goldman"
+      ],
+      "families": [
+        "Plaid"
+      ]
     },
     {
       "name": "David Parau",
       "bondNumber": 1988,
       "pledgeClass": "Alpha Epsilon",
-      "bigs": [],
-      "littles": [],
-      "families": []
+      "bigs": [
+        "Derek Jones"
+      ],
+      "littles": [
+        "Jonny McKay",
+        "Leo Zhang"
+      ],
+      "families": [
+        "Dark Pink"
+      ]
     },
     {
       "name": "Richard Nolen",
       "bondNumber": 1989,
       "pledgeClass": "Alpha Epsilon",
-      "bigs": [],
+      "bigs": [
+        "PATRIARCH"
+      ],
       "littles": [],
-      "families": []
+      "families": [
+        "Fire"
+      ]
     },
     {
       "name": "Blank",
@@ -84,113 +108,199 @@
       "name": "Alex Oliva",
       "bondNumber": 1991,
       "pledgeClass": "Alpha Epsilon",
-      "bigs": [],
-      "littles": [],
-      "families": []
+      "bigs": [
+        "Hank Funderbunk"
+      ],
+      "littles": [
+        "James Harris",
+        "Lukas Makikali",
+        "Grey Dugan",
+        "Kyle Panarelli"
+      ],
+      "families": [
+        "Black"
+      ]
     },
     {
       "name": "Samuel Slattery",
       "bondNumber": 1992,
       "pledgeClass": "Alpha Epsilon",
-      "bigs": [],
-      "littles": [],
-      "families": []
+      "bigs": [
+        "Niclas Carlson"
+      ],
+      "littles": [
+        "Ali Osouli"
+      ],
+      "families": [
+        "Black"
+      ]
     },
     {
       "name": "Presley Silahian",
       "bondNumber": 1993,
       "pledgeClass": "Alpha Epsilon",
-      "bigs": [],
-      "littles": [],
-      "families": []
+      "bigs": [
+        "Zayn Tandon"
+      ],
+      "littles": [
+        "Adnan Khan"
+      ],
+      "families": [
+        "Platinum"
+      ]
     },
     {
       "name": "James Kasaba",
       "bondNumber": 1994,
       "pledgeClass": "Alpha Epsilon",
-      "bigs": [],
-      "littles": [],
-      "families": []
+      "bigs": [
+        "Aidan Dobson"
+      ],
+      "littles": [
+        "Christopher Cooper",
+        "Taliesin Tenerelli"
+      ],
+      "families": [
+        "Notorious"
+      ]
     },
     {
       "name": "Carson Mogush",
       "bondNumber": 1995,
       "pledgeClass": "Alpha Epsilon",
-      "bigs": [],
-      "littles": [],
-      "families": []
+      "bigs": [
+        "Jordan Marzo"
+      ],
+      "littles": [
+        "Kameron Mody",
+        "Dane Gramstrup",
+        "Taliesin Tenerelli"
+      ],
+      "families": [
+        "Green"
+      ]
     },
     {
       "name": "Owen Ramsby",
       "bondNumber": 1996,
       "pledgeClass": "Alpha Epsilon",
-      "bigs": [],
+      "bigs": [
+        "Spencer Paulsen"
+      ],
       "littles": [],
-      "families": []
+      "families": [
+        "Unknown"
+      ]
     },
     {
       "name": "Ryan Nishida",
       "bondNumber": 1997,
       "pledgeClass": "Alpha Epsilon",
-      "bigs": [],
+      "bigs": [
+        "Sean McNamee"
+      ],
       "littles": [],
-      "families": []
+      "families": [
+        "Unknown"
+      ]
     },
     {
       "name": "Alexander St. Jean",
       "bondNumber": 1998,
       "pledgeClass": "Alpha Epsilon",
-      "bigs": [],
-      "littles": [],
-      "families": []
+      "bigs": [
+        "Andrew Clark"
+      ],
+      "littles": [
+        "Jackson Bry"
+      ],
+      "families": [
+        "Gold"
+      ]
     },
     {
       "name": "Gray Toomey",
       "bondNumber": 1999,
       "pledgeClass": "Alpha Epsilon",
-      "bigs": [],
+      "bigs": [
+        "Lucas Martinez"
+      ],
       "littles": [],
-      "families": []
+      "families": [
+        "Gold"
+      ]
     },
     {
       "name": "Jordan Tollner",
       "bondNumber": 2000,
       "pledgeClass": "Alpha Epsilon",
-      "bigs": [],
+      "bigs": [
+        "Ashish Suresh"
+      ],
       "littles": [],
-      "families": []
+      "families": [
+        "Unknown"
+      ]
     },
     {
       "name": "Andrew Bialock",
       "bondNumber": 2001,
       "pledgeClass": "Alpha Epsilon",
-      "bigs": [],
-      "littles": [],
-      "families": []
+      "bigs": [
+        "Phillip Bliss"
+      ],
+      "littles": [
+        "Braden Russell"
+      ],
+      "families": [
+        "Platinum"
+      ]
     },
     {
       "name": "Joe Antonello",
       "bondNumber": 2002,
       "pledgeClass": "Alpha Zeta",
-      "bigs": [],
-      "littles": [],
-      "families": []
+      "bigs": [
+        "Sean Powers"
+      ],
+      "littles": [
+        "John Huskins",
+        "Heath Palluck"
+      ],
+      "families": [
+        "Platinum"
+      ]
     },
     {
       "name": "Bayan Sadighian",
       "bondNumber": 2003,
       "pledgeClass": "Alpha Zeta",
-      "bigs": [],
-      "littles": [],
-      "families": []
+      "bigs": [
+        "PATRIARCH (but technically has a big and its warren so what do you want me to do here"
+      ],
+      "littles": [
+        "Augie Sommers",
+        "Sammy Barr",
+        "Marc Svedlov",
+        "Henry McGonnigal"
+      ],
+      "families": [
+        "Cheetah"
+      ]
     },
     {
       "name": "Jack Goldman",
       "bondNumber": 2004,
       "pledgeClass": "Alpha Zeta",
-      "bigs": [],
-      "littles": [],
-      "families": []
+      "bigs": [
+        "Anant Vasudevan"
+      ],
+      "littles": [
+        "Riley Hernandez"
+      ],
+      "families": [
+        "Plaid"
+      ]
     },
     {
       "name": "Redacted",
@@ -204,177 +314,310 @@
       "name": "Adnan Khan",
       "bondNumber": 2006,
       "pledgeClass": "Alpha Zeta",
-      "bigs": [],
-      "littles": [],
-      "families": []
+      "bigs": [
+        "Presley Silahian"
+      ],
+      "littles": [
+        "Arman Balian",
+        "Justin Lee"
+      ],
+      "families": [
+        "Platinum"
+      ]
     },
     {
       "name": "Matt Huntington",
       "bondNumber": 2007,
       "pledgeClass": "Alpha Zeta",
-      "bigs": [],
-      "littles": [],
-      "families": []
+      "bigs": [
+        "Niclas Carlson"
+      ],
+      "littles": [
+        "Sean Wilcox"
+      ],
+      "families": [
+        "Black"
+      ]
     },
     {
       "name": "Matt Levy",
       "bondNumber": 2008,
       "pledgeClass": "Alpha Zeta",
-      "bigs": [],
-      "littles": [],
-      "families": []
+      "bigs": [
+        "Andrew Huang"
+      ],
+      "littles": [
+        "Max Kroll",
+        "Jack Brasesco"
+      ],
+      "families": [
+        "Green"
+      ]
     },
     {
       "name": "Thomas Kimmel",
       "bondNumber": 2009,
       "pledgeClass": "Alpha Zeta",
-      "bigs": [],
+      "bigs": [
+        "Louis Cheng"
+      ],
       "littles": [],
-      "families": []
+      "families": [
+        "Unknown"
+      ]
     },
     {
       "name": "Braden Russell",
       "bondNumber": 2010,
       "pledgeClass": "Alpha Eta",
-      "bigs": [],
-      "littles": [],
-      "families": []
+      "bigs": [
+        "Andrew Bialock"
+      ],
+      "littles": [
+        "Victor Ogden"
+      ],
+      "families": [
+        "Platinum"
+      ]
     },
     {
       "name": "Sam Tvrdik",
       "bondNumber": 2011,
       "pledgeClass": "Alpha Eta",
-      "bigs": [],
-      "littles": [],
-      "families": []
+      "bigs": [
+        "Chris Montooth"
+      ],
+      "littles": [
+        "Morgan Hill-Edgar"
+      ],
+      "families": [
+        "Dark Pink"
+      ]
     },
     {
       "name": "Henry McGonnigal",
       "bondNumber": 2012,
       "pledgeClass": "Alpha Eta",
-      "bigs": [],
-      "littles": [],
-      "families": []
+      "bigs": [
+        "Bayan Sadighian"
+      ],
+      "littles": [
+        "Ethan Hoffman",
+        "Evan Pruett"
+      ],
+      "families": [
+        "Cheetah"
+      ]
     },
     {
       "name": "Christopher Cooper",
       "bondNumber": 2013,
       "pledgeClass": "Alpha Eta",
-      "bigs": [],
-      "littles": [],
-      "families": []
+      "bigs": [
+        "James Kasaba"
+      ],
+      "littles": [
+        "Eric Traub"
+      ],
+      "families": [
+        "Notorious"
+      ]
     },
     {
       "name": "Riley Hernandez",
       "bondNumber": 2014,
       "pledgeClass": "Alpha Eta",
-      "bigs": [],
-      "littles": [],
-      "families": []
+      "bigs": [
+        "Jack Goldman"
+      ],
+      "littles": [
+        "Marcus Ruiz"
+      ],
+      "families": [
+        "Black",
+        "Plaid"
+      ]
     },
     {
       "name": "Hayes Waycaster",
       "bondNumber": 2015,
       "pledgeClass": "Alpha Eta",
-      "bigs": [],
-      "littles": [],
-      "families": []
+      "bigs": [
+        "Bryan Feminella"
+      ],
+      "littles": [
+        "Ben Polaski"
+      ],
+      "families": [
+        "Gold"
+      ]
     },
     {
       "name": "Lukas Makikalli",
       "bondNumber": 2016,
       "pledgeClass": "Alpha Eta",
-      "bigs": [],
-      "littles": [],
-      "families": []
+      "bigs": [
+        "Alex Oliva"
+      ],
+      "littles": [
+        "Zach Lachance",
+        "Porter Landefeld"
+      ],
+      "families": [
+        "Black"
+      ]
     },
     {
       "name": "Kameron Mody",
       "bondNumber": 2017,
       "pledgeClass": "Alpha Eta",
-      "bigs": [],
+      "bigs": [
+        "Carson Mogush"
+      ],
       "littles": [],
-      "families": []
+      "families": [
+        "Green"
+      ]
     },
     {
       "name": "Jack Hughes",
       "bondNumber": 2018,
       "pledgeClass": "Alpha Eta",
-      "bigs": [],
-      "littles": [],
-      "families": []
+      "bigs": [
+        "Warren Arndt"
+      ],
+      "littles": [
+        "Will Scown",
+        "Will Dolan",
+        "Connor Bobis"
+      ],
+      "families": [
+        "Dark Pink"
+      ]
     },
     {
       "name": "John McKay",
       "bondNumber": 2019,
       "pledgeClass": "Alpha Eta",
-      "bigs": [],
+      "bigs": [
+        "David Parau"
+      ],
       "littles": [],
-      "families": []
+      "families": [
+        "Dark Pink"
+      ]
     },
     {
       "name": "Jacob Rodier",
       "bondNumber": 2020,
       "pledgeClass": "Alpha Eta",
-      "bigs": [],
+      "bigs": [
+        "Steven Verona"
+      ],
       "littles": [],
-      "families": []
+      "families": [
+        "Gold"
+      ]
     },
     {
       "name": "Jordan Thomas",
       "bondNumber": 2021,
       "pledgeClass": "Alpha Eta",
-      "bigs": [],
+      "bigs": [
+        "Mekhi Reese"
+      ],
       "littles": [],
-      "families": []
+      "families": [
+        "Pink"
+      ]
     },
     {
       "name": "Michael Ziegler",
       "bondNumber": 2022,
       "pledgeClass": "Alpha Eta",
-      "bigs": [],
-      "littles": [],
-      "families": []
+      "bigs": [
+        "Andre Stanton"
+      ],
+      "littles": [
+        "Ryan DeMotte",
+        "Truman Costello"
+      ],
+      "families": [
+        "Gold"
+      ]
     },
     {
       "name": "Josiah Clark",
       "bondNumber": 2023,
       "pledgeClass": "Alpha Eta",
-      "bigs": [],
-      "littles": [],
-      "families": []
+      "bigs": [
+        "Jack Litwin"
+      ],
+      "littles": [
+        "Marc Huang",
+        "Ben Crotty"
+      ],
+      "families": [
+        "Black"
+      ]
     },
     {
       "name": "Adrian Reynoso",
       "bondNumber": 2024,
       "pledgeClass": "Alpha Eta",
-      "bigs": [],
-      "littles": [],
-      "families": []
+      "bigs": [
+        "Josh Rana"
+      ],
+      "littles": [
+        "Sean Jackson"
+      ],
+      "families": [
+        "Chrome"
+      ]
     },
     {
       "name": "Greg Sarandi",
       "bondNumber": 2025,
       "pledgeClass": "Alpha Eta",
-      "bigs": [],
-      "littles": [],
-      "families": []
+      "bigs": [
+        "Sagan Gor"
+      ],
+      "littles": [
+        "Quinn Poseley",
+        "Manny Adelstein"
+      ],
+      "families": [
+        "Dark Pink"
+      ]
     },
     {
       "name": "Heath Palluck",
       "bondNumber": 2026,
       "pledgeClass": "Alpha Theta",
-      "bigs": [],
-      "littles": [],
-      "families": []
+      "bigs": [
+        "Joe Antonello"
+      ],
+      "littles": [
+        "Sammy Fromberg",
+        "Daniel Chun"
+      ],
+      "families": [
+        "Platinum"
+      ]
     },
     {
       "name": "Jack Brasesco",
       "bondNumber": 2027,
       "pledgeClass": "Alpha Theta",
-      "bigs": [],
-      "littles": [],
-      "families": []
+      "bigs": [
+        "Matt Levy"
+      ],
+      "littles": [
+        "Ryan Gillespie"
+      ],
+      "families": [
+        "Green"
+      ]
     },
     {
       "name": "Ben Bowler",
@@ -384,7 +627,10 @@
         "Aidan Dobson",
         "Kaveh Mahdavi"
       ],
-      "littles": [],
+      "littles": [
+        "Will Dolan",
+        "Warren Oetojo"
+      ],
       "families": [
         "Notorious"
       ]
@@ -544,7 +790,10 @@
       "bigs": [
         "Richard Nolen"
       ],
-      "littles": [],
+      "littles": [
+        "Parth",
+        "Lucien LaScala"
+      ],
       "families": [
         "Fire"
       ]
@@ -568,7 +817,9 @@
       "bigs": [
         "Jack Hughes"
       ],
-      "littles": [],
+      "littles": [
+        "Will Dolan"
+      ],
       "families": [
         "Dark Pink"
       ]
@@ -778,7 +1029,9 @@
       "bigs": [
         "Kyle Panarelli"
       ],
-      "littles": [],
+      "littles": [
+        "Andy Lee"
+      ],
       "families": [
         "Black"
       ]
@@ -912,7 +1165,7 @@
       ],
       "littles": [],
       "families": [
-        "Black"
+        "Green"
       ]
     },
     {
@@ -1009,7 +1262,7 @@
       ],
       "littles": [],
       "families": [
-        "Black"
+        "Green"
       ]
     },
     {
@@ -1113,7 +1366,7 @@
       ],
       "littles": [],
       "families": [
-        "Black"
+        "Unknown"
       ]
     },
     {
@@ -1229,7 +1482,7 @@
       "bondNumber": 2093,
       "pledgeClass": "Alpha Kappa",
       "bigs": [
-        "Marc Svedlov"
+        "Marc Sverdlov"
       ],
       "littles": [],
       "families": [
@@ -1287,7 +1540,7 @@
       ],
       "littles": [],
       "families": [
-        "Black"
+        "Notorious"
       ]
     },
     {
@@ -1837,7 +2090,7 @@
       "bondNumber": 2140,
       "pledgeClass": "Alpha Mu",
       "bigs": [
-        "Marc Svedlov"
+        "Marc Sverdlov"
       ],
       "littles": [
         "Elliot Sykes"
