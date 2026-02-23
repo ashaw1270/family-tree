@@ -56,6 +56,9 @@ jobs:
                   if name == "":
                       continue
 
+                  if "bondNumber" in obj:
+                      obj["bondNumber"] = int(obj["bondNumber"])
+
                   if "nickname" in obj and obj["nickname"] == "":
                       del obj["nickname"]
 
