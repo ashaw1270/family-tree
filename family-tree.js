@@ -386,9 +386,8 @@ function buildTree(preservePath = false, animate = false) {
 }
 
 
-// Calculate graph layout using pure hierarchical layout with crossing minimization
+// Calculate graph layout: each family is laid out primarily vertically (chains stacked by depth)
 function calculateGraphLayout(nodes, links) {
-    // Convert string links to object references
     const nodeMap = new Map();
     nodes.forEach(node => {
         nodeMap.set(node.id, node);
@@ -399,180 +398,119 @@ function calculateGraphLayout(nodes, links) {
         target: typeof link.target === 'string' ? nodeMap.get(link.target) : link.target
     }));
 
-    // Group nodes by depth (layer)
-    const layers = new Map();
-    nodes.forEach(node => {
-        const depth = node.depth || 0;
-        if (!layers.has(depth)) {
-            layers.set(depth, []);
-        }
-        layers.get(depth).push(node);
-    });
-
-    // Build adjacency lists
-    const childrenMap = new Map();
+    // Build parent list per node (for chain assignment)
     const parentsMap = new Map();
     nodes.forEach(node => {
-        childrenMap.set(node.id, []);
         parentsMap.set(node.id, []);
     });
-    
     graphLinks.forEach(link => {
-        const sourceId = link.source.id;
-        const targetId = link.target.id;
-        childrenMap.get(sourceId).push(targetId);
-        parentsMap.get(targetId).push(sourceId);
+        parentsMap.get(link.target.id).push(link.source.id);
     });
 
-    // Sort layers by depth
-    const sortedLayers = Array.from(layers.entries()).sort((a, b) => a[0] - b[0]);
-    const nodePositions = new Map();
-    
-    // Initialize first layer (roots) - sort by name for stability
-    if (sortedLayers.length > 0) {
-        const rootLayer = sortedLayers[0][1];
-        rootLayer.sort((a, b) => a.id.localeCompare(b.id));
-        rootLayer.forEach((node, index) => {
-            nodePositions.set(node.id, index);
-        });
-    }
-
-    // Iterative crossing minimization using barycenter method
-    // This minimizes edge crossings by ordering nodes within each layer
-    let improved = true;
-    let iterations = 0;
-    const maxIterations = 30;
-    
-    while (improved && iterations < maxIterations) {
-        improved = false;
-        iterations++;
-        
-        // Downward pass: order layers from top to bottom based on parent positions
-        for (let layerIdx = 1; layerIdx < sortedLayers.length; layerIdx++) {
-            const [depth, layerNodes] = sortedLayers[layerIdx];
-            
-            // Calculate barycenters (average position of parents)
-            const barycenters = new Map();
-            layerNodes.forEach(node => {
-                const parents = parentsMap.get(node.id);
-                if (parents.length > 0) {
-                    const sum = parents.reduce((acc, parentId) => {
-                        return acc + (nodePositions.get(parentId) || 0);
-                    }, 0);
-                    barycenters.set(node.id, sum / parents.length);
-                } else {
-                    // No parents, keep current position
-                    barycenters.set(node.id, nodePositions.get(node.id) || layerNodes.length / 2);
-                }
-            });
-            
-            // Sort by barycenter to minimize crossings
-            const sorted = [...layerNodes].sort((a, b) => {
-                const baryA = barycenters.get(a.id);
-                const baryB = barycenters.get(b.id);
-                if (Math.abs(baryA - baryB) > 0.0001) {
-                    return baryA - baryB;
-                }
-                // Tie-breaker for stability
-                return a.id.localeCompare(b.id);
-            });
-            
-            // Update if order changed
-            const oldOrder = layerNodes.map(n => n.id).join(',');
-            const newOrder = sorted.map(n => n.id).join(',');
-            if (oldOrder !== newOrder) {
-                improved = true;
-                sortedLayers[layerIdx][1] = sorted;
-                sorted.forEach((node, index) => {
-                    nodePositions.set(node.id, index);
-                });
-            }
+    // Group nodes by family
+    const familyToNodes = new Map();
+    nodes.forEach(node => {
+        const key = node.family || 'default';
+        if (!familyToNodes.has(key)) {
+            familyToNodes.set(key, []);
         }
-        
-        // Upward pass: order layers from bottom to top based on child positions
-        for (let layerIdx = sortedLayers.length - 2; layerIdx >= 0; layerIdx--) {
-            const [depth, layerNodes] = sortedLayers[layerIdx];
-            
-            // Calculate barycenters (average position of children)
-            const barycenters = new Map();
-            layerNodes.forEach(node => {
-                const children = childrenMap.get(node.id);
-                if (children.length > 0) {
-                    const sum = children.reduce((acc, childId) => {
-                        return acc + (nodePositions.get(childId) || 0);
-                    }, 0);
-                    barycenters.set(node.id, sum / children.length);
-                } else {
-                    // No children, keep current position
-                    barycenters.set(node.id, nodePositions.get(node.id) || layerNodes.length / 2);
-                }
-            });
-            
-            // Sort by barycenter to minimize crossings
-            const sorted = [...layerNodes].sort((a, b) => {
-                const baryA = barycenters.get(a.id);
-                const baryB = barycenters.get(b.id);
-                if (Math.abs(baryA - baryB) > 0.0001) {
-                    return baryA - baryB;
-                }
-                // Tie-breaker for stability
-                return a.id.localeCompare(b.id);
-            });
-            
-            // Update if order changed
-            const oldOrder = layerNodes.map(n => n.id).join(',');
-            const newOrder = sorted.map(n => n.id).join(',');
-            if (oldOrder !== newOrder) {
-                improved = true;
-                sortedLayers[layerIdx][1] = sorted;
-                sorted.forEach((node, index) => {
-                    nodePositions.set(node.id, index);
-                });
-            }
-        }
-    }
+        familyToNodes.get(key).push(node);
+    });
 
-    // Calculate final positions with proper spacing to prevent overlaps (sized for larger node boxes)
+    // Internal links per family (both endpoints in same family)
+    const familyToInternalTargets = new Map();
+    const familyToChildren = new Map(); // familyKey -> nodeId -> [child ids in family]
+    graphLinks.forEach(link => {
+        const src = link.source;
+        const tgt = link.target;
+        const key = src.family || 'default';
+        if ((tgt.family || 'default') !== key) return;
+        if (!familyToInternalTargets.has(key)) {
+            familyToInternalTargets.set(key, new Set());
+            familyToChildren.set(key, new Map());
+        }
+        familyToInternalTargets.get(key).add(tgt.id);
+        const childrenMap = familyToChildren.get(key);
+        if (!childrenMap.has(src.id)) childrenMap.set(src.id, []);
+        childrenMap.get(src.id).push(tgt.id);
+    });
+
     const layerHeight = 140;
-    const nodeSpacing = 120; // Base spacing between nodes (min width for node rect + padding)
-    const familyGap = 80; // Extra spacing when transitioning between different families
+    const nodeSpacing = 155;
+    const familyGap = 80;
     const startY = height / 4;
-    
-    // Position nodes in clean hierarchical grid, maintaining optimized order
-    // but adding extra spacing between different families
-    sortedLayers.forEach(([depth, layerNodes]) => {
-        let currentX = width / 2; // Start from center
-        
-        // Calculate total width needed
-        let totalWidth = (layerNodes.length - 1) * nodeSpacing;
-        // Add extra spacing for family transitions
-        for (let i = 1; i < layerNodes.length; i++) {
-            if (layerNodes[i].family !== layerNodes[i-1].family) {
-                totalWidth += familyGap;
-            }
-        }
-        
-        // Start from left side
-        currentX = (width - totalWidth) / 2;
-        
-        // Position nodes maintaining order but with family-aware spacing
-        layerNodes.forEach((node, index) => {
-            node.x = currentX;
-            node.y = startY + depth * layerHeight;
-            
-            // Calculate spacing to next node
-            if (index < layerNodes.length - 1) {
-                const nextNode = layerNodes[index + 1];
-                if (node.family !== nextNode.family) {
-                    // Different families - add extra spacing
-                    currentX += nodeSpacing + familyGap;
-                } else {
-                    // Same family - normal spacing
-                    currentX += nodeSpacing;
-                }
-            }
+
+    // Sort family keys for stable placement
+    const familyKeys = Array.from(familyToNodes.keys()).sort((a, b) => a.localeCompare(b));
+    const familyWidths = [];
+    const familyBaseX = [];
+    const familyMinUnitX = [];
+
+    // For each family: assign unitX so that siblings are horizontally spaced and parent is centered over its littles
+    for (const familyKey of familyKeys) {
+        const familyNodesList = familyToNodes.get(familyKey);
+        const internalTargets = familyToInternalTargets.get(familyKey) || new Set();
+        const childrenMap = familyToChildren.get(familyKey) || new Map();
+        // Sort each node's children by name for stable layout
+        childrenMap.forEach((kids, id) => {
+            kids.sort((a, b) => a.localeCompare(b));
         });
-    });
+
+        const roots = familyNodesList.filter(n => !internalTargets.has(n.id));
+        roots.sort((a, b) => a.id.localeCompare(b.id));
+
+        let nextUnitX = 0;
+
+        function placeSubtree(node) {
+            if (node.unitX !== undefined) return; // already placed (e.g. multiple bigs)
+            const littles = (childrenMap.get(node.id) || []).filter(id => nodeMap.get(id));
+            if (littles.length === 0) {
+                node.unitX = nextUnitX;
+                nextUnitX += 1;
+                return;
+            }
+            for (const lid of littles) {
+                const little = nodeMap.get(lid);
+                if (little && (little.family || 'default') === familyKey) placeSubtree(little);
+            }
+            const littlesInFamily = littles.map(id => nodeMap.get(id)).filter(n => n && (n.family || 'default') === familyKey);
+            node.unitX = littlesInFamily.reduce((sum, n) => sum + n.unitX, 0) / littlesInFamily.length;
+        }
+
+        for (const r of roots) {
+            placeSubtree(r);
+            nextUnitX += 1; // gap between root subtrees
+        }
+
+        const minUX = Math.min(...familyNodesList.map(n => n.unitX));
+        const maxUX = Math.max(...familyNodesList.map(n => n.unitX));
+        familyMinUnitX.push(minUX);
+        const span = Math.max(1, maxUX - minUX + 1);
+        familyWidths.push(span * nodeSpacing);
+    }
+
+    // Place families side by side and center the block
+    let currentX = 0;
+    for (let f = 0; f < familyKeys.length; f++) {
+        familyBaseX.push(currentX);
+        currentX += familyWidths[f] + familyGap;
+    }
+    const totalWidth = currentX - familyGap;
+    const offset = (width / 2) - (totalWidth / 2);
+    for (let i = 0; i < familyBaseX.length; i++) {
+        familyBaseX[i] += offset;
+    }
+
+    // Convert unitX to pixel x,y per node
+    for (let f = 0; f < familyKeys.length; f++) {
+        const familyNodesList = familyToNodes.get(familyKeys[f]);
+        const baseX = familyBaseX[f];
+        const minUX = familyMinUnitX[f];
+        familyNodesList.forEach(node => {
+            node.x = baseX + (node.unitX - minUX) * nodeSpacing;
+            node.y = startY + (node.depth || 0) * layerHeight;
+        });
+    }
 
     return { nodes, links: graphLinks };
 }
