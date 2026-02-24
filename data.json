@@ -121,11 +121,9 @@
       "bondNumber": 1989,
       "pledgeClass": "Alpha Epsilon",
       "bigs": [
+        "PATRIARCH"
       ],
-      "littles": [
-        "Lucien LaScala",
-        "Parth Suri"
-      ],
+      "littles": [],
       "families": [
         "Fire"
       ]
@@ -310,7 +308,7 @@
       "bondNumber": 2003,
       "pledgeClass": "Alpha Zeta",
       "bigs": [
-        "Warren Arndt"
+        "PATRIARCH (but technically has a big and its warren so what do you want me to do here"
       ],
       "littles": [
         "Augie Sommers",
@@ -1006,7 +1004,9 @@
         "Ali Osouli",
         "Riley Hernandez"
       ],
-      "littles": [],
+      "littles": [
+        "Brendon Zimmer"
+      ],
       "families": [
         "Black",
         "Plaid"
@@ -2201,7 +2201,9 @@
       "bigs": [
         "Ben Crotty"
       ],
-      "littles": [],
+      "littles": [
+        "Paul Hoang"
+      ],
       "families": [
         "Black"
       ]
