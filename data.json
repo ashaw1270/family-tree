@@ -124,7 +124,7 @@
         "Warren Arndt"
       ],
       "littles": [
-        "Lucien Lascala",
+        "Lucien LaScala",
         "Parth Suri"
       ],
       "families": [
@@ -137,7 +137,8 @@
       "pledgeClass": "Alpha Epsilon",
       "bigs": [],
       "littles": [],
-      "families": []
+      "families": [],
+      "redacted": true
     },
     {
       "name": "Alex Oliva",
@@ -343,7 +344,8 @@
       "pledgeClass": "Alpha Zeta",
       "bigs": [],
       "littles": [],
-      "families": []
+      "families": [],
+      "redacted": true
     },
     {
       "name": "Adnan Khan",
@@ -981,7 +983,8 @@
       "pledgeClass": "Alpha Iota",
       "bigs": [],
       "littles": [],
-      "families": []
+      "families": [],
+      "redacted": true
     },
     {
       "name": "Lucien LaScala",
@@ -1296,7 +1299,8 @@
       "pledgeClass": "Alpha Iota",
       "bigs": [],
       "littles": [],
-      "families": []
+      "families": [],
+      "redacted": true
     },
     {
       "name": "Max Kroll",
@@ -1331,7 +1335,8 @@
       "pledgeClass": "Alpha Iota",
       "bigs": [],
       "littles": [],
-      "families": []
+      "families": [],
+      "redacted": true
     },
     {
       "name": "Connor Bobis",
@@ -1667,7 +1672,8 @@
       "pledgeClass": "Alpha Kappa",
       "bigs": [],
       "littles": [],
-      "families": []
+      "families": [],
+      "redacted": true
     },
     {
       "name": "Adam Tung",
@@ -1853,7 +1859,8 @@
       "pledgeClass": "Alpha Lambda",
       "bigs": [],
       "littles": [],
-      "families": []
+      "families": [],
+      "redacted": true
     },
     {
       "name": "Dane Christiensen",
@@ -2151,7 +2158,8 @@
       "pledgeClass": "Alpha Mu",
       "bigs": [],
       "littles": [],
-      "families": []
+      "families": [],
+      "redacted": true
     },
     {
       "name": "Alex Weir",
@@ -2160,7 +2168,9 @@
       "bigs": [
         "Ben Polaski"
       ],
-      "littles": [],
+      "littles": [
+        "Oubai Hassabelrasoul"
+      ],
       "families": [
         "Gold"
       ]
@@ -2200,7 +2210,9 @@
       "bigs": [
         "Evan Danu"
       ],
-      "littles": [],
+      "littles": [
+        "Derek Wu"
+      ],
       "families": [
         "Cheetah"
       ]
@@ -2213,7 +2225,9 @@
         "Ben Crotty"
       ],
       "littles": [
-        "Paul Hoang"
+        "Paul Hoang",
+        "Eisa Bhatti",
+        "Edward Zhang"
       ],
       "families": [
         "Black"
@@ -2266,7 +2280,8 @@
       "pledgeClass": "Alpha Mu",
       "bigs": [],
       "littles": [],
-      "families": []
+      "families": [],
+      "redacted": true
     },
     {
       "name": "Joey Choi",
@@ -2455,7 +2470,8 @@
       "pledgeClass": "Alpha Nu",
       "bigs": [],
       "littles": [],
-      "families": []
+      "families": [],
+      "redacted": true
     },
     {
       "name": "Vincent Schmidtke",
@@ -2718,7 +2734,8 @@
       "pledgeClass": "Alpha Xi",
       "bigs": [],
       "littles": [],
-      "families": []
+      "families": [],
+      "redacted": true
     },
     {
       "name": "Ben Feldman",
@@ -2878,13 +2895,10 @@
       "name": "Redacted",
       "bondNumber": 2198,
       "pledgeClass": "Alpha Omicron",
-      "bigs": [
-        "Ben Feldman"
-      ],
+      "bigs": [],
       "littles": [],
-      "families": [
-        "Fire"
-      ]
+      "families": [],
+      "redacted": true
     },
     {
       "name": "Wael Guedoudou",
@@ -3227,8 +3241,81 @@
   "families": [
     {
       "name": "Fire Fam",
-      "patriarch": "Lucien LaScala",
-      "color": ""
+      "patriarch": "Lucien LaScala ",
+      "color": "",
+      "Bond number": "2153"
+    },
+    {
+      "name": "Dark Pink ",
+      "patriarch": "Brett Sarem ",
+      "color": "",
+      "Bond number": "1776"
+    },
+    {
+      "name": "Gold",
+      "patriarch": "Josh Peterson ",
+      "color": "",
+      "Bond number": "1794"
+    },
+    {
+      "name": "Cheetah ",
+      "patriarch": "Bayan Sadighan",
+      "color": "",
+      "Bond number": "2003"
+    },
+    {
+      "name": "Black",
+      "patriarch": "Mark Morrissey ",
+      "color": "",
+      "Bond number": "1822"
+    },
+    {
+      "name": "Plat",
+      "patriarch": "Charlie Pangborn",
+      "color": "",
+      "Bond number": "1818"
+    },
+    {
+      "name": "Chrome",
+      "patriarch": "Tommy Swad",
+      "color": "",
+      "Bond number": "1791"
+    },
+    {
+      "name": "Black (2)",
+      "patriarch": "Toby Leitao",
+      "color": "",
+      "Bond number": "1885"
+    },
+    {
+      "name": "Notorious ",
+      "patriarch": "Aiden Cusack",
+      "color": "",
+      "Bond number": "1859"
+    },
+    {
+      "name": "Green",
+      "patriarch": "Dylan Field ",
+      "color": "",
+      "Bond number": "1862"
+    },
+    {
+      "name": "Plaid",
+      "patriarch": "Nick Boveri ",
+      "color": "",
+      "Bond number": "1898"
+    },
+    {
+      "name": "Pink ",
+      "patriarch": "Anders Osterling",
+      "color": "",
+      "Bond number": "1765"
+    },
+    {
+      "name": "White",
+      "patriarch": "Thomas Giaclone",
+      "color": "",
+      "Bond number": "1816"
     }
   ]
 }
