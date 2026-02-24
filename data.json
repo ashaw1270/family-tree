@@ -121,9 +121,11 @@
       "bondNumber": 1989,
       "pledgeClass": "Alpha Epsilon",
       "bigs": [
-        "PATRIARCH"
       ],
-      "littles": [],
+      "littles": [
+        "Lucien LaScala",
+        "Parth Suri"
+      ],
       "families": [
         "Fire"
       ]
@@ -308,7 +310,7 @@
       "bondNumber": 2003,
       "pledgeClass": "Alpha Zeta",
       "bigs": [
-        "PATRIARCH (but technically has a big and its warren so what do you want me to do here"
+        "Warren Arndt"
       ],
       "littles": [
         "Augie Sommers",
@@ -1018,7 +1020,6 @@
         "Joe Antonello"
       ],
       "littles": [
-        "John Huskins",
         "Heath Palluck"
       ],
       "families": [
@@ -1062,6 +1063,7 @@
         "Kyle Panarelli"
       ],
       "littles": [
+        "Martin Petersen",
         "Andy Lee"
       ],
       "families": [
@@ -1474,7 +1476,7 @@
       "littles": [
         "Vincent Schmidtke",
         "Martin Petersen",
-        "Nate Gilette",
+        "Nate Gillette",
         "Reagan Dawley"
       ],
       "families": [
@@ -2087,7 +2089,7 @@
       ]
     },
     {
-      "name": "Matthew Ginsburg",
+      "name": "Matt Ginsburg",
       "bondNumber": 2138,
       "pledgeClass": "Alpha Mu",
       "bigs": [
