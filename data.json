@@ -1,6 +1,384 @@
 {
   "people": [
     {
+      "name": "Chris Bott",
+      "bondNumber": 1950,
+      "pledgeClass": "",
+      "bigs": [
+        "Phillip Bliss"
+      ],
+      "littles": [],
+      "families": [
+        "Platinum"
+      ]
+    },
+    {
+      "name": "Emrad Axar",
+      "bondNumber": 1917,
+      "pledgeClass": "",
+      "bigs": [
+        "Phillip Bliss"
+      ],
+      "littles": [
+        "Sean Powers"
+      ],
+      "families": [
+        "Platinum"
+      ]
+    },
+    {
+      "name": "Sean Powers",
+      "bondNumber": 1963,
+      "pledgeClass": "",
+      "bigs": [
+        "Emrad Axar"
+      ],
+      "littles": [
+        "Joe Antonello"
+      ],
+      "families": [
+        "Platinum"
+      ]
+    },
+    {
+      "name": "Mark Morrissey",
+      "bondNumber": 1822,
+      "pledgeClass": "",
+      "bigs": [],
+      "littles": [
+        "Ryan Fawaez"
+      ],
+      "families": [
+        "Black"
+      ]
+    },
+    {
+      "name": "Ryan Fawaez ",
+      "bondNumber": 1924,
+      "pledgeClass": "",
+      "bigs": [
+        "Mark Morrissey"
+      ],
+      "littles": [
+        "Hank Funderburk",
+        "Paul Rodriguez-Anter"
+      ],
+      "families": [
+        "Black"
+      ]
+    },
+    {
+      "name": "Hank Funderburk",
+      "bondNumber": 1933,
+      "pledgeClass": "",
+      "bigs": [
+        "Ryan Fawaez"
+      ],
+      "littles": [
+        "Alex Oliva"
+      ],
+      "families": [
+        "Black"
+      ]
+    },
+    {
+      "name": "Paul Rodriguez-Anter",
+      "bondNumber": 1927,
+      "pledgeClass": "",
+      "bigs": [
+        "Ryan Fawaez"
+      ],
+      "littles": [
+        "Jack Litwin"
+      ],
+      "families": [
+        "Black"
+      ]
+    },
+    {
+      "name": "Josh Peterson",
+      "bondNumber": 1794,
+      "pledgeClass": "",
+      "bigs": [],
+      "littles": [
+        "William Chadwick"
+      ],
+      "families": [
+        "Gold"
+      ]
+    },
+    {
+      "name": "William Chadwick",
+      "bondNumber": 1833,
+      "pledgeClass": "",
+      "bigs": [
+        "Josh Peterson"
+      ],
+      "littles": [
+        "Brian Feminella",
+        "Gabe Galanti"
+      ],
+      "families": [
+        "Gold"
+      ]
+    },
+    {
+      "name": "Brian Feminella",
+      "bondNumber": 1927,
+      "pledgeClass": "",
+      "bigs": [
+        "William Chadwick"
+      ],
+      "littles": [
+        "Lucas Martinez",
+        "Hayes Waycaster"
+      ],
+      "families": [
+        "Gold"
+      ]
+    },
+    {
+      "name": "Lucas Martinez",
+      "bondNumber": 1978,
+      "pledgeClass": "",
+      "bigs": [
+        "Brian Feminella"
+      ],
+      "littles": [
+        "Gray Toomey"
+      ],
+      "families": [
+        "Gold"
+      ]
+    },
+    {
+      "name": "Gabe Galanti",
+      "bondNumber": 1856,
+      "pledgeClass": "",
+      "bigs": [
+        "William Chadwick"
+      ],
+      "littles": [
+        "Tyler Jensen",
+        "Grant Thomas",
+        "Rohan Parepally",
+        "Brighton Balfrey"
+      ],
+      "families": [
+        "Gold"
+      ]
+    },
+    {
+      "name": "Tyler Jensen",
+      "bondNumber": 1931,
+      "pledgeClass": "",
+      "bigs": [
+        "Gabe Galanti"
+      ],
+      "littles": [
+        "Andrew Clark"
+      ],
+      "families": [
+        "Gold"
+      ]
+    },
+    {
+      "name": "Andrew Clark",
+      "bondNumber": 1968,
+      "pledgeClass": "",
+      "bigs": [
+        "Tyler Jensen"
+      ],
+      "littles": [
+        "Alexander St. Jean"
+      ],
+      "families": [
+        "Gold"
+      ]
+    },
+    {
+      "name": "Grant Thomas",
+      "bondNumber": 1893,
+      "pledgeClass": "",
+      "bigs": [
+        "Gabe Galanti"
+      ],
+      "littles": [],
+      "families": [
+        "Gold"
+      ]
+    },
+    {
+      "name": "Rohan Parepally",
+      "bondNumber": 1897,
+      "pledgeClass": "",
+      "bigs": [
+        "Gabe Galanti"
+      ],
+      "littles": [],
+      "families": [
+        "Gold"
+      ]
+    },
+    {
+      "name": "Brighton Balfrey",
+      "bondNumber": 1911,
+      "pledgeClass": "",
+      "bigs": [
+        "Gabe Galanti"
+      ],
+      "littles": [
+        "Andre Stanton"
+      ],
+      "families": [
+        "Gold"
+      ]
+    },
+    {
+      "name": "Andre Stanton",
+      "bondNumber": 1936,
+      "pledgeClass": "",
+      "bigs": [
+        "Brighton Balfrey"
+      ],
+      "littles": [
+        "Mikey Ziegler",
+        "Steven Verona"
+      ],
+      "families": [
+        "Gold"
+      ]
+    },
+    {
+      "name": "Brett Sarem",
+      "bondNumber": 1776,
+      "pledgeClass": "",
+      "bigs": [],
+      "littles": [
+        "Harrison Forch"
+      ],
+      "families": [
+        "Dark Pink"
+      ]
+    },
+    {
+      "name": "Harrison Forch",
+      "bondNumber": 1817,
+      "pledgeClass": "",
+      "bigs": [
+        "Brett Sarem"
+      ],
+      "littles": [
+        "Alex Trannon"
+      ],
+      "families": [
+        "Dark Pink"
+      ]
+    },
+    {
+      "name": "Alex Trannon",
+      "bondNumber": 1832,
+      "pledgeClass": "",
+      "bigs": [
+        "Harrison Forch"
+      ],
+      "littles": [
+        "Adam Owens",
+        "Chris Montooth",
+        "Blaykle Talman"
+      ],
+      "families": [
+        "Dark Pink"
+      ]
+    },
+    {
+      "name": "Adam Owens",
+      "bondNumber": 1858,
+      "pledgeClass": "",
+      "bigs": [
+        "Alex Trannon"
+      ],
+      "littles": [
+        "Sam Bennett"
+      ],
+      "families": [
+        "Dark Pink"
+      ]
+    },
+    {
+      "name": "Chris Montooth",
+      "bondNumber": 1930,
+      "pledgeClass": "",
+      "bigs": [
+        "Alex Trannon"
+      ],
+      "littles": [
+        "Sam Tvrdik"
+      ],
+      "families": [
+        "Dark Pink"
+      ]
+    },
+    {
+      "name": "Sam Bennett",
+      "bondNumber": 1933,
+      "pledgeClass": "",
+      "bigs": [
+        "Adam Owens"
+      ],
+      "littles": [
+        "Sagan Gor"
+      ],
+      "families": [
+        "Dark Pink"
+      ]
+    },
+    {
+      "name": "Blaykle Talman",
+      "bondNumber": 1883,
+      "pledgeClass": "",
+      "bigs": [
+        "Alex Trannon"
+      ],
+      "littles": [
+        "Derek Jones"
+      ],
+      "families": [
+        "Dark Pink"
+      ]
+    },
+    {
+      "name": "Derek Jones",
+      "bondNumber": 1948,
+      "pledgeClass": "",
+      "bigs": [
+        "Blaykle Talman"
+      ],
+      "littles": [
+        "Warren Arndt",
+        "David Parau"
+      ],
+      "families": [
+        "Dark Pink"
+      ]
+    },
+    {
+      "name": "Warren Arndt",
+      "bondNumber": 1969,
+      "pledgeClass": "",
+      "bigs": [
+        "Derek Jones"
+      ],
+      "littles": [
+        "Kevin Faraday",
+        "Bayan Sadighian",
+        "Jack Hughes"
+      ],
+      "families": [
+        "Dark Pink"
+      ]
+    },
+    {
       "name": "Steven Verona",
       "bondNumber": 1981,
       "pledgeClass": "Alpha Epsilon",
@@ -145,7 +523,7 @@
       "bondNumber": 1991,
       "pledgeClass": "Alpha Epsilon",
       "bigs": [
-        "Hank Funderbunk"
+        "Hank Funderburk"
       ],
       "littles": [
         "James Harris",
@@ -1054,7 +1432,7 @@
       "bondNumber": 2057,
       "pledgeClass": "Alpha Iota",
       "bigs": [
-        "Alex St. Jean"
+        "Alexander St. Jean"
       ],
       "littles": [],
       "families": [
