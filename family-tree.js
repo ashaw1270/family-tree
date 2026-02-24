@@ -18,23 +18,28 @@ let familyNodes = new Set(); // Track nodes in selected family
 let familyNuclearFamily = new Set(); // Track nuclear family (bigs/littles) of family members
 let currentFamily = null; // Track currently selected family
 
-// Family color mapping - distinct colors for each family
-const familyColors = {
-    'Cheetah': { fill: '#FF6B35', stroke: '#C94A1F' },      // Orange-red
-    'Lion': { fill: '#F7B801', stroke: '#D99A01' },          // Gold
-    'Tiger': { fill: '#FF9500', stroke: '#CC7700' },        // Orange
-    'Bear': { fill: '#8B4513', stroke: '#6B3410' },          // Brown
-    'Wolf': { fill: '#708090', stroke: '#556B7A' },         // Slate gray
-    'Eagle': { fill: '#4A90E2', stroke: '#3A70B2' },        // Blue
-    'default': { fill: '#fff', stroke: '#629dc7' }          // Default for no family
-};
+// Family colors are loaded from data.json (treeData.families); built in init()
+let familyColors = { default: { fill: '#fff', stroke: '#629dc7' } };
 
-// Get family color
+function buildFamilyColorsFromData() {
+    if (!treeData || !Array.isArray(treeData.families)) return;
+    familyColors = { default: { fill: '#fff', stroke: '#629dc7' } };
+    treeData.families.forEach(f => {
+        if (f.name != null && (f.fill != null || f.stroke != null)) {
+            familyColors[f.name] = {
+                fill: f.fill != null ? f.fill : familyColors.default.fill,
+                stroke: f.stroke != null ? f.stroke : familyColors.default.stroke
+            };
+        }
+    });
+}
+
+// Get family color (uses colors from JSON; falls back to default if family missing or no data yet)
 function getFamilyColor(familyName) {
     if (familyName && familyColors[familyName]) {
         return familyColors[familyName];
     }
-    return familyColors['default'];
+    return familyColors.default;
 }
 
 // Ensure SVG defs contain linear gradients for each (family1, family2) pair used by nodes (left half / right half).
@@ -201,6 +206,7 @@ async function init() {
         const response = await fetch('data.json');
         treeData = await response.json();
         filteredData = treeData;
+        buildFamilyColorsFromData();
     } catch (error) {
         console.error('Error loading data:', error);
         alert('Error loading data. Please ensure data.json exists.');
