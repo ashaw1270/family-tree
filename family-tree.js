@@ -511,10 +511,12 @@ function calculateGraphLayout(nodes, links) {
         nodeMap.set(node.id, node);
     });
 
-    const graphLinks = links.map(link => ({
-        source: typeof link.source === 'string' ? nodeMap.get(link.source) : link.source,
-        target: typeof link.target === 'string' ? nodeMap.get(link.target) : link.target
-    }));
+    const graphLinks = links
+        .map(link => ({
+            source: typeof link.source === 'string' ? nodeMap.get(link.source) : link.source,
+            target: typeof link.target === 'string' ? nodeMap.get(link.target) : link.target
+        }))
+        .filter(link => link.source && link.target);
 
     // Build parent list per node (for chain assignment)
     const parentsMap = new Map();
@@ -599,21 +601,45 @@ function calculateGraphLayout(nodes, links) {
         roots.sort((a, b) => a.id.localeCompare(b.id));
 
         let nextUnitX = 0;
+        const visiting = new Set(); // detect cycles when following littles only (two bigs is not a cycle)
+        const path = []; // current path for cycle reporting
 
         function placeSubtree(node) {
             if (node.unitX !== undefined) return;
-            const littles = (childrenMap.get(node.id) || []).filter(id => nodeMap.get(id));
-            if (littles.length === 0) {
+            if (visiting.has(node.id)) {
                 node.unitX = nextUnitX;
                 nextUnitX += 1;
                 return;
             }
+            visiting.add(node.id);
+            path.push(node.id);
+            const littles = (childrenMap.get(node.id) || []).filter(id => nodeMap.get(id));
+            if (littles.length === 0) {
+                node.unitX = nextUnitX;
+                nextUnitX += 1;
+                path.pop();
+                visiting.delete(node.id);
+                return;
+            }
             for (const lid of littles) {
                 const little = nodeMap.get(lid);
-                if (little && (little.family || 'default') === familyKey) placeSubtree(little);
+                if (little && (little.family || 'default') === familyKey) {
+                    if (visiting.has(little.id)) {
+                        if (little.unitX === undefined) {
+                            little.unitX = nextUnitX;
+                            nextUnitX += 1;
+                        }
+                        const cycle = path.slice(path.indexOf(little.id)).concat([little.id]);
+                        console.warn('[Tree] Cycle detected in littles:', cycle.join(' → '));
+                    } else {
+                        placeSubtree(little);
+                    }
+                }
             }
             const littlesInFamily = littles.map(id => nodeMap.get(id)).filter(n => n && (n.family || 'default') === familyKey);
-            node.unitX = littlesInFamily.reduce((sum, n) => sum + n.unitX, 0) / littlesInFamily.length;
+            node.unitX = littlesInFamily.reduce((sum, n) => sum + (n.unitX !== undefined ? n.unitX : 0), 0) / littlesInFamily.length;
+            path.pop();
+            visiting.delete(node.id);
         }
 
         for (const r of roots) {
@@ -635,17 +661,25 @@ function calculateGraphLayout(nodes, links) {
         }
         leaves.forEach((n, i) => { n.localX = leafLocalX[i]; });
 
+        // Any node without localX yet (e.g. in a cycle with no leaves) gets one from unitX so we never get NaN
+        const defaultSpacing = familyNodesList.reduce((s, n) => s + (n.estimatedWidth || 80), 0) / familyNodesList.length + minGap;
+        familyNodesList.forEach(node => {
+            if (node.localX === undefined) node.localX = (node.unitX ?? 0) * defaultSpacing;
+        });
+
         // Parents: place at center of their littles (process by depth descending so children have localX first)
         const byDepth = familyNodesList.slice().sort((a, b) => (b.depth || 0) - (a.depth || 0));
         byDepth.forEach(node => {
             const kids = littlesInFamily(node);
             if (kids.length > 0) {
-                node.localX = kids.reduce((sum, c) => sum + c.localX, 0) / kids.length;
+                const sum = kids.reduce((s, c) => s + (c.localX ?? 0), 0);
+                const count = kids.length;
+                if (Number.isFinite(sum)) node.localX = sum / count;
             }
         });
 
-        const allLeft = familyNodesList.map(n => n.localX - n.estimatedWidth / 2);
-        const allRight = familyNodesList.map(n => n.localX + n.estimatedWidth / 2);
+        const allLeft = familyNodesList.map(n => (n.localX ?? 0) - (n.estimatedWidth || 0) / 2);
+        const allRight = familyNodesList.map(n => (n.localX ?? 0) + (n.estimatedWidth || 0) / 2);
         const familyWidth = Math.max(...allRight) - Math.min(...allLeft);
         familyWidths.push(familyWidth);
     }
@@ -665,10 +699,11 @@ function calculateGraphLayout(nodes, links) {
     // Convert localX to global x,y per node
     for (let f = 0; f < familyKeys.length; f++) {
         const familyNodesList = familyToNodes.get(familyKeys[f]);
-        const leftEdge = Math.min(...familyNodesList.map(n => n.localX - n.estimatedWidth / 2));
+        const leftEdge = Math.min(...familyNodesList.map(n => (n.localX ?? 0) - (n.estimatedWidth || 0) / 2));
         const baseX = familyBaseX[f];
         familyNodesList.forEach(node => {
-            node.x = baseX + node.localX - leftEdge;
+            const lx = node.localX ?? 0;
+            node.x = baseX + lx - leftEdge;
             node.y = startY + (node.depth || 0) * layerHeight;
         });
     }
@@ -1350,10 +1385,24 @@ function addFamilyLabels(nodes, fadeIn = false) {
     });
 }
 
-// Helper function to create a clickable link for a person
+// Helper: escape HTML so names can't break popup markup
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// Helper function to create a clickable link for a person (or red plain text if person not in data)
 function createPersonLink(personName) {
-    const displayName = getNicknameOrName(personName);
-    return `<a href="#" class="info-link person-link" data-person="${personName}">${displayName}</a>`;
+    if (!personName) return '';
+    const inData = treeData && treeData.people && treeData.people.some(p => p.name === personName);
+    const displayName = inData ? getNicknameOrName(personName) : personName;
+    const safeName = escapeHtml(displayName);
+    if (inData) {
+        return `<a href="#" class="info-link person-link" data-person="${escapeHtml(personName)}">${safeName}</a>`;
+    }
+    return `<span class="person-not-in-data">${safeName}</span>`;
 }
 
 // Helper function to create a clickable link for a family
