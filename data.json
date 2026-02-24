@@ -121,11 +121,14 @@
       "bondNumber": 1989,
       "pledgeClass": "Alpha Epsilon",
       "bigs": [
-        "PATRIARCH"
+        "Warren Arndt"
       ],
-      "littles": [],
+      "littles": [
+        "Lucien Lascala",
+        "Parth Suri"
+      ],
       "families": [
-        "Fire"
+        "Black Pink"
       ]
     },
     {
@@ -308,7 +311,7 @@
       "bondNumber": 2003,
       "pledgeClass": "Alpha Zeta",
       "bigs": [
-        "PATRIARCH (but technically has a big and its warren so what do you want me to do here"
+        "Warren Arndt"
       ],
       "littles": [
         "Augie Sommers",
@@ -1135,7 +1138,9 @@
       "bigs": [
         "Kevin Faraday"
       ],
-      "littles": [],
+      "littles": [
+        "Adam Tung"
+      ],
       "families": [
         "Dark Pink"
       ]
@@ -1209,7 +1214,10 @@
       "bigs": [
         "Bayan Sadighian"
       ],
-      "littles": [],
+      "littles": [
+        "Adam Shaw",
+        "Ryan Asgarian"
+      ],
       "families": [
         "Cheetah"
       ]
@@ -1262,7 +1270,10 @@
       "bigs": [
         "Henry McGonnigal"
       ],
-      "littles": [],
+      "littles": [
+        "Evan Danu",
+        "Mansher Malik"
+      ],
       "families": [
         "Cheetah"
       ]
@@ -1663,7 +1674,7 @@
       "bondNumber": 2105,
       "pledgeClass": "Alpha Kappa",
       "bigs": [
-        "Ryan Chou"
+        "Ray Chou"
       ],
       "littles": [],
       "families": [
@@ -2097,7 +2108,7 @@
       ],
       "littles": [
         "Ryan Fuerte",
-        "Kethan Kaira"
+        "Kethan Kalra"
       ],
       "families": [
         "Fire"
@@ -2688,7 +2699,7 @@
       ]
     },
     {
-      "name": "Kethan Kaira",
+      "name": "Kethan Kalra",
       "bondNumber": 2184,
       "pledgeClass": "Alpha Xi",
       "bigs": [
@@ -2716,7 +2727,9 @@
       "bigs": [
         "Parker Bond"
       ],
-      "littles": [],
+      "littles": [
+        "Peter Hermann"
+      ],
       "families": [
         "Fire"
       ]
@@ -2725,9 +2738,13 @@
       "name": "Holden Weissler",
       "bondNumber": 2187,
       "pledgeClass": "Alpha Xi",
-      "bigs": [],
+      "bigs": [
+        "Alex Gramajo"
+      ],
       "littles": [],
-      "families": []
+      "families": [
+        "Gold"
+      ]
     },
     {
       "name": "Reagan Dawley",
@@ -3025,9 +3042,10 @@
       "bondNumber": 2211,
       "pledgeClass": "Alpha Pi",
       "bigs": [
-        "Kethan Kaira"
+        "Kethan Kalra"
       ],
       "littles": [],
+      "nickname": "Kartman",
       "families": [
         "Fire"
       ]
@@ -3040,7 +3058,6 @@
         "Alvaro Valerio"
       ],
       "littles": [],
-      "nickname": "Kartman",
       "families": [
         "Black"
       ]
@@ -3073,9 +3090,13 @@
       "name": "Peter Hermann",
       "bondNumber": 2215,
       "pledgeClass": "Alpha Pi",
-      "bigs": [],
+      "bigs": [
+        "Ben Feldman"
+      ],
       "littles": [],
-      "families": []
+      "families": [
+        "Fire"
+      ]
     },
     {
       "name": "Sam Frausto",
@@ -3085,6 +3106,7 @@
         "Derek Wu"
       ],
       "littles": [],
+      "nickname": "Frosty",
       "families": [
         "Cheetah"
       ]
@@ -3145,6 +3167,7 @@
         "Noah Neri"
       ],
       "littles": [],
+      "nickname": "Unc",
       "families": [
         "Dark Pink"
       ]
@@ -3201,5 +3224,11 @@
     }
   ],
   "pledgeClasses": [],
-  "families": []
+  "families": [
+    {
+      "name": "Fire Fam",
+      "patriarch": "Lucien LaScala",
+      "color": ""
+    }
+  ]
 }
