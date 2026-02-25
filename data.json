@@ -1,6 +1,18 @@
 {
   "people": [
     {
+      "name": "Andrew Huang",
+      "bondNumber": 2001,
+      "pledgeClass": "Alpha Epsilon",
+      "bigs": [],
+      "littles": [
+        "Matt Levy"
+      ],
+      "families": [
+        "Green"
+      ]
+    },
+    {
       "name": "Chris Bott",
       "bondNumber": 1950,
       "pledgeClass": "",
@@ -29,7 +41,7 @@
     {
       "name": "Sean Powers",
       "bondNumber": 1963,
-      "pledgeClass": "",
+      "pledgeClass": "Alpha Delta",
       "bigs": [
         "Emrad Axar"
       ],
@@ -243,7 +255,7 @@
       ],
       "littles": [
         "Mikey Ziegler",
-        "Steven Verona"
+        "Steven Vorona"
       ],
       "families": [
         "Gold"
@@ -285,7 +297,7 @@
       "littles": [
         "Adam Owens",
         "Chris Montooth",
-        "Blaykle Talman"
+        "Blayke Tatman"
       ],
       "families": [
         "Dark Pink"
@@ -334,7 +346,7 @@
       ]
     },
     {
-      "name": "Blaykle Talman",
+      "name": "Blayke Tatman",
       "bondNumber": 1883,
       "pledgeClass": "",
       "bigs": [
@@ -352,7 +364,7 @@
       "bondNumber": 1948,
       "pledgeClass": "",
       "bigs": [
-        "Blaykle Talman"
+        "Blayke Tatman"
       ],
       "littles": [
         "Warren Arndt",
@@ -380,7 +392,7 @@
       ]
     },
     {
-      "name": "Steven Verona",
+      "name": "Steven Vorona",
       "bondNumber": 1981,
       "pledgeClass": "Alpha Epsilon",
       "bigs": [
@@ -876,7 +888,7 @@
         "Alex Oliva"
       ],
       "littles": [
-        "Zach Lachance",
+        "Zach LaChance",
         "Porter Landefeld"
       ],
       "families": [
@@ -928,7 +940,7 @@
       "bondNumber": 2020,
       "pledgeClass": "Alpha Eta",
       "bigs": [
-        "Steven Verona"
+        "Steven Vorona"
       ],
       "littles": [],
       "families": [
@@ -1473,9 +1485,9 @@
         "Dylan Lionelli",
         "Marc Huang"
       ],
+      "nickname": "Evantacious",
       "families": [
-        "Cheetah",
-        "Black"
+        "Cheetah"
       ]
     },
     {
@@ -2710,6 +2722,7 @@
         "Sam Benn",
         "Cameron Chitayat"
       ],
+      "nickname": "Goob",
       "families": [
         "Dark Pink"
       ]
@@ -3059,7 +3072,7 @@
       ],
       "littles": [],
       "families": [
-        "Chrome"
+        "Platinum"
       ]
     },
     {
@@ -3149,6 +3162,7 @@
       "littles": [
         "Sam DeRusha"
       ],
+      "nickname": "Dih",
       "families": [
         "Fire"
       ]
@@ -3613,7 +3627,134 @@
       ]
     }
   ],
-  "pledgeClasses": [],
+  "pledgeClasses": [
+    {
+      "name": "Alpha Delta",
+      "semester": "Fall 2019",
+      "pcp": "Sean Powers?",
+      "pcvp": "",
+      "bestPledge": "",
+      "hindTit": "Brett Slezak",
+      "pledgeMaster": ""
+    },
+    {
+      "name": "Alpha Epsilon",
+      "semester": "Spring 2020",
+      "pcp": "Steven Vorona",
+      "pcvp": "Josh Rana",
+      "bestPledge": "Jack Litwin",
+      "hindTit": "Andrew Huang",
+      "pledgeMaster": ""
+    },
+    {
+      "name": "Alpha Zeta",
+      "semester": "Fall 2020",
+      "pcp": "Joe Antonello",
+      "pcvp": "Bayan Sadighan",
+      "bestPledge": "Jack Goldman",
+      "hindTit": "Thomas Kimmell",
+      "pledgeMaster": ""
+    },
+    {
+      "name": "Alpha Eta",
+      "semester": "Spring 2021",
+      "pcp": "Braden Russell",
+      "pcvp": "Sam Tverdik",
+      "bestPledge": "Henry McGonnigal",
+      "hindTit": "Greg Sarandi",
+      "pledgeMaster": ""
+    },
+    {
+      "name": "Alpha Theta",
+      "semester": "Fall 2021",
+      "pcp": "Heath Palluck",
+      "pcvp": "Jack Brasesco",
+      "bestPledge": "Ben Bowler",
+      "hindTit": "Augie Sommers",
+      "pledgeMaster": "Andre Stanton"
+    },
+    {
+      "name": "Alpha Iota",
+      "semester": "Spring 2022",
+      "pcp": "Dane Gramstrup",
+      "pcvp": "",
+      "bestPledge": "Lucien LaScala",
+      "hindTit": "Manny Adelstein",
+      "pledgeMaster": "Mikey Ziegler"
+    },
+    {
+      "name": "Alpha Kappa",
+      "semester": "Fall 2022",
+      "pcp": "Alvaro Valerio",
+      "pcvp": "Marshall McInerney",
+      "bestPledge": "Marc Huang",
+      "hindTit": "Albert Chung",
+      "pledgeMaster": "Jack Brasesco"
+    },
+    {
+      "name": "Alpha Lambda",
+      "semester": "Spring 2023",
+      "pcp": "Sean Iredell",
+      "pcvp": "Evan Danu",
+      "bestPledge": "Sean Jackson",
+      "hindTit": "Parker Bond",
+      "pledgeMaster": "John Huskins"
+    },
+    {
+      "name": "Alpha Mu",
+      "semester": "Fall 2023",
+      "pcp": "Chris Clausen",
+      "pcvp": "Lucas Li",
+      "bestPledge": "Justin Shih",
+      "hindTit": "David Moseley",
+      "pledgeMaster": "Ryan DeMotte"
+    },
+    {
+      "name": "Alpha Nu",
+      "semester": "Spring 2024",
+      "pcp": "Roman Savino",
+      "pcvp": "Max Rubenstein",
+      "bestPledge": "Derek Wu",
+      "hindTit": "Vikram Gedipudi",
+      "pledgeMaster": "Colin Jimmink"
+    },
+    {
+      "name": "Alpha Xi",
+      "semester": "Fall 2024",
+      "pcp": "Raffi Avedissian",
+      "pcvp": "Michael Cahn",
+      "bestPledge": "Paul Hoang",
+      "hindTit": "Harry Stiles",
+      "pledgeMaster": "Jai Makhija"
+    },
+    {
+      "name": "Alpha Omicron",
+      "semester": "Spring 2025",
+      "pcp": "Michael Lemos",
+      "pcvp": "Grant Franey",
+      "bestPledge": "Carlos Karaptian",
+      "hindTit": "Naveen Prabath",
+      "pledgeMaster": "Sammy Fromberg"
+    },
+    {
+      "name": "Alpha Pi",
+      "semester": "Fall 2025",
+      "pcp": "Sam Benn",
+      "pcvp": "Sam DeRusha",
+      "bestPledge": "Edward Zhang",
+      "hindTit": "Nicholas Moriarty",
+      "pledgeMaster": "Raffi Avedissian"
+    },
+    {
+      "name": "Alpha Rho",
+      "semester": "Spring 2026",
+      "pcp": "",
+      "pcvp": "",
+      "bestPledge": "",
+      "hindTit": "",
+      "pledgeMaster": "Kethan Kalra"
+    }
+  ],
   "families": [
     {
       "name": "Fire",
