@@ -518,7 +518,7 @@ function buildTree(preservePath = false, animate = false) {
 
 // Measure label width for layout (same font as .node-label: 14px, weight 600)
 function measureNodeLabelWidth(node) {
-    const label = getNicknameOrName(node.name);
+    const label = formatNameWithNickname(node.name);
     if (!label) return 40;
     if (!g || !g.node()) return label.length * 8;
     try {
@@ -1110,7 +1110,7 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
         .attr('text-anchor', 'middle')
         .attr('dominant-baseline', 'middle')
         .attr('dy', 0)
-        .text(d => getNicknameOrName(d.name))
+        .text(d => formatNameWithNickname(d.name))
         .style('font-weight', d => {
             // Slightly bolder for highlighted node labels
             if (pledgeClassNodes.has(d.id) || familyNodes.has(d.id)) return '700';
@@ -1503,7 +1503,7 @@ function escapeHtml(text) {
 function createPersonLink(personName) {
     if (!personName) return '';
     const inData = treeData && treeData.people && treeData.people.some(p => p.name === personName);
-    const displayName = inData ? getNicknameOrName(personName) : personName;
+    const displayName = inData ? formatNameWithNickname(personName) : personName;
     const safeName = escapeHtml(displayName);
     if (inData) {
         return `<a href="#" class="info-link person-link" data-person="${escapeHtml(personName)}">${safeName}</a>`;
