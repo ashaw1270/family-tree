@@ -53,7 +53,7 @@
       ]
     },
     {
-      "name": "Ryan Fawaez ",
+      "name": "Ryan Fawaez",
       "bondNumber": 1924,
       "pledgeClass": "",
       "bigs": [
@@ -858,7 +858,7 @@
       "bondNumber": 2015,
       "pledgeClass": "Alpha Eta",
       "bigs": [
-        "Bryan Feminella"
+        "Brian Feminella"
       ],
       "littles": [
         "Ben Polaski"
@@ -1095,7 +1095,7 @@
       ],
       "littles": [
         "Colin Jimmink",
-        "Sam Soccoro",
+        "Sam Socorro",
         "Adam Oliva"
       ],
       "families": [
@@ -1404,7 +1404,7 @@
         "Joe Antonello"
       ],
       "littles": [
-        "Heath Palluck"
+        "Sean Iredell"
       ],
       "families": [
         "Platinum"
@@ -2509,6 +2509,7 @@
       "littles": [
         "Vikram Gedipudi",
         "Lucas Massa",
+        "Holden Weissler",
         "Cooper Queen",
         "Daelyn Smith"
       ],
@@ -3619,17 +3620,17 @@
   "families": [
     {
       "name": "Fire",
-      "patriarch": "Lucien LaScala ",
+      "patriarch": "Lucien LaScala",
       "color": "#FF751F"
     },
     {
       "name": "Dark Pink",
-      "patriarch": "Brett Sarem ",
+      "patriarch": "Brett Sarem",
       "color": "#B21364"
     },
     {
       "name": "Gold",
-      "patriarch": "Josh Peterson ",
+      "patriarch": "Josh Peterson",
       "color": "#FFDE5A"
     },
     {
@@ -3639,7 +3640,7 @@
     },
     {
       "name": "Black",
-      "patriarch": "Mark Morrissey ",
+      "patriarch": "Mark Morrissey",
       "color": "#000000"
     },
     {
@@ -3658,22 +3659,22 @@
       "color": "#000000"
     },
     {
-      "name": "Notorious ",
+      "name": "Notorious",
       "patriarch": "Aiden Cusack",
       "color": "#FBAE19"
     },
     {
       "name": "Green",
-      "patriarch": "Dylan Field ",
+      "patriarch": "Dylan Field",
       "color": "#03BF64"
     },
     {
       "name": "Plaid",
-      "patriarch": "Nick Boveri ",
+      "patriarch": "Nick Boveri",
       "color": "#FF3132"
     },
     {
-      "name": "Pink ",
+      "name": "Pink",
       "patriarch": "Anders Osterling",
       "color": "#FF66C5"
     },
