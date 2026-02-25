@@ -3620,80 +3620,67 @@
     {
       "name": "Fire",
       "patriarch": "Lucien LaScala ",
-      "color": "",
-      "Bond number": "2153"
+      "color": "#FF751F"
     },
     {
       "name": "Dark Pink",
       "patriarch": "Brett Sarem ",
-      "color": "",
-      "Bond number": "1776"
+      "color": "#B21364"
     },
     {
       "name": "Gold",
       "patriarch": "Josh Peterson ",
-      "color": "",
-      "Bond number": "1794"
+      "color": "#FFDE5A"
     },
     {
       "name": "Cheetah",
       "patriarch": "Bayan Sadighan",
-      "color": "",
-      "Bond number": "2003"
+      "color": "#CE9770"
     },
     {
       "name": "Black",
       "patriarch": "Mark Morrissey ",
-      "color": "",
-      "Bond number": "1822"
+      "color": "#000000"
     },
     {
-      "name": "Plat",
+      "name": "Platinum",
       "patriarch": "Charlie Pangborn",
-      "color": "",
-      "Bond number": "1818"
+      "color": "#E5E4E2"
     },
     {
       "name": "Chrome",
       "patriarch": "Tommy Swad",
-      "color": "",
-      "Bond number": "1791"
+      "color": "#E0EFFF"
     },
     {
       "name": "Black (2)",
       "patriarch": "Toby Leitao",
-      "color": "",
-      "Bond number": "1885"
+      "color": "#000000"
     },
     {
       "name": "Notorious ",
       "patriarch": "Aiden Cusack",
-      "color": "",
-      "Bond number": "1859"
+      "color": "#FBAE19"
     },
     {
       "name": "Green",
       "patriarch": "Dylan Field ",
-      "color": "",
-      "Bond number": "1862"
+      "color": "#03BF64"
     },
     {
       "name": "Plaid",
       "patriarch": "Nick Boveri ",
-      "color": "",
-      "Bond number": "1898"
+      "color": "#FF3132"
     },
     {
       "name": "Pink ",
       "patriarch": "Anders Osterling",
-      "color": "",
-      "Bond number": "1765"
+      "color": "#FF66C5"
     },
     {
       "name": "White",
       "patriarch": "Thomas Giaclone",
-      "color": "",
-      "Bond number": "1816"
+      "color": "#FFFFFF"
     }
   ]
 }
