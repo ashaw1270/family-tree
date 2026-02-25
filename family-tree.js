@@ -229,12 +229,48 @@ function extractActualName(inputValue) {
     return trimmed;
 }
 
+// Ensure every person referenced in any bigs/littles has an entry in treeData.people.
+// Missing entries get a minimal object: name + bigs/littles inferred from other people's references.
+function ensureReferencedPeopleHaveEntries(data) {
+    if (!data?.people || !Array.isArray(data.people)) return;
+    const existingNames = new Set(data.people.map(p => p.name));
+    const referenced = new Set();
+    data.people.forEach(person => {
+        (person.bigs || []).forEach(big => referenced.add(big));
+        (person.littles || []).forEach(little => referenced.add(little));
+    });
+    const missing = [...referenced].filter(name => !existingNames.has(name));
+    missing.forEach(name => {
+        const referrers = data.people.filter(
+            p => (p.littles || []).includes(name) || (p.bigs || []).includes(name)
+        );
+        const inferredBigs = referrers.filter(p => (p.littles || []).includes(name)).map(p => p.name);
+        const inferredLittles = referrers.filter(p => (p.bigs || []).includes(name)).map(p => p.name);
+        const familyCounts = new Map();
+        referrers.forEach(p => {
+            (p.families || []).filter(f => f).forEach(f => familyCounts.set(f, (familyCounts.get(f) || 0) + 1));
+        });
+        let inferredFamily = null;
+        let best = 0;
+        familyCounts.forEach((count, fam) => { if (count > best) { best = count; inferredFamily = fam; } });
+        const stub = {
+            name: name,
+            bigs: inferredBigs,
+            littles: inferredLittles
+        };
+        if (inferredFamily) stub.families = [inferredFamily];
+        data.people.push(stub);
+        existingNames.add(name);
+    });
+}
+
 // Initialize the visualization
 async function init() {
     // Load data
     try {
         const response = await fetch('data.json');
         treeData = await response.json();
+        ensureReferencedPeopleHaveEntries(treeData);
         filteredData = treeData;
         buildFamilyColorsFromData();
     } catch (error) {
@@ -471,6 +507,9 @@ function buildTree(preservePath = false, animate = false) {
         };
     });
 
+    // Infer family for nodes that have none (e.g. stubs) so they layout with their bigs/littles
+    inferFamilyFromConnections(nodes);
+
     // Show all nodes (family filter now uses highlighting instead of filtering)
     const layout = calculateGraphLayout(nodes, links);
     renderTree(layout.nodes, layout.links, animate);
@@ -538,6 +577,39 @@ function orderFamiliesByConnectivity(allFamilyKeys, familyCrossLinks) {
         }
     }
     return placed;
+}
+
+// Infer family for nodes that have none (e.g. dynamically added stubs) from their bigs/littles
+// so they are laid out in the same family column as their connections. Runs multiple passes
+// so family propagates along chains (e.g. stub big -> stub little -> person with family).
+function inferFamilyFromConnections(nodes) {
+    const idToNode = new Map(nodes.map(n => [n.id, n]));
+    let changed = true;
+    while (changed) {
+        changed = false;
+        nodes.forEach(node => {
+            if (node.family != null && node.family !== '') return;
+            const familyCounts = new Map();
+            const consider = (name) => {
+                const other = idToNode.get(name);
+                const f = other?.family;
+                if (f && f !== 'default') familyCounts.set(f, (familyCounts.get(f) || 0) + 1);
+            };
+            (node.bigs || []).forEach(consider);
+            (node.littles || []).forEach(consider);
+            if (familyCounts.size === 0) return;
+            let best = null;
+            let bestCount = 0;
+            familyCounts.forEach((count, fam) => {
+                if (count > bestCount) { bestCount = count; best = fam; }
+            });
+            if (best != null) {
+                node.family = best;
+                node.families = node.families?.length ? node.families : [best];
+                changed = true;
+            }
+        });
+    }
 }
 
 // Calculate graph layout: each family is laid out primarily vertically (chains stacked by depth)
