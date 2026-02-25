@@ -21,14 +21,26 @@ let currentFamily = null; // Track currently selected family
 // Family colors are loaded from data.json (treeData.families); built in init()
 let familyColors = { default: { fill: '#fff', stroke: '#629dc7' } };
 
+// Derive a darker stroke color from a fill hex (for node borders)
+function darkenHex(hex, factor) {
+    if (!hex || typeof hex !== 'string') return '#333';
+    const h = hex.replace('#', '');
+    if (h.length !== 6) return hex;
+    const r = Math.max(0, Math.floor(parseInt(h.slice(0, 2), 16) * (factor ?? 0.65)));
+    const g = Math.max(0, Math.floor(parseInt(h.slice(2, 4), 16) * (factor ?? 0.65)));
+    const b = Math.max(0, Math.floor(parseInt(h.slice(4, 6), 16) * (factor ?? 0.65)));
+    return '#' + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('');
+}
+
 function buildFamilyColorsFromData() {
     if (!treeData || !Array.isArray(treeData.families)) return;
     familyColors = { default: { fill: '#fff', stroke: '#629dc7' } };
     treeData.families.forEach(f => {
-        if (f.name != null && (f.fill != null || f.stroke != null)) {
+        const color = f.color && String(f.color).trim();
+        if (f.name != null && color) {
             familyColors[f.name] = {
-                fill: f.fill != null ? f.fill : familyColors.default.fill,
-                stroke: f.stroke != null ? f.stroke : familyColors.default.stroke
+                fill: color,
+                stroke: darkenHex(color)
             };
         }
     });
