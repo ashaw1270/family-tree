@@ -118,6 +118,24 @@ function getContrastingTextColor(backgroundColor) {
     return luminance < 0.5 ? '#ffffff' : '#000000';
 }
 
+// Apply text fill (and optional outline for two-family nodes) so name is visible on split background
+function applyNodeTextStyle(textSelection, d, backgroundColorForContrast) {
+    const bg = (typeof backgroundColorForContrast === 'string' && backgroundColorForContrast.startsWith('url('))
+        ? getFamilyColor(d.family).fill
+        : backgroundColorForContrast;
+    const fill = getContrastingTextColor(bg);
+    textSelection.style('fill', fill);
+    if (d.families && d.families.length >= 2) {
+        textSelection.style('stroke', fill === '#ffffff' ? '#000000' : '#ffffff');
+        textSelection.style('stroke-width', '1.5px');
+        textSelection.style('paint-order', 'stroke fill');
+    } else {
+        textSelection.style('stroke', 'none');
+        textSelection.style('stroke-width', null);
+        textSelection.style('paint-order', null);
+    }
+}
+
 // Helper: true if person exists and has redacted: true (optional field in JSON)
 function isRedacted(personName) {
     if (!personName || !treeData?.people) return false;
@@ -1110,11 +1128,9 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
             .style('stroke', strokeColor)
             .style('stroke-width', strokeWidth);
         
-        // Set text color: for two-family nodes use primary family fill for contrast
+        // Set text color (with outline for two-family nodes so name is visible on both split colors)
         const bgForContrast = (d.families && d.families.length >= 2) ? primaryColor.fill : (typeof fillColor === 'string' && fillColor.startsWith('url(') ? primaryColor.fill : fillColor);
-        const textColor = getContrastingTextColor(bgForContrast);
-        currentNode.select('text')
-            .style('fill', textColor);
+        applyNodeTextStyle(currentNode.select('text'), d, bgForContrast);
     });
 
     // Make text visible now
@@ -1870,9 +1886,9 @@ function highlightNode(nodeId) {
             rect.style('stroke', primaryColor.stroke);
             rect.style('stroke-width', '3px');
         }
-        // Update text color for readability (use primary fill when gradient)
+        // Update text color for readability (with outline for two-family nodes)
         const bgForContrast = (d.families && d.families.length >= 2) ? getFamilyColor(d.family).fill : fillColor;
-        text.style('fill', getContrastingTextColor(typeof bgForContrast === 'string' && bgForContrast.startsWith('url(') ? getFamilyColor(d.family).fill : bgForContrast));
+        applyNodeTextStyle(text, d, typeof bgForContrast === 'string' && bgForContrast.startsWith('url(') ? getFamilyColor(d.family).fill : bgForContrast);
     });
     
     // If nodeId is provided, add selected class and styling to that node
@@ -3004,7 +3020,7 @@ function highlightFamilyInTree() {
                         .attr('x', -(baseWidth + 6) / 2)
                         .attr('y', -(baseHeight + 3) / 2);
                     const bgForContrast = (d.families && d.families.length >= 2) ? primaryColor.fill : fillColor;
-                    text.style('fill', getContrastingTextColor(typeof bgForContrast === 'string' && bgForContrast.startsWith('url(') ? primaryColor.fill : bgForContrast));
+                    applyNodeTextStyle(text, d, typeof bgForContrast === 'string' && bgForContrast.startsWith('url(') ? primaryColor.fill : bgForContrast);
                 }
             }
             // Ensure full opacity for family nodes
@@ -3035,7 +3051,7 @@ function highlightFamilyInTree() {
                         .attr('x', -baseWidth / 2)
                         .attr('y', -baseHeight / 2);
                     const bgForContrast = (d.families && d.families.length >= 2) ? primaryColor.fill : fillColor;
-                    text.style('fill', getContrastingTextColor(typeof bgForContrast === 'string' && bgForContrast.startsWith('url(') ? primaryColor.fill : bgForContrast));
+                    applyNodeTextStyle(text, d, typeof bgForContrast === 'string' && bgForContrast.startsWith('url(') ? primaryColor.fill : bgForContrast);
                 }
             }
             // Fade non-family nodes if a family is selected
