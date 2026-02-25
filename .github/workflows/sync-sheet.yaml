@@ -50,6 +50,8 @@ jobs:
                   for key, value in row.items():
                       if key in LIST_FIELDS and isinstance(value, str):
                           value = [s.strip() for s in value.split(',') if s.strip()]
+                      else:
+                          value = value.strip()
                       obj[key] = value
                       
                   name = list(obj.values())[0]
