@@ -3262,6 +3262,10 @@ function resetView() {
     }
     hidePathPanel();
     
+    // Clear search person box
+    const personSearchInput = document.getElementById('personSearch');
+    if (personSearchInput) personSearchInput.value = '';
+    
     // Reset filters
     document.getElementById('familyFilter').value = 'all';
     document.getElementById('pledgeClassFilter').value = 'all';
