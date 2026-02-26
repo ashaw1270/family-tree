@@ -526,11 +526,15 @@ function measureNodeLabelWidth(node) {
             .attr('class', 'node-label')
             .style('font-size', '14px')
             .style('font-weight', '600')
-            .style('visibility', 'hidden')
-            .text(label);
-        const w = temp.node().getBBox().width;
+            .style('visibility', 'hidden');
+        const hasBond = node.bondNumber != null && node.bondNumber !== '';
+        temp.append('tspan').attr('x', 0).attr('dy', hasBond ? '-0.55em' : '0').text(label);
+        if (hasBond) {
+            temp.append('tspan').attr('class', 'node-bond').attr('x', 0).attr('dy', '1.35em').text(String(node.bondNumber));
+        }
+        const bbox = temp.node().getBBox();
         temp.remove();
-        return w;
+        return Math.max(bbox.width, label.length * 8);
     } catch (e) {
         return label.length * 8;
     }
@@ -1067,12 +1071,13 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
         .on('mouseover', function(event, d) {
             const rect = d3.select(this).select('rect');
             const text = d3.select(this).select('text');
-            // Get current text width to calculate new rectangle size
             const textNode = text.node();
             if (textNode) {
-                const textWidth = textNode.getBBox().width || d.name.length * 8;
+                const bbox = textNode.getBBox();
+                const textWidth = bbox.width || d.name.length * 8;
+                const textHeight = bbox.height || 14;
                 const baseWidth = textWidth + 36;
-                const baseHeight = 34;
+                const baseHeight = Math.max(34, textHeight + 14);
                 if (pledgeClassNodes.has(d.id) || familyNodes.has(d.id)) {
                     rect.attr('width', baseWidth + 8).attr('height', baseHeight + 4)
                         .attr('x', -(baseWidth + 8) / 2).attr('y', -(baseHeight + 4) / 2);
@@ -1085,12 +1090,13 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
         .on('mouseout', function(event, d) {
             const rect = d3.select(this).select('rect');
             const text = d3.select(this).select('text');
-            // Get current text width to calculate rectangle size
             const textNode = text.node();
             if (textNode) {
-                const textWidth = textNode.getBBox().width || d.name.length * 8;
+                const bbox = textNode.getBBox();
+                const textWidth = bbox.width || d.name.length * 8;
+                const textHeight = bbox.height || 14;
                 const baseWidth = textWidth + 36;
-                const baseHeight = 34;
+                const baseHeight = Math.max(34, textHeight + 14);
                 if (pathNodes.has(d.id)) {
                     rect.attr('width', baseWidth + 4).attr('height', baseHeight + 2)
                         .attr('x', -(baseWidth + 4) / 2).attr('y', -(baseHeight + 2) / 2);
@@ -1104,13 +1110,27 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
             }
         });
 
-    // Create text first to measure its width
+    // Create text first (name + optional bond number) to measure its size
     const textElements = node.append('text')
         .attr('class', 'node-label')
         .attr('text-anchor', 'middle')
         .attr('dominant-baseline', 'middle')
         .attr('dy', 0)
-        .text(d => formatNameWithNickname(d.name))
+        .each(function(d) {
+            const el = d3.select(this);
+            const hasBond = d.bondNumber != null && d.bondNumber !== '';
+            el.append('tspan')
+                .attr('x', 0)
+                .attr('dy', hasBond ? '-0.55em' : '0')
+                .text(formatNameWithNickname(d.name));
+            if (hasBond) {
+                el.append('tspan')
+                    .attr('class', 'node-bond')
+                    .attr('x', 0)
+                    .attr('dy', '1.35em')
+                    .text(String(d.bondNumber));
+            }
+        })
         .style('font-weight', d => {
             // Slightly bolder for highlighted node labels
             if (pledgeClassNodes.has(d.id) || familyNodes.has(d.id)) return '700';
@@ -1151,13 +1171,15 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
         })
         .style('visibility', 'hidden'); // Temporarily hide to measure
 
-    // Create rectangles based on text width
+    // Create rectangles based on text size (name + optional bond number)
     node.each(function(d) {
         const currentNode = d3.select(this);
         const textNode = currentNode.select('text').node();
-        const textWidth = textNode ? textNode.getBBox().width : d.name.length * 8;
+        const bbox = textNode ? textNode.getBBox() : null;
+        const textWidth = bbox ? bbox.width : d.name.length * 8;
+        const textHeight = bbox ? bbox.height : 14;
         const baseWidth = textWidth + 36;
-        const baseHeight = 34;
+        const baseHeight = Math.max(34, textHeight + 14);
         
         let rectWidth, rectHeight;
         if (pathNodes.has(d.id)) {
@@ -2281,9 +2303,11 @@ function highlightPathindree() {
             const text = node.select('text');
             const textNode = text.node();
             if (textNode) {
-                const textWidth = textNode.getBBox().width || d.name.length * 7;
+                const bbox = textNode.getBBox();
+                const textWidth = bbox.width || d.name.length * 7;
+                const textHeight = bbox.height || 14;
                 const baseWidth = textWidth + 20;
-                const baseHeight = 24;
+                const baseHeight = Math.max(24, textHeight + 10);
                 const fillColor = '#ff6b6b';
                 rect
                     .transition()
@@ -2977,9 +3001,11 @@ function highlightPledgeClassInTree() {
             if (rect.size() > 0 && text.size() > 0) {
                 const textNode = text.node();
                 if (textNode) {
-                    const textWidth = textNode.getBBox().width || d.name.length * 7;
+                    const bbox = textNode.getBBox();
+                    const textWidth = bbox.width || d.name.length * 7;
+                    const textHeight = bbox.height || 14;
                     const baseWidth = textWidth + 20;
-                    const baseHeight = 24;
+                    const baseHeight = Math.max(24, textHeight + 10);
                     const fillColor = '#ffd700'; // Gold
                     // Apply highlighting immediately using style() to override CSS
                     rect
@@ -3008,9 +3034,11 @@ function highlightPledgeClassInTree() {
             if (rect.size() > 0 && text.size() > 0) {
                 const textNode = text.node();
                 if (textNode) {
-                    const textWidth = textNode.getBBox().width || d.name.length * 7;
+                    const bbox = textNode.getBBox();
+                    const textWidth = bbox.width || d.name.length * 7;
+                    const textHeight = bbox.height || 14;
                     const baseWidth = textWidth + 20;
-                    const baseHeight = 24;
+                    const baseHeight = Math.max(24, textHeight + 10);
                     const familyColor = getFamilyColor(d.family);
                     const fillColor = familyColor.fill;
                     rect
@@ -3089,9 +3117,11 @@ function highlightFamilyInTree() {
             if (rect.size() > 0 && text.size() > 0) {
                 const textNode = text.node();
                 if (textNode) {
-                    const textWidth = textNode.getBBox().width || d.name.length * 7;
+                    const bbox = textNode.getBBox();
+                    const textWidth = bbox.width || d.name.length * 7;
+                    const textHeight = bbox.height || 14;
                     const baseWidth = textWidth + 20;
-                    const baseHeight = 24;
+                    const baseHeight = Math.max(24, textHeight + 10);
                     const fillColor = getNodeFill(d, 'normal'); // Gradient for two families
                     const primaryColor = getFamilyColor(d.family);
                     // Apply highlighting immediately using style() to override CSS
@@ -3121,9 +3151,11 @@ function highlightFamilyInTree() {
             if (rect.size() > 0 && text.size() > 0) {
                 const textNode = text.node();
                 if (textNode) {
-                    const textWidth = textNode.getBBox().width || d.name.length * 7;
+                    const bbox = textNode.getBBox();
+                    const textWidth = bbox.width || d.name.length * 7;
+                    const textHeight = bbox.height || 14;
                     const baseWidth = textWidth + 20;
-                    const baseHeight = 24;
+                    const baseHeight = Math.max(24, textHeight + 10);
                     const fillColor = getNodeFill(d, 'normal');
                     const primaryColor = getFamilyColor(d.family);
                     rect
