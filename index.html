@@ -512,6 +512,28 @@
             font-weight: 600;
         }
 
+        .info-panel-action-btn {
+            display: block;
+            width: 100%;
+            margin-top: 16px;
+            padding: 10px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #629dc7;
+            background: transparent;
+            border: 2px solid #629dc7;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+            box-sizing: border-box;
+        }
+
+        .info-panel-action-btn:hover {
+            background: rgba(98, 157, 199, 0.12);
+            color: #4a8ab5;
+            border-color: #4a8ab5;
+        }
+
         .person-not-in-data {
             color: #c92a2a;
             font-weight: 500;
@@ -867,6 +889,7 @@
             <div class="info-panel" id="infoPanel">
                 <h3 id="infoName"></h3>
                 <p id="infoDetails"></p>
+                <button type="button" class="info-panel-action-btn" id="seeDescendantsBtn" onclick="showDescendantsFromPanel()" title="Highlight this person and all their descendants in the tree">See descendants</button>
             </div>
             
             <div class="family-info-panel" id="familyInfoPanel">

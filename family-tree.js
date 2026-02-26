@@ -17,6 +17,8 @@ let currentPledgeClass = null; // Track currently selected pledge class
 let familyNodes = new Set(); // Track nodes in selected family
 let familyNuclearFamily = new Set(); // Track nuclear family (bigs/littles) of family members
 let currentFamily = null; // Track currently selected family
+let descendantNodes = new Set(); // Track person + all descendants when "See descendants" is active
+let descendantLinks = new Set(); // Track links between descendant nodes
 
 // Family colors are loaded from data.json (treeData.families); built in init()
 let familyColors = { default: { fill: '#fff', stroke: '#629dc7' } };
@@ -94,6 +96,7 @@ function ensureFamilyGradients(nodes) {
 function getNodeFill(d, context) {
     if (context === 'path' && pathNodes.has(d.id)) return '#ff6b6b';
     if (context === 'pledge' && pledgeClassNodes.has(d.id)) return '#ffd700';
+    if (context === 'descendant' && descendantNodes.has(d.id)) return '#2ecc71';
     if (d.families && d.families.length >= 2) {
         const ordered = d.familyOrderByPosition || d.families.slice(0, 2);
         const [a, b] = ordered;
@@ -881,6 +884,9 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
                 pathLinks.has(`${targetId}-${sourceId}`)) {
                 classes += ' path-link';
             }
+            if (descendantLinks.has(`${sourceId}-${targetId}`) || descendantLinks.has(`${targetId}-${sourceId}`)) {
+                classes += ' descendant-link';
+            }
             return classes;
         })
         .attr('x1', d => d.source.x)
@@ -944,6 +950,11 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
                     return fadeIn ? 0 : 0.15; // Very faded for other links
                 }
             }
+            // Fade links if descendants are highlighted
+            if (descendantNodes.size > 0) {
+                const isDescendantLink = descendantLinks.has(`${sourceId}-${targetId}`) || descendantLinks.has(`${targetId}-${sourceId}`);
+                return isDescendantLink ? (fadeIn ? 0 : 1) : (fadeIn ? 0 : 0.15);
+            }
             // Fade links if family is selected
             if (currentFamily && currentFamily !== 'all') {
                 const sourceInFamily = familyNodes.has(sourceId);
@@ -981,6 +992,9 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
             if (familyNodes.has(d.id)) {
                 classes += ' family-node';
             }
+            if (descendantNodes.has(d.id)) {
+                classes += ' descendant-node';
+            }
             return classes;
         })
         .attr('transform', d => `translate(${d.x},${d.y})`)
@@ -1014,6 +1028,10 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
                     return fadeIn ? 0 : 0.6; // Less faded for nuclear family
                 }
                 return fadeIn ? 0 : 0.15; // Very faded for other nodes
+            }
+            // Fade nodes if descendants are highlighted and node is not a descendant
+            if (descendantNodes.size > 0 && !descendantNodes.has(d.id)) {
+                return fadeIn ? 0 : 0.15;
             }
             return fadeIn ? 0 : 1;
         })
@@ -1185,7 +1203,7 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
         if (pathNodes.has(d.id)) {
             rectWidth = baseWidth + 4;
             rectHeight = baseHeight + 2;
-        } else if (pledgeClassNodes.has(d.id) || familyNodes.has(d.id)) {
+        } else if (pledgeClassNodes.has(d.id) || familyNodes.has(d.id) || descendantNodes.has(d.id)) {
             rectWidth = baseWidth + 6;
             rectHeight = baseHeight + 3;
         } else {
@@ -1199,6 +1217,8 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
             fillColor = '#ff6b6b';
         } else if (pledgeClassNodes.has(d.id)) {
             fillColor = '#ffd700'; // Gold
+        } else if (descendantNodes.has(d.id)) {
+            fillColor = '#2ecc71'; // Green for descendants
         } else {
             fillColor = getNodeFill(d, 'normal');
         }
@@ -1210,6 +1230,8 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
             strokeColor = '#c92a2a';
         } else if (pledgeClassNodes.has(d.id)) {
             strokeColor = '#ff8c00'; // Orange
+        } else if (descendantNodes.has(d.id)) {
+            strokeColor = '#27ae60'; // Darker green
         } else {
             strokeColor = primaryColor.stroke;
         }
@@ -1218,7 +1240,7 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
         let strokeWidth;
         if (pathNodes.has(d.id)) {
             strokeWidth = '5px';
-        } else if (pledgeClassNodes.has(d.id) || familyNodes.has(d.id)) {
+        } else if (pledgeClassNodes.has(d.id) || familyNodes.has(d.id) || descendantNodes.has(d.id)) {
             strokeWidth = '6px';
         } else {
             strokeWidth = '3px';
@@ -1284,6 +1306,11 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
                     }
                 }
                 
+                // Fade links if descendants are highlighted
+                if (descendantNodes.size > 0) {
+                    const isDescendantLink = descendantLinks.has(`${sourceId}-${targetId}`) || descendantLinks.has(`${targetId}-${sourceId}`);
+                    return isDescendantLink ? 1 : 0.15;
+                }
                 // Fade links if pledge class is selected
                 if (currentPledgeClass && currentPledgeClass !== 'all') {
                     const sourceInPledgeClass = pledgeClassNodes.has(sourceId);
@@ -1358,6 +1385,10 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
                     }
                     return 0.15; // Very faded for other nodes
                 }
+                // Fade nodes if descendants are highlighted and node is not a descendant
+                if (descendantNodes.size > 0 && !descendantNodes.has(d.id)) {
+                    return 0.15;
+                }
                 return 1;
             });
         
@@ -1378,6 +1409,11 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
                 // Fade labels if path is highlighted and node is not part of the path
                 if (pathNodes.size > 0 && !pathNodes.has(d.id)) {
                     return 0.15; // Very faded for labels not in path
+                }
+                
+                // Fade labels if descendants are highlighted and node is not a descendant
+                if (descendantNodes.size > 0 && !descendantNodes.has(d.id)) {
+                    return 0.15;
                 }
                 
                 // Fade labels if pledge class is selected and node is not in pledge class
@@ -1754,6 +1790,12 @@ function showNodeInfo(node) {
     // Attach event listeners to the links
     attachLinkListeners(detailsEl);
     
+    // Show "See descendants" button only if this person has at least one little
+    const seeDescendantsBtn = document.getElementById('seeDescendantsBtn');
+    if (seeDescendantsBtn) {
+        seeDescendantsBtn.style.display = (node.littles && node.littles.length > 0) ? '' : 'none';
+    }
+    
     panel.classList.add('show');
     
     // Rebuild tree to apply opacity changes when selecting a person (and nothing else is selected)
@@ -1766,6 +1808,8 @@ function showNodeInfo(node) {
 function hideNodeInfo() {
     currentlySelectedNode = null;
     selectedNodeNuclearFamily.clear();
+    descendantNodes.clear();
+    descendantLinks.clear();
     const panel = document.getElementById('infoPanel');
     panel.classList.remove('show');
     
@@ -1773,9 +1817,129 @@ function hideNodeInfo() {
     highlightNode(null);
     
     // Rebuild tree to update opacity when node is deselected
-    if (!currentFamily && !currentPledgeClass && pathNodes.size === 0) {
+    if (!currentFamily && (!currentPledgeClass || currentPledgeClass === 'all') && pathNodes.size === 0) {
         buildTree();
     }
+}
+
+// Return set of person name + all descendants (littles, grandlittles, etc.)
+function getDescendants(personName) {
+    if (!treeData || !treeData.people) return new Set([personName]);
+    const people = new Map();
+    treeData.people.forEach(p => people.set(p.name, p));
+    const result = new Set([personName]);
+    const queue = [personName];
+    while (queue.length > 0) {
+        const name = queue.shift();
+        const person = people.get(name);
+        if (person && person.littles) {
+            person.littles.forEach(little => {
+                if (!result.has(little)) {
+                    result.add(little);
+                    queue.push(little);
+                }
+            });
+        }
+    }
+    return result;
+}
+
+// Show descendants in tree (highlight person and all their littles/grandlittles)
+function showDescendantsFromPanel() {
+    if (!currentlySelectedNode) return;
+    showDescendants(currentlySelectedNode.id);
+}
+
+function showDescendants(personName) {
+    descendantNodes = getDescendants(personName);
+    descendantLinks.clear();
+    treeData.people.forEach(person => {
+        if (!descendantNodes.has(person.name)) return;
+        (person.littles || []).forEach(little => {
+            if (descendantNodes.has(little)) {
+                descendantLinks.add(`${person.name}-${little}`);
+            }
+        });
+    });
+    pathNodes.clear();
+    pathLinks.clear();
+    currentPath = null;
+    hidePathPanel();
+    buildTree();
+    setTimeout(() => {
+        highlightDescendantsInTree();
+        zoomToDescendants();
+    }, 300);
+}
+
+function zoomToDescendants() {
+    if (descendantNodes.size === 0) return;
+    const nodes = g.selectAll('.node').data();
+    const descendantData = nodes.filter(d => descendantNodes.has(d.id));
+    if (descendantData.length === 0) return;
+    const xCoords = descendantData.map(d => d.x);
+    const yCoords = descendantData.map(d => d.y);
+    const minX = Math.min(...xCoords);
+    const maxX = Math.max(...xCoords);
+    const minY = Math.min(...yCoords);
+    const maxY = Math.max(...yCoords);
+    const centerX = (minX + maxX) / 2;
+    const centerY = (minY + maxY) / 2;
+    const spanX = maxX - minX || width;
+    const spanY = maxY - minY || height;
+    const padding = 120;
+    const scale = Math.min(width / (spanX + padding), height / (spanY + padding)) * 0.75;
+    const transform = d3.zoomIdentity
+        .translate(width / 2 - centerX * scale, height / 2 - centerY * scale)
+        .scale(scale);
+    svg.transition()
+        .duration(750)
+        .ease(d3.easeCubicInOut)
+        .call(zoom.transform, transform);
+}
+
+// Highlight descendant nodes in the tree after rendering
+function highlightDescendantsInTree() {
+    g.selectAll('.node').each(function(d) {
+        const node = d3.select(this);
+        const nodeId = d.id || d.name;
+        const label = node.select('.node-label');
+        const rect = node.select('rect');
+        const text = node.select('text');
+        if (rect.size() === 0 || text.size() === 0) return;
+        if (descendantNodes.has(nodeId) && !pathNodes.has(nodeId)) {
+            const textNode = text.node();
+            const bbox = textNode ? textNode.getBBox() : { width: d.name.length * 7, height: 14 };
+            const textWidth = bbox.width || d.name.length * 7;
+            const textHeight = bbox.height || 14;
+            const baseWidth = textWidth + 20;
+            const baseHeight = Math.max(24, textHeight + 10);
+            const fillColor = '#2ecc71';
+            rect
+                .style('fill', fillColor)
+                .style('stroke', '#27ae60')
+                .style('stroke-width', '5px')
+                .attr('width', baseWidth + 6)
+                .attr('height', baseHeight + 3)
+                .attr('x', -(baseWidth + 6) / 2)
+                .attr('y', -(baseHeight + 3) / 2);
+            applyNodeTextStyle(text, d, fillColor);
+            node.style('opacity', 1);
+            if (label.size() > 0) {
+                label.style('opacity', 1).style('font-weight', '700');
+            }
+        } else if (!descendantNodes.has(nodeId) && descendantNodes.size > 0) {
+            node.style('opacity', 0.15);
+            if (label.size() > 0) label.style('opacity', 0.15);
+        }
+    });
+    g.selectAll('.link').each(function(d) {
+        const link = d3.select(this);
+        const sourceId = typeof d.source === 'object' ? d.source.id : d.source;
+        const targetId = typeof d.target === 'object' ? d.target.id : d.target;
+        const isDescendantLink = descendantLinks.has(`${sourceId}-${targetId}`) || descendantLinks.has(`${targetId}-${sourceId}`);
+        link.style('opacity', isDescendantLink ? 1 : 0.15);
+    });
 }
 
 // Show family information
@@ -1983,6 +2147,12 @@ function highlightNode(nodeId) {
             fillColor = '#ffd700';
             rect.style('fill', fillColor);
             rect.style('stroke', '#ff8c00');
+            rect.style('stroke-width', '5px');
+        } else if (descendantNodes.has(d.id)) {
+            // Keep descendant node styling
+            fillColor = '#2ecc71';
+            rect.style('fill', fillColor);
+            rect.style('stroke', '#27ae60');
             rect.style('stroke-width', '5px');
         } else {
             // Family-based styling (gradient for two families)
