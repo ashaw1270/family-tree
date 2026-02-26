@@ -1537,7 +1537,7 @@
       ]
     },
     {
-      "name": "Michael Ziegler",
+      "name": "Mikey Ziegler",
       "bondNumber": 2022,
       "pledgeClass": "Alpha Eta",
       "bigs": [
@@ -2467,7 +2467,8 @@
       "bondNumber": 2091,
       "pledgeClass": "Alpha Kappa",
       "bigs": [
-        "Evan Henderson"
+        "Evan Henderson",
+        "Josiah Clark"
       ],
       "littles": [
         "Teja Kanumuru"
@@ -3739,7 +3740,6 @@
       "littles": [
         "Sam DeRusha"
       ],
-      "nickname": "Dih",
       "families": [
         "Fire"
       ]
@@ -3952,6 +3952,7 @@
         "Michael Lemos"
       ],
       "littles": [],
+      "nickname": "Dih",
       "families": [
         "Fire",
         "Gold"
