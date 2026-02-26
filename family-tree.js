@@ -2580,9 +2580,11 @@ function populateFamilyLegend() {
     
     // Sort families alphabetically
     const sortedFamilies = Array.from(families).sort();
-    
+    // Exclude families whose names begin with "Unknown" from the legend only
+    const familiesForLegend = sortedFamilies.filter(name => !name.startsWith('Unknown'));
+
     // Create legend items
-    sortedFamilies.forEach(familyName => {
+    familiesForLegend.forEach(familyName => {
         const familyColor = getFamilyColor(familyName);
         
         const legendItem = document.createElement('div');
