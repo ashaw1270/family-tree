@@ -17,6 +17,9 @@ let currentPledgeClass = null; // Track currently selected pledge class
 let familyNodes = new Set(); // Track nodes in selected family
 let familyNuclearFamily = new Set(); // Track nuclear family (bigs/littles) of family members
 let currentFamily = null; // Track currently selected family
+// When true, selecting a family (filter or legend) rebuilds the tree to show ONLY that family's members.
+// When false, the full tree is shown with family members highlighted and others faded.
+let familyFilterIsolateMode = true;
 let descendantNodes = new Set(); // Track person + all descendants when "See descendants" is active
 let descendantLinks = new Set(); // Track links between descendant nodes
 
@@ -446,13 +449,26 @@ function buildTree(preservePath = false, animate = false) {
         hidePathPanel();
     }
 
+    // In isolate mode with a family selected, use only that family's members (and only links between them)
+    let peopleToUse = treeData.people;
+    if (familyFilterIsolateMode && currentFamily && currentFamily !== 'all' && familyNodes.size > 0) {
+        const familySet = new Set(familyNodes);
+        peopleToUse = treeData.people
+            .filter(p => familySet.has(p.name))
+            .map(p => ({
+                ...p,
+                littles: (p.littles || []).filter(l => familySet.has(l)),
+                bigs: (p.bigs || []).filter(b => familySet.has(b))
+            }));
+    }
+
     // Build node map and adjacency lists
     const nodeMap = new Map();
     const adjacencyList = new Map();
     const allPeople = new Set();
 
     // Collect all people and build relationships from their bigs/littles
-    treeData.people.forEach(person => {
+    peopleToUse.forEach(person => {
         allPeople.add(person.name);
         nodeMap.set(person.name, person);
         // Use bigs and littles directly from person object, defaulting to empty arrays
@@ -464,7 +480,7 @@ function buildTree(preservePath = false, animate = false) {
 
     // Build links from relationships (graph structure, not strict tree)
     const links = [];
-    treeData.people.forEach(person => {
+    peopleToUse.forEach(person => {
         const littles = person.littles || [];
         littles.forEach(little => {
             links.push({ source: person.name, target: little });
@@ -512,6 +528,15 @@ function buildTree(preservePath = false, animate = false) {
 
     // Infer family for nodes that have none (e.g. stubs) so they layout with their bigs/littles
     inferFamilyFromConnections(nodes);
+
+    // In isolate mode, force every node to the selected family for layout so the tree is one compact
+    // column: nodes are placed only by their (filtered) big/little chain, not spread by multi-family ties.
+    if (familyFilterIsolateMode && currentFamily && currentFamily !== 'all') {
+        nodes.forEach(node => {
+            node.family = currentFamily;
+            node.families = [currentFamily];
+        });
+    }
 
     // Show all nodes (family filter now uses highlighting instead of filtering)
     const layout = calculateGraphLayout(nodes, links);
@@ -1684,15 +1709,17 @@ function selectPledgeClass(pledgeClassName) {
 // Show node information
 function showNodeInfo(node) {
     currentlySelectedNode = node;
-    
-    // Track nuclear family (bigs and littles) of selected node
+    // Use source person data so pop-up shows full info (all bigs, littles, families) even when filtering
+    const personData = treeData?.people?.find(p => p.name === node.id || p.name === node.name);
+    const source = personData || node;
+
+    // Track nuclear family (bigs and littles) of selected node — use source so highlight is consistent
     selectedNodeNuclearFamily.clear();
-    if (node.bigs && node.bigs.length > 0) {
-        node.bigs.forEach(big => selectedNodeNuclearFamily.add(big));
-    }
-    if (node.littles && node.littles.length > 0) {
-        node.littles.forEach(little => selectedNodeNuclearFamily.add(little));
-    }
+    const bigs = source.bigs || [];
+    const littles = source.littles || [];
+    bigs.forEach(big => selectedNodeNuclearFamily.add(big));
+    littles.forEach(little => selectedNodeNuclearFamily.add(little));
+
     const panel = document.getElementById('infoPanel');
     const nameEl = document.getElementById('infoName');
     const detailsEl = document.getElementById('infoDetails');
@@ -1731,30 +1758,33 @@ function showNodeInfo(node) {
     let details = [];
     
     // Nickname - show first if it exists (never show for redacted persons)
-    if (node.nickname && !isRedacted(node.name)) {
-        details.push(`<strong>Nickname:</strong> ${node.nickname}`);
+    if (source.nickname && !isRedacted(node.name)) {
+        details.push(`<strong>Nickname:</strong> ${source.nickname}`);
     }
     
     // Bond Number
-    if (node.bondNumber !== null && node.bondNumber !== undefined) {
-        details.push(`<strong>Bond Number:</strong> ${node.bondNumber}`);
+    if (source.bondNumber !== null && source.bondNumber !== undefined) {
+        details.push(`<strong>Bond Number:</strong> ${source.bondNumber}`);
     } else {
         details.push(`<strong>Bond Number:</strong> Unknown`);
     }
     
     // Pledge Class
-    if (node.pledgeClass) {
-        details.push(`<strong>Pledge Class:</strong> ${createPledgeClassLink(node.pledgeClass)}`);
+    if (source.pledgeClass) {
+        details.push(`<strong>Pledge Class:</strong> ${createPledgeClassLink(source.pledgeClass)}`);
     } else {
         details.push(`<strong>Pledge Class:</strong> Unknown`);
     }
     
     // Family / Families
-    if (node.families && node.families.length > 0) {
-        if (node.families.length === 1) {
-            details.push(`<strong>Family:</strong> ${createFamilyLink(node.families[0])}`);
+    const familiesToShow = Array.isArray(source.families) && source.families.length > 0
+        ? source.families
+        : [];
+    if (familiesToShow.length > 0) {
+        if (familiesToShow.length === 1) {
+            details.push(`<strong>Family:</strong> ${createFamilyLink(familiesToShow[0])}`);
         } else {
-            const familyLinks = node.families.map(f => createFamilyLink(f)).join(', ');
+            const familyLinks = familiesToShow.map(f => createFamilyLink(f)).join(', ');
             details.push(`<strong>Families:</strong> ${familyLinks}`);
         }
     } else {
@@ -1762,11 +1792,11 @@ function showNodeInfo(node) {
     }
     
     // Big Brother(s)
-    if (node.bigs && node.bigs.length > 0) {
-        if (node.bigs.length === 1) {
-            details.push(`<strong>Big:</strong> ${createPersonLink(node.bigs[0])}`);
+    if (bigs.length > 0) {
+        if (bigs.length === 1) {
+            details.push(`<strong>Big:</strong> ${createPersonLink(bigs[0])}`);
         } else {
-            const bigLinks = node.bigs.map(big => createPersonLink(big)).join(', ');
+            const bigLinks = bigs.map(big => createPersonLink(big)).join(', ');
             details.push(`<strong>Bigs:</strong> ${bigLinks}`);
         }
     } else {
@@ -1774,11 +1804,11 @@ function showNodeInfo(node) {
     }
     
     // Little Brother(s)
-    if (node.littles && node.littles.length > 0) {
-        if (node.littles.length === 1) {
-            details.push(`<strong>Little:</strong> ${createPersonLink(node.littles[0])}`);
+    if (littles.length > 0) {
+        if (littles.length === 1) {
+            details.push(`<strong>Little:</strong> ${createPersonLink(littles[0])}`);
         } else {
-            const littleLinks = node.littles.map(little => createPersonLink(little)).join(', ');
+            const littleLinks = littles.map(little => createPersonLink(little)).join(', ');
             details.push(`<strong>Littles:</strong> ${littleLinks}`);
         }
     } else {
@@ -1793,7 +1823,7 @@ function showNodeInfo(node) {
     // Show "See descendants" button only if this person has at least one little
     const seeDescendantsBtn = document.getElementById('seeDescendantsBtn');
     if (seeDescendantsBtn) {
-        seeDescendantsBtn.style.display = (node.littles && node.littles.length > 0) ? '' : 'none';
+        seeDescendantsBtn.style.display = littles.length > 0 ? '' : 'none';
     }
     
     panel.classList.add('show');
