@@ -1,6 +1,117 @@
 {
   "people": [
     {
+      "name": "Jack Salva",
+      "bondNumber": 1921,
+      "pledgeClass": "",
+      "bigs": [],
+      "littles": [
+        "Evan Molenda"
+      ],
+      "families": [
+        "Unknown"
+      ]
+    },
+    {
+      "name": "Evan Molenda",
+      "bondNumber": 1951,
+      "pledgeClass": "",
+      "bigs": [
+        "Jack Salva"
+      ],
+      "littles": [
+        "David Rozo"
+      ],
+      "families": [
+        "Unknown"
+      ]
+    },
+    {
+      "name": "Spencer Paulsen",
+      "bondNumber": 1887,
+      "pledgeClass": "",
+      "bigs": [],
+      "littles": [
+        "Owen Ramsby"
+      ],
+      "families": [
+        "Unknown"
+      ]
+    },
+    {
+      "name": "Kevin Wu",
+      "bondNumber": 1901,
+      "pledgeClass": "",
+      "bigs": [],
+      "littles": [
+        "Ryan Ross"
+      ],
+      "families": [
+        "Unknown"
+      ]
+    },
+    {
+      "name": "Ryan Ross",
+      "bondNumber": 1939,
+      "pledgeClass": "",
+      "bigs": [
+        "Kevin Wu"
+      ],
+      "littles": [],
+      "families": [
+        "Unknown"
+      ]
+    },
+    {
+      "name": "Louis Cheng",
+      "bondNumber": 1977,
+      "pledgeClass": "",
+      "bigs": [],
+      "littles": [
+        "Tommy Kimmel"
+      ],
+      "families": [
+        "Unknown"
+      ]
+    },
+    {
+      "name": "Sam McNamee",
+      "bondNumber": 1868,
+      "pledgeClass": "",
+      "bigs": [],
+      "littles": [
+        "Ryan Nishida",
+        "Sam Mink"
+      ],
+      "families": [
+        "Unknown"
+      ]
+    },
+    {
+      "name": "Ryan Nishida",
+      "bondNumber": 1997,
+      "pledgeClass": "",
+      "bigs": [
+        "Sam McNamee"
+      ],
+      "littles": [],
+      "families": [
+        "Unknown"
+      ]
+    },
+    {
+      "name": "Sam Mink",
+      "bondNumber": 1971,
+      "pledgeClass": "",
+      "bigs": [
+        "Sam McNamee"
+      ],
+      "littles": [],
+      "families": [
+        "Unknown"
+      ]
+    },
+    {
       "name": "Jason Silberman",
       "bondNumber": 1934,
       "pledgeClass": "",
