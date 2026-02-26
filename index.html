@@ -339,23 +339,22 @@
         }
 
         .family-legend {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
+            width: 100%;
             background: rgba(255, 255, 255, 0.98);
-            padding: 15px 20px;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            padding: 12px 20px;
+            border-radius: 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             z-index: 1001;
-            border: 2px solid #e9ecef;
-            min-width: 200px;
-            max-height: calc(100vh - 80px);
+            border-bottom: 2px solid #e9ecef;
+            border-left: none;
+            border-right: none;
+            border-top: none;
             overflow: hidden;
         }
 
         .family-legend-collapsed {
             padding: 8px 12px;
-            min-width: 0;
+            min-height: 0;
         }
 
         .family-legend-collapsed .family-legend-content {
@@ -386,15 +385,19 @@
         }
 
         .family-legend-content {
-            display: block;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
         }
 
         .family-legend-header {
             display: flex;
             align-items: center;
-            justify-content: space-between;
             gap: 10px;
-            margin-bottom: 12px;
+            margin-bottom: 0;
+            flex-shrink: 0;
         }
 
         .family-legend-collapse-btn {
@@ -434,16 +437,16 @@
 
         .legend-items {
             display: flex;
-            flex-direction: column;
-            gap: 8px;
-            overflow-y: auto;
-            max-height: min(50vh, 400px);
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 8px 16px;
+            align-items: center;
         }
 
         .legend-item {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             cursor: pointer;
             padding: 6px 10px;
             border-radius: 6px;
@@ -452,7 +455,7 @@
 
         .legend-item:hover {
             background: #f8f9fa;
-            transform: translateX(3px);
+            transform: translateY(-2px);
         }
 
         .legend-color-box {
@@ -846,20 +849,20 @@
             </div>
         </div>
         
+        <div class="family-legend" id="familyLegend">
+            <div class="family-legend-content">
+                <div class="family-legend-header">
+                    <h4>Families</h4>
+                    <button type="button" class="family-legend-collapse-btn" onclick="toggleFamilyLegendCollapse()" title="Collapse">−</button>
+                </div>
+                <div class="legend-items" id="legendItems"></div>
+            </div>
+            <button type="button" class="family-legend-expand-tab" id="familyLegendExpandTab" onclick="toggleFamilyLegendCollapse()" title="Show families">Families</button>
+        </div>
+        
         <div class="visualization-container">
             <button type="button" class="exit-fullscreen-btn" id="exitFullscreenBtn" onclick="toggleFullscreen()" title="Exit full screen">Exit full screen</button>
             <svg id="tree-svg"></svg>
-            
-            <div class="family-legend" id="familyLegend">
-                <div class="family-legend-content">
-                    <div class="family-legend-header">
-                        <h4>Families</h4>
-                        <button type="button" class="family-legend-collapse-btn" onclick="toggleFamilyLegendCollapse()" title="Collapse">−</button>
-                    </div>
-                    <div class="legend-items" id="legendItems"></div>
-                </div>
-                <button type="button" class="family-legend-expand-tab" id="familyLegendExpandTab" onclick="toggleFamilyLegendCollapse()" title="Show families">Families</button>
-            </div>
             
             <div class="info-panel" id="infoPanel">
                 <h3 id="infoName"></h3>
