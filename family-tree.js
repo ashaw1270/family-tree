@@ -2815,6 +2815,31 @@ document.getElementById('pledgeClassFilter').addEventListener('change', function
     updateCenterButtonVisibility();
 });
 
+// Fullscreen: tree only, no filters or panels
+function toggleFullscreen() {
+    document.body.classList.toggle('fullscreen-mode');
+    const btn = document.getElementById('fullscreenBtn');
+    if (btn) {
+        btn.textContent = document.body.classList.contains('fullscreen-mode') ? 'Exit full screen' : 'Full screen';
+        btn.title = document.body.classList.contains('fullscreen-mode') ? 'Exit full screen' : 'Full screen';
+    }
+    requestAnimationFrame(() => {
+        setTimeout(resizeTreeToContainer, 50);
+    });
+}
+
+function resizeTreeToContainer() {
+    const container = d3.select('.visualization-container').node();
+    if (!container || !svg) return;
+    width = container.offsetWidth;
+    height = container.offsetHeight;
+    svg.attr('width', width).attr('height', height);
+    buildTree(true);
+    requestAnimationFrame(() => {
+        zoomToFitAllNodes(false);
+    });
+}
+
 // Zoom controls
 function zoomIn() {
     svg.transition().call(zoom.scaleBy, 1.5);
