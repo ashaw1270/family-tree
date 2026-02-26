@@ -1,15 +1,479 @@
 {
   "people": [
     {
-      "name": "Andrew Huang",
-      "bondNumber": 2001,
-      "pledgeClass": "Alpha Epsilon",
+      "name": "Jason Silberman",
+      "bondNumber": 1934,
+      "pledgeClass": "",
       "bigs": [],
       "littles": [
+        "Randeep Grewal"
+      ],
+      "families": [
+        "Unknown"
+      ]
+    },
+    {
+      "name": "Randeep Grewal",
+      "bondNumber": 1970,
+      "pledgeClass": "",
+      "bigs": [
+        "Jason Silberman"
+      ],
+      "littles": [],
+      "families": [
+        "Unknown"
+      ]
+    },
+    {
+      "name": "Ashish Suresh",
+      "bondNumber": 1972,
+      "pledgeClass": "",
+      "bigs": [],
+      "littles": [
+        "Jordan Tollner"
+      ],
+      "families": [
+        "Unknown"
+      ]
+    },
+    {
+      "name": "Sina Mahbobi",
+      "bondNumber": 1848,
+      "pledgeClass": "",
+      "bigs": [],
+      "littles": [
+        "Robert Bobby Dileo"
+      ],
+      "families": [
+        "Unknown"
+      ]
+    },
+    {
+      "name": "Robert Bobby Dileo",
+      "bondNumber": 1876,
+      "pledgeClass": "",
+      "bigs": [
+        "Sina Mahbobi"
+      ],
+      "littles": [
+        "Kesavan Soundararajan"
+      ],
+      "families": [
+        "Unknown"
+      ]
+    },
+    {
+      "name": "Kesavan Soundararajan",
+      "bondNumber": 1974,
+      "pledgeClass": "",
+      "bigs": [
+        "Robert Bobby Dileo"
+      ],
+      "littles": [
+        "Ishaan Chawla"
+      ],
+      "families": [
+        "Unknown"
+      ]
+    },
+    {
+      "name": "John Miggins",
+      "bondNumber": 1878,
+      "pledgeClass": "",
+      "bigs": [],
+      "littles": [
+        "Jeremy Thompson",
+        "Graham Smith",
+        "Brett Slezak"
+      ],
+      "families": [
+        "Unknown"
+      ]
+    },
+    {
+      "name": "Jeremy Thompson",
+      "bondNumber": 1923,
+      "pledgeClass": "",
+      "bigs": [
+        "John Miggins"
+      ],
+      "littles": [],
+      "families": [
+        "Unknown"
+      ]
+    },
+    {
+      "name": "Graham Smith",
+      "bondNumber": 1942,
+      "pledgeClass": "",
+      "bigs": [
+        "John Miggins"
+      ],
+      "littles": [],
+      "families": [
+        "Unknown"
+      ]
+    },
+    {
+      "name": "Brett Slezak",
+      "bondNumber": 1980,
+      "pledgeClass": "",
+      "bigs": [
+        "John Miggins"
+      ],
+      "littles": [],
+      "families": [
+        "Unknown"
+      ]
+    },
+    {
+      "name": "Skylar Yang",
+      "bondNumber": 1847,
+      "pledgeClass": "",
+      "bigs": [],
+      "littles": [],
+      "families": [
+        "Dragon"
+      ]
+    },
+    {
+      "name": "Thomas Giaclone",
+      "bondNumber": 1816,
+      "pledgeClass": "",
+      "bigs": [],
+      "littles": [
+        "David Cooper"
+      ],
+      "families": [
+        "White"
+      ]
+    },
+    {
+      "name": "David Cooper",
+      "bondNumber": 1857,
+      "pledgeClass": "",
+      "bigs": [
+        "Thomas Giaclone"
+      ],
+      "littles": [
+        "Ben Taubman"
+      ],
+      "families": [
+        "White"
+      ]
+    },
+    {
+      "name": "Ben Taubman",
+      "bondNumber": 1966,
+      "pledgeClass": "",
+      "bigs": [
+        "David Cooper"
+      ],
+      "littles": [],
+      "families": [
+        "White"
+      ]
+    },
+    {
+      "name": "Dawson Dayhoff",
+      "bondNumber": 1900,
+      "pledgeClass": "",
+      "bigs": [],
+      "littles": [
+        "Mekhi Reese"
+      ],
+      "families": [
+        "Pink"
+      ]
+    },
+    {
+      "name": "Anders Osterling",
+      "bondNumber": 1765,
+      "pledgeClass": "",
+      "bigs": [],
+      "littles": [
+        "Mekhi Reese"
+      ],
+      "families": [
+        "Pink"
+      ]
+    },
+    {
+      "name": "Mekhi Reese",
+      "bondNumber": 1952,
+      "pledgeClass": "",
+      "bigs": [
+        "Anders Osterling",
+        "Dawson Dayhoff"
+      ],
+      "littles": [
+        "Elliot Smith",
+        "Jordan Thomas"
+      ],
+      "families": [
+        "Pink"
+      ]
+    },
+    {
+      "name": "Nick Boveri",
+      "bondNumber": 1898,
+      "pledgeClass": "",
+      "bigs": [],
+      "littles": [
+        "Anant Vasudevan"
+      ],
+      "families": [
+        "Plaid"
+      ]
+    },
+    {
+      "name": "Henry Hiemstra",
+      "bondNumber": 1916,
+      "pledgeClass": "",
+      "bigs": [],
+      "littles": [
+        "Andrew Huang"
+      ],
+      "families": [
+        "Green"
+      ]
+    },
+    {
+      "name": "Andrew Huang",
+      "bondNumber": 1955,
+      "pledgeClass": "",
+      "bigs": [
+        "Henry Hiemstra"
+      ],
+      "littles": [
+        "Jordan Marzo",
         "Matt Levy"
       ],
       "families": [
         "Green"
+      ]
+    },
+    {
+      "name": "Jordan Marzo",
+      "bondNumber": 1973,
+      "pledgeClass": "",
+      "bigs": [
+        "Andrew Huang"
+      ],
+      "littles": [
+        "Carson Mogush"
+      ],
+      "families": [
+        "Green"
+      ]
+    },
+    {
+      "name": "Dylan Field",
+      "bondNumber": 1862,
+      "pledgeClass": "",
+      "bigs": [],
+      "littles": [
+        "Terry Mulaney"
+      ],
+      "families": [
+        "Green"
+      ]
+    },
+    {
+      "name": "Terry Mulaney",
+      "bondNumber": 1937,
+      "pledgeClass": "",
+      "bigs": [
+        "Dylan Field"
+      ],
+      "littles": [
+        "Sam Guillemette"
+      ],
+      "families": [
+        "Green"
+      ]
+    },
+    {
+      "name": "Aidan Cusack",
+      "bondNumber": 1859,
+      "pledgeClass": "",
+      "bigs": [],
+      "littles": [
+        "Aidan Dobson"
+      ],
+      "families": [
+        "Notorious"
+      ]
+    },
+    {
+      "name": "Aidan Dobson",
+      "bondNumber": 1932,
+      "pledgeClass": "",
+      "bigs": [
+        "Aidan Cusack"
+      ],
+      "littles": [
+        "James Kasaba",
+        "Ben Bowler"
+      ],
+      "families": [
+        "Notorious"
+      ]
+    },
+    {
+      "name": "Toby Leitao",
+      "bondNumber": 1885,
+      "pledgeClass": "",
+      "bigs": [],
+      "littles": [
+        "John Shepherd"
+      ],
+      "families": [
+        "Black"
+      ]
+    },
+    {
+      "name": "John Shepherd",
+      "bondNumber": 1928,
+      "pledgeClass": "",
+      "bigs": [
+        "Toby Leitao"
+      ],
+      "littles": [
+        "Niclas Carlson"
+      ],
+      "families": [
+        "Black"
+      ]
+    },
+    {
+      "name": "Kaveh Mahdavi",
+      "bondNumber": 1943,
+      "pledgeClass": "",
+      "bigs": [
+        "Jeremy Thompson"
+      ],
+      "littles": [
+        "Ben Bowler"
+      ],
+      "families": [
+        "Black",
+        "Notorious",
+        "Unknown"
+      ]
+    },
+    {
+      "name": "Niclas Carlson",
+      "bondNumber": 1967,
+      "pledgeClass": "",
+      "bigs": [
+        "John Shepherd"
+      ],
+      "littles": [
+        "Samuel Slattery",
+        "Matt Huntington",
+        "Rian Jagtiani"
+      ],
+      "families": [
+        "Black"
+      ]
+    },
+    {
+      "name": "Tommy Swad",
+      "bondNumber": 1791,
+      "pledgeClass": "",
+      "bigs": [],
+      "littles": [
+        "Nick Gima"
+      ],
+      "families": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "Nick Gima",
+      "bondNumber": 1882,
+      "pledgeClass": "",
+      "bigs": [
+        "Tommy Swad"
+      ],
+      "littles": [
+        "Mike DeLucia"
+      ],
+      "families": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "Mike DeLucia",
+      "bondNumber": 1940,
+      "pledgeClass": "",
+      "bigs": [
+        "Nick Gima",
+        "Phillip Bliss"
+      ],
+      "littles": [
+        "Kevin Nikroo"
+      ],
+      "families": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "Kevin Nikroo",
+      "bondNumber": 1965,
+      "pledgeClass": "",
+      "bigs": [
+        "Mike DeLucia"
+      ],
+      "littles": [
+        "Josh Rana"
+      ],
+      "families": [
+        "Chrome"
+      ]
+    },
+    {
+      "name": "Charlie Pangborn",
+      "bondNumber": 1818,
+      "pledgeClass": "",
+      "bigs": [],
+      "littles": [
+        "Phillip Bliss"
+      ],
+      "families": [
+        "Platinum"
+      ]
+    },
+    {
+      "name": "Phillip Bliss",
+      "bondNumber": 1880,
+      "pledgeClass": "",
+      "bigs": [
+        "Charlie Pangborn"
+      ],
+      "littles": [
+        "Zayn Tandon",
+        "Chris Bott",
+        "Emrad Axar",
+        "Andrew Bialock"
+      ],
+      "families": [
+        "Platinum"
+      ]
+    },
+    {
+      "name": "Zayn Tandon",
+      "bondNumber": 1975,
+      "pledgeClass": "",
+      "bigs": [
+        "Phillip Bliss"
+      ],
+      "littles": [
+        "Presley Silahian"
+      ],
+      "families": [
+        "Platinum"
       ]
     },
     {
@@ -41,7 +505,7 @@
     {
       "name": "Sean Powers",
       "bondNumber": 1963,
-      "pledgeClass": "Alpha Delta",
+      "pledgeClass": "",
       "bigs": [
         "Emrad Axar"
       ],
@@ -3628,6 +4092,78 @@
     }
   ],
   "pledgeClasses": [
+    {
+      "name": "Upsilon",
+      "semester": "Fall 2015",
+      "pcp": "Anders Osterling",
+      "pcvp": "Chris Adnams",
+      "bestPledge": "Soomin Song",
+      "hindTit": "Josh Petersen",
+      "pledgeMaster": ""
+    },
+    {
+      "name": "Phi",
+      "semester": "Spring 2016",
+      "pcp": "Benjamin Friedman",
+      "pcvp": "Kameron Hurt",
+      "bestPledge": "Sterling Dietz",
+      "hindTit": "Kieran Sweeney",
+      "pledgeMaster": ""
+    },
+    {
+      "name": "Chi",
+      "semester": "Fall 2016",
+      "pcp": "Quinlan Hughes",
+      "pcvp": "Jeremiah Watson",
+      "bestPledge": "Joey Rearic",
+      "hindTit": "Nick Carballo",
+      "pledgeMaster": ""
+    },
+    {
+      "name": "Psi",
+      "semester": "Spring 2017",
+      "pcp": "Alex Trannon",
+      "pcvp": "William Chadwick",
+      "bestPledge": "William Harton",
+      "hindTit": "Daniel Dufur",
+      "pledgeMaster": ""
+    },
+    {
+      "name": "Omega",
+      "semester": "Fall 2017",
+      "pcp": "Gabe Galanti",
+      "pcvp": "David Cooper",
+      "bestPledge": "Adam Owens",
+      "hindTit": "Quinn Cuniff",
+      "pledgeMaster": ""
+    },
+    {
+      "name": "Alpha Alpha",
+      "semester": "Spring 2018",
+      "pcp": "Alex Waggoner",
+      "pcvp": "Robert Dileo",
+      "bestPledge": "Jack Lulich",
+      "hindTit": "Drew Charters",
+      "pledgeMaster": ""
+    },
+    {
+      "name": "Alpha Beta",
+      "semester": "Fall 2018",
+      "pcp": "Kareem Danan",
+      "pcvp": "Jarrod Daltikanskas",
+      "bestPledge": "Elliot Hoppe",
+      "hindTit": "Cordon Baesel",
+      "pledgeMaster": ""
+    },
+    {
+      "name": "Alpha Gamma",
+      "semester": "Spring 2019",
+      "pcp": "Brian Femminella",
+      "pcvp": "John Shepherd",
+      "bestPledge": "Sam Bennett",
+      "hindTit": "Alpha Gamma",
+      "pledgeMaster": ""
+    },
     {
       "name": "Alpha Delta",
       "semester": "Fall 2019",
