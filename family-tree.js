@@ -2456,6 +2456,71 @@ function clearPath() {
     setTimeout(() => zoomToFitAllNodes(), 100);
 }
 
+// Compute familial relationship label from path (e.g. "first cousin once removed").
+// Treats "big" as one generation up, "little" as one generation down.
+function getRelationshipFromPath(path) {
+    if (path.length < 2) return null;
+    const people = treeData.people;
+    const levels = [0];
+    for (let i = 1; i < path.length; i++) {
+        const prev = people.find(p => p.name === path[i - 1]);
+        const curr = people.find(p => p.name === path[i]);
+        if (!prev || !curr) return null;
+        const goingToBig = prev.bigs && prev.bigs.includes(path[i]);   // next is prev's big → up a generation
+        const goingToLittle = prev.littles && prev.littles.includes(path[i]); // next is prev's little → down
+        if (goingToBig) levels.push(levels[i - 1] + 1);
+        else if (goingToLittle) levels.push(levels[i - 1] - 1);
+        else return null;
+    }
+    const M = Math.max(...levels);
+    const r = M;                                    // generations up from source to common ancestor
+    const targetLevel = levels[path.length - 1];
+    const s = M - targetLevel;                      // generations up from target to common ancestor
+
+    const ordinals = ['zero', 'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth'];
+    const removedWords = ['', 'once', 'twice', 'three times', 'four times', 'five times', 'six times', 'seven times', 'eight times', 'nine times', 'ten times'];
+
+    if (r === 0 && s === 0) return 'self';
+    if (r === 1 && s === 0) return 'big';
+    if (r === 0 && s === 1) return 'little';
+    if (r === 1 && s === 1) return 'twin';
+
+    // Target is source's big line (r>=2, s=0): grandbig, great-grandbig, ...
+    if (s === 0 && r >= 2) {
+        if (r === 2) return 'grandbig';
+        const greats = r - 2;
+        return (greats === 1 ? 'great-' : 'great-'.repeat(greats)) + 'grandbig';
+    }
+    // Target is source's little line (r=0, s>=2): grandlittle, great-grandlittle, ...
+    if (r === 0 && s >= 2) {
+        if (s === 2) return 'grandlittle';
+        const greats = s - 2;
+        return (greats === 1 ? 'great-' : 'great-'.repeat(greats)) + 'grandlittle';
+    }
+
+    // Target is source's uncle line (r>1, s=1)
+    if (s === 1 && r >= 2) {
+        if (r === 2) return 'uncle';
+        const greats = r - 2;
+        return (greats === 1 ? 'great-' : 'great-'.repeat(greats)) + 'uncle';
+    }
+    // Target is source's little line (r=1, s>1): grandlittle, great-grandlittle, ...
+    if (r === 1 && s >= 2) {
+        if (s === 2) return 'grandlittle';
+        const greats = s - 2;
+        return (greats === 1 ? 'great-' : 'great-'.repeat(greats)) + 'grandlittle';
+    }
+
+    // Cousin-style: min = cousin degree (2=first, 3=second, ...), removed = |r-s|
+    const minRS = Math.min(r, s);
+    const removed = Math.abs(r - s);
+    if (minRS < 2) return 'distant relation'; // should not reach here after handling grandbig/grandlittle above
+    const ord = minRS - 1 < ordinals.length ? ordinals[minRS - 1] : (minRS - 1) + 'th'; // 2→first, 3→second
+    if (removed === 0) return ord + ' cousin';
+    const remWord = removed < removedWords.length ? removedWords[removed] : removed + ' times';
+    return ord + ' cousin ' + remWord + ' removed';
+}
+
 // Show path panel with text description
 function showPathPanel(path) {
     const panel = document.getElementById('pathPanel');
@@ -2466,8 +2531,18 @@ function showPathPanel(path) {
         return;
     }
     
+    const sourceName = path[0];
+    const targetName = path[path.length - 1];
+    const relationship = getRelationshipFromPath(path);
+
     // Build path description with clickable links
-    let pathDescription = `Path from ${createPersonLink(path[0])} to ${createPersonLink(path[path.length - 1])}:\n\n`;
+    let pathDescription = `Path from ${createPersonLink(sourceName)} to ${createPersonLink(targetName)}:\n\n`;
+    if (relationship) {
+        const relSentence = relationship === 'self'
+            ? `${createPersonLink(targetName)} is the same person as ${createPersonLink(sourceName)}.`
+            : `${createPersonLink(targetName)} is ${createPersonLink(sourceName)}'s ${relationship}.`;
+        pathDescription += relSentence + '\n\n';
+    }
     
     for (let i = 0; i < path.length - 1; i++) {
         const current = path[i];
