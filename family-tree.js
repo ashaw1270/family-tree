@@ -712,6 +712,7 @@ function calculateGraphLayout(nodes, links) {
     });
     const allFamilyKeys = Array.from(familyToNodes.keys());
     const familyKeys = orderFamiliesByConnectivity(allFamilyKeys, familyCrossLinks);
+    const familyIndex = new Map(familyKeys.map((key, idx) => [key, idx]));
 
     // Estimate each node's box width from label (text + modest padding for rect)
     const labelPadding = 60;
@@ -734,7 +735,43 @@ function calculateGraphLayout(nodes, links) {
         const internalTargets = familyToInternalTargets.get(familyKey) || new Set();
         const childrenMap = familyToChildren.get(familyKey) || new Map();
         childrenMap.forEach((kids, id) => {
-            kids.sort((a, b) => a.localeCompare(b));
+            kids.sort((aName, bName) => {
+                const aNode = nodeMap.get(aName);
+                const bNode = nodeMap.get(bName);
+                const thisFamilyIndex = familyIndex.get(familyKey);
+
+                function bestDeltaFor(node) {
+                    if (!node || !Array.isArray(node.bigs) || thisFamilyIndex === undefined) {
+                        return 0;
+                    }
+                    let bestDelta = 0;
+                    let bestAbs = Infinity;
+                    let found = false;
+                    for (const bigName of node.bigs) {
+                        const bigNode = nodeMap.get(bigName);
+                        if (!bigNode) continue;
+                        const bigFamily = bigNode.family || 'default';
+                        const bigFamilyIndex = familyIndex.get(bigFamily);
+                        if (bigFamilyIndex === undefined || bigFamilyIndex === thisFamilyIndex) continue;
+                        const delta = bigFamilyIndex - thisFamilyIndex;
+                        const abs = Math.abs(delta);
+                        if (abs < bestAbs || (abs === bestAbs && delta < bestDelta)) {
+                            bestAbs = abs;
+                            bestDelta = delta;
+                            found = true;
+                        }
+                    }
+                    return found ? bestDelta : 0;
+                }
+
+                const aDelta = bestDeltaFor(aNode);
+                const bDelta = bestDeltaFor(bNode);
+
+                if (aDelta !== bDelta) {
+                    return aDelta - bDelta;
+                }
+                return aName.localeCompare(bName);
+            });
         });
 
         const roots = familyNodesList.filter(n => !internalTargets.has(n.id));
