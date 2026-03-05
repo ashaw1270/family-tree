@@ -1041,8 +1041,8 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
             const sourceId = typeof d.source === 'object' ? d.source.id : d.source;
             const targetId = typeof d.target === 'object' ? d.target.id : d.target;
             
-            // Fade links if a person is selected (and nothing else)
-            if (currentlySelectedNode && !currentFamily && (!currentPledgeClass || currentPledgeClass === 'all') && pathNodes.size === 0) {
+            // Fade links if a person is selected (and nothing else) — applies even when family filter is on
+            if (currentlySelectedNode && (!currentPledgeClass || currentPledgeClass === 'all') && pathNodes.size === 0) {
                 const sourceIsSelected = sourceId === currentlySelectedNode.id;
                 const targetIsSelected = targetId === currentlySelectedNode.id;
                 const sourceInNuclearFamily = selectedNodeNuclearFamily.has(sourceId);
@@ -1143,8 +1143,8 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
         })
         .attr('transform', d => `translate(${d.x},${d.y})`)
         .style('opacity', d => {
-            // Fade nodes if a person is selected (and nothing else) and node is not the selected person or in nuclear family
-            if (currentlySelectedNode && !currentFamily && (!currentPledgeClass || currentPledgeClass === 'all') && pathNodes.size === 0) {
+            // Fade nodes if a person is selected (and nothing else) and node is not the selected person or in nuclear family — applies even when family filter is on
+            if (currentlySelectedNode && (!currentPledgeClass || currentPledgeClass === 'all') && pathNodes.size === 0) {
                 if (d.id === currentlySelectedNode.id || selectedNodeNuclearFamily.has(d.id)) {
                     return fadeIn ? 0 : 1; // Full opacity for selected person and nuclear family
                 } else {
@@ -1299,8 +1299,8 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
             return '600';
         })
         .style('opacity', d => {
-            // Fade labels if a person is selected (and nothing else) and node is not the selected person or in nuclear family
-            if (currentlySelectedNode && !currentFamily && (!currentPledgeClass || currentPledgeClass === 'all') && pathNodes.size === 0) {
+            // Fade labels if a person is selected (and nothing else) and node is not the selected person or in nuclear family — applies even when family filter is on
+            if (currentlySelectedNode && (!currentPledgeClass || currentPledgeClass === 'all') && pathNodes.size === 0) {
                 if (d.id === currentlySelectedNode.id || selectedNodeNuclearFamily.has(d.id)) {
                     return 1; // Full opacity for selected person and nuclear family labels
                 } else {
@@ -1416,8 +1416,8 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
                 const sourceId = typeof d.source === 'object' ? d.source.id : d.source;
                 const targetId = typeof d.target === 'object' ? d.target.id : d.target;
                 
-                // Fade links if a person is selected (and nothing else)
-                if (currentlySelectedNode && !currentFamily && (!currentPledgeClass || currentPledgeClass === 'all') && pathNodes.size === 0) {
+                // Fade links if a person is selected (and nothing else) — applies even when family filter is on
+                if (currentlySelectedNode && (!currentPledgeClass || currentPledgeClass === 'all') && pathNodes.size === 0) {
                     const sourceIsSelected = sourceId === currentlySelectedNode.id;
                     const targetIsSelected = targetId === currentlySelectedNode.id;
                     const sourceInNuclearFamily = selectedNodeNuclearFamily.has(sourceId);
@@ -1499,8 +1499,8 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
         node.transition()
             .duration(400)
             .style('opacity', d => {
-                // Fade nodes if a person is selected (and nothing else) and node is not the selected person or in nuclear family
-                if (currentlySelectedNode && !currentFamily && (!currentPledgeClass || currentPledgeClass === 'all') && pathNodes.size === 0) {
+                // Fade nodes if a person is selected (and nothing else) and node is not the selected person or in nuclear family — applies even when family filter is on
+                if (currentlySelectedNode && (!currentPledgeClass || currentPledgeClass === 'all') && pathNodes.size === 0) {
                     if (d.id === currentlySelectedNode.id || selectedNodeNuclearFamily.has(d.id)) {
                         return 1; // Full opacity for selected person and nuclear family
                     } else {
@@ -1541,8 +1541,8 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
             .transition()
             .duration(400)
             .style('opacity', d => {
-                // Fade labels if a person is selected (and nothing else) and node is not the selected person or in nuclear family
-                if (currentlySelectedNode && !currentFamily && (!currentPledgeClass || currentPledgeClass === 'all') && pathNodes.size === 0) {
+                // Fade labels if a person is selected (and nothing else) and node is not the selected person or in nuclear family — applies even when family filter is on
+                if (currentlySelectedNode && (!currentPledgeClass || currentPledgeClass === 'all') && pathNodes.size === 0) {
                     if (d.id === currentlySelectedNode.id || selectedNodeNuclearFamily.has(d.id)) {
                         return 1; // Full opacity for selected person and nuclear family labels
                     } else {
@@ -1964,8 +1964,8 @@ function showNodeInfo(node) {
     
     panel.classList.add('show');
     
-    // Rebuild tree to apply opacity changes when selecting a person (and nothing else is selected)
-    if (!currentFamily && (!currentPledgeClass || currentPledgeClass === 'all') && pathNodes.size === 0) {
+    // Rebuild tree to apply opacity changes when selecting a person (and nothing else is selected) — also when family filter is on so nuclear family fade applies
+    if ((!currentPledgeClass || currentPledgeClass === 'all') && pathNodes.size === 0) {
         buildTree();
     }
 }
@@ -1982,8 +1982,8 @@ function hideNodeInfo() {
     // Remove highlight and restore default styling
     highlightNode(null);
     
-    // Rebuild tree to update opacity when node is deselected
-    if (!currentFamily && (!currentPledgeClass || currentPledgeClass === 'all') && pathNodes.size === 0) {
+    // Rebuild tree to update opacity when node is deselected — also when family filter is on so family view is restored
+    if ((!currentPledgeClass || currentPledgeClass === 'all') && pathNodes.size === 0) {
         buildTree();
     }
 }
