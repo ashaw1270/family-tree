@@ -1,6 +1,15 @@
 {
   "people": [
     {
+      "name": "Heinrich Stucky",
+      "bondNumber": 1964,
+      "pledgeClass": "Alpha Delta",
+      "bigs": [],
+      "littles": [],
+      "linkedin": "",
+      "families": []
+    },
+    {
       "name": "Jack Salva",
       "bondNumber": 1921,
       "pledgeClass": "Alpha Beta",
@@ -2379,7 +2388,8 @@
       ],
       "littles": [
         "Dante Brundage",
-        "Alex Ollmann"
+        "Alex Ollmann",
+        "Wael Guedoudou"
       ],
       "nickname": "Culvinator",
       "linkedin": "",
@@ -3207,7 +3217,8 @@
       "bondNumber": 2131,
       "pledgeClass": "Alpha Lambda",
       "bigs": [
-        "Dane Culver"
+        "Dane Culver",
+        "Alvaro Valerio"
       ],
       "littles": [],
       "linkedin": "",
@@ -4541,7 +4552,7 @@
       "pcp": "Anders Osterling",
       "pcvp": "Chris Adnams",
       "bestPledge": "Soomin Song",
-      "hindTit": "Josh Petersen",
+      "hindTit": "Josh Peterson",
       "pledgeMaster": ""
     },
     {
@@ -4611,8 +4622,8 @@
       "name": "Alpha Delta",
       "semester": "Fall 2019",
       "pcp": "Sean Powers",
-      "pcvp": "",
-      "bestPledge": "",
+      "pcvp": "Heinrich Stucky",
+      "bestPledge": "Kevin Nikroo",
       "hindTit": "Brett Slezak",
       "pledgeMaster": ""
     },
