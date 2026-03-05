@@ -873,8 +873,12 @@
             <div class="controls-section">
                 <h3 class="section-title">Search Person</h3>
                 <div class="path-finder">
-                    <input type="text" id="personSearch" placeholder="Type a name..." autocomplete="off" onkeydown="if(event.key==='Enter') searchAndSelectPerson()">
+                    <input type="text" id="personSearch" placeholder="Name..." autocomplete="off" onkeydown="if(event.key==='Enter') searchAndSelectPerson()">
                     <button onclick="searchAndSelectPerson()">Go</button>
+                </div>
+                <div class="path-finder">
+                    <input type="text" id="bondSearch" placeholder="Bond Number..." autocomplete="off" onkeydown="if(event.key==='Enter') searchAndSelectPersonByBondNumber()">
+                    <button onclick="searchAndSelectPersonByBondNumber()">Go</button>
                 </div>
             </div>
             

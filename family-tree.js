@@ -1807,6 +1807,27 @@ function searchAndSelectPerson() {
     selectPersonByName(partial[0].name);
 }
 
+// Search for a person by bond number and select them like a node click.
+function searchAndSelectPersonByBondNumber() {
+    const input = document.getElementById('bondSearch');
+    if (!input || !treeData || !treeData.people) return;
+    const query = (input.value || '').trim();
+    if (!query) return;
+    const people = treeData.people;
+    const bondStr = String(query).toLowerCase();
+    const exact = people.find(p => p.bondNumber != null && String(p.bondNumber).toLowerCase() === bondStr);
+    if (exact) {
+        selectPersonByName(exact.name);
+        return;
+    }
+    const partial = people.filter(p => p.bondNumber != null && String(p.bondNumber).toLowerCase().includes(bondStr));
+    if (partial.length === 0) {
+        showErrorPopup('No person found with bond number matching "' + query + '"');
+        return;
+    }
+    selectPersonByName(partial[0].name);
+}
+
 // Helper function to select a family (triggers family filter)
 function selectFamily(familyName) {
     const familyFilter = document.getElementById('familyFilter');
@@ -2789,6 +2810,7 @@ function populateFamilyFilter() {
     setupFilteredAutocomplete('person2');
     // Search person: same dropdown, and on select immediately select that person in the tree
     setupFilteredAutocomplete('personSearch', (name) => selectPersonByName(name));
+    setupBondNumberAutocomplete('bondSearch', (name) => selectPersonByName(name));
 }
 
 // Populate pledge class filter dropdown
@@ -3017,6 +3039,134 @@ function setupFilteredAutocomplete(inputId, onSelectCallback) {
     });
     
     // Hide dropdown when input loses focus (with small delay to allow clicks)
+    input.addEventListener('blur', () => {
+        setTimeout(() => {
+            if (!dropdown.matches(':hover') && document.activeElement !== input) {
+                hideDropdown();
+            }
+        }, 200);
+    });
+}
+
+// Setup autocomplete for bond number search: dropdown shows only bond numbers; on select, finds person and calls callback with name.
+function setupBondNumberAutocomplete(inputId, onSelectCallback) {
+    const input = document.getElementById(inputId);
+    if (!input) return;
+
+    const bondToName = new Map();
+    treeData.people.forEach(person => {
+        if (person.bondNumber != null && person.bondNumber !== '') {
+            const bondStr = String(person.bondNumber);
+            if (!bondToName.has(bondStr)) bondToName.set(bondStr, person.name);
+        }
+    });
+    const allBondNumbers = Array.from(bondToName.keys()).sort((a, b) => Number(a) - Number(b));
+
+    const dropdown = document.createElement('div');
+    dropdown.id = `${inputId}-dropdown`;
+    dropdown.className = 'autocomplete-dropdown';
+
+    const inputWrapper = document.createElement('div');
+    inputWrapper.style.position = 'relative';
+    inputWrapper.style.display = 'inline-block';
+
+    input.parentNode.insertBefore(inputWrapper, input);
+    inputWrapper.appendChild(input);
+    inputWrapper.appendChild(dropdown);
+
+    let selectedIndex = -1;
+    let filteredBonds = [];
+
+    function applySelection(bondStr) {
+        input.value = bondStr;
+        dropdown.classList.remove('show');
+        selectedIndex = -1;
+        const personName = bondToName.get(bondStr);
+        if (personName && typeof onSelectCallback === 'function') {
+            onSelectCallback(personName);
+        }
+    }
+
+    function showDropdown(query) {
+        if (!query || query.trim() === '') {
+            dropdown.classList.remove('show');
+            return;
+        }
+        const queryLower = query.trim().toLowerCase();
+        filteredBonds = allBondNumbers.filter(bond => String(bond).toLowerCase().includes(queryLower));
+        filteredBonds = filteredBonds.slice(0, 10);
+
+        if (filteredBonds.length === 0) {
+            dropdown.classList.remove('show');
+            return;
+        }
+
+        dropdown.innerHTML = '';
+        filteredBonds.forEach((bondStr, index) => {
+            const item = document.createElement('div');
+            item.className = 'autocomplete-item';
+            item.textContent = bondStr;
+            item.addEventListener('click', () => applySelection(bondStr));
+            dropdown.appendChild(item);
+        });
+
+        dropdown.classList.add('show');
+        selectedIndex = -1;
+    }
+
+    function hideDropdown() {
+        dropdown.classList.remove('show');
+        selectedIndex = -1;
+    }
+
+    function highlightItem(index) {
+        const items = dropdown.querySelectorAll('.autocomplete-item');
+        items.forEach((item, i) => {
+            if (i === index) {
+                item.classList.add('highlighted');
+                item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+            } else {
+                item.classList.remove('highlighted');
+            }
+        });
+    }
+
+    input.addEventListener('input', (e) => showDropdown(e.target.value));
+    input.addEventListener('focus', (e) => {
+        if (e.target.value.trim() !== '') showDropdown(e.target.value);
+    });
+
+    input.addEventListener('keydown', (e) => {
+        const items = dropdown.querySelectorAll('.autocomplete-item');
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (items.length > 0) {
+                selectedIndex = (selectedIndex + 1) % items.length;
+                highlightItem(selectedIndex);
+            }
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (items.length > 0) {
+                selectedIndex = selectedIndex <= 0 ? items.length - 1 : selectedIndex - 1;
+                highlightItem(selectedIndex);
+            }
+        } else if (e.key === 'Enter') {
+            if (selectedIndex >= 0 && selectedIndex < items.length) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                applySelection(filteredBonds[selectedIndex]);
+            }
+        } else if (e.key === 'Escape') {
+            hideDropdown();
+        }
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!input.contains(e.target) && !dropdown.contains(e.target)) {
+            hideDropdown();
+        }
+    });
+
     input.addEventListener('blur', () => {
         setTimeout(() => {
             if (!dropdown.matches(':hover') && document.activeElement !== input) {
@@ -3743,9 +3893,11 @@ function resetView() {
     }
     hidePathPanel();
     
-    // Clear search person box
+    // Clear search person boxes
     const personSearchInput = document.getElementById('personSearch');
     if (personSearchInput) personSearchInput.value = '';
+    const bondSearchInput = document.getElementById('bondSearch');
+    if (bondSearchInput) bondSearchInput.value = '';
     
     // Reset filters
     document.getElementById('familyFilter').value = 'all';
