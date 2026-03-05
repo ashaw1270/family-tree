@@ -2304,8 +2304,11 @@ function highlightNode(nodeId) {
             rect.style('fill', fillColor);
             rect.style('stroke', '#764ba2');
             rect.style('stroke-width', '4px');
-            // Update text color for readability
+            // Update text color for readability; remove outline so we don't get white-on-white for two-family nodes
             text.style('fill', getContrastingTextColor(fillColor));
+            text.style('stroke', 'none');
+            text.style('stroke-width', null);
+            text.style('paint-order', null);
         });
     }
 }
