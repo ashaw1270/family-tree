@@ -855,9 +855,36 @@ function calculateGraphLayout(nodes, links) {
             }
         });
 
+        // Helper: get all descendants of a node in this family (for shifting subtree when parent has one little)
+        function getDescendantsInFamily(nodeId, childrenMap, nodeMap, familyKey) {
+            const result = [];
+            const queue = [nodeId];
+            const visited = new Set([nodeId]);
+            while (queue.length) {
+                const id = queue.shift();
+                const kids = (childrenMap.get(id) || []).map(id => nodeMap.get(id)).filter(n => n && (n.family || 'default') === familyKey);
+                for (const c of kids) {
+                    if (!visited.has(c.id)) {
+                        visited.add(c.id);
+                        result.push(c);
+                        queue.push(c.id);
+                    }
+                }
+            }
+            return result;
+        }
+
+        // Map: for each node that is the only little of its big in this family, singleBig[nodeId] = that big (node)
+        const singleBigInFamily = new Map();
+        familyNodesList.forEach(node => {
+            const kids = littlesInFamily(node);
+            if (kids.length === 1) singleBigInFamily.set(kids[0].id, node);
+        });
+
         // Final per-depth collision pass: ensure siblings / same-layer nodes
         // within this family do not end up with identical or overlapping x positions.
         // This can happen when different subtrees have very similar child centroids.
+        // When a node has exactly one little, shifting it also shifts that little and its subtree so they stay centered.
         const byDepthAsc = familyNodesList.slice().sort((a, b) => (a.depth || 0) - (b.depth || 0));
         let idx = 0;
         while (idx < byDepthAsc.length) {
@@ -890,6 +917,20 @@ function calculateGraphLayout(nodes, links) {
                     const shift = requiredLeft - left;
                     cx += shift;
                     node.localX = cx;
+                    // If this node has exactly one little, shift that little and its whole subtree so they stay centered
+                    const kids = littlesInFamily(node);
+                    if (kids.length === 1) {
+                        const little = kids[0];
+                        little.localX = (little.localX ?? 0) + shift;
+                        const descendants = getDescendantsInFamily(little.id, childrenMap, nodeMap, familyKey);
+                        descendants.forEach(desc => { desc.localX = (desc.localX ?? 0) + shift; });
+                    }
+                    // If this node is the only little of its big, shift that big and the whole "only little" chain upward
+                    let big = singleBigInFamily.get(node.id);
+                    while (big) {
+                        big.localX = (big.localX ?? 0) + shift;
+                        big = singleBigInFamily.get(big.id);
+                    }
                 }
 
                 cursorRight = cx + half;
