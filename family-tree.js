@@ -1894,18 +1894,13 @@ function showNodeInfo(node) {
     }
 
     // LinkedIn (if present and non-empty) — always last field above the action button.
-    // JSON is expected to store only the username/slug, e.g. "adam-shaw-usc".
+    // JSON stores the full URL, e.g. "https://www.linkedin.com/in/adam-shaw-usc".
     const linkedinRaw = (source.linkedin || '').trim();
     if (linkedinRaw) {
-        let username = linkedinRaw;
-
-        // If a full URL was accidentally provided, try to extract the /in/{username} segment.
-        const fullUrlMatch = username.match(/linkedin\.com\/in\/([^\/?]+)/i);
-        if (fullUrlMatch && fullUrlMatch[1]) {
-            username = fullUrlMatch[1];
+        let linkedinUrl = linkedinRaw;
+        if (!/^https?:\/\//i.test(linkedinUrl)) {
+            linkedinUrl = 'https://' + linkedinUrl;
         }
-
-        const linkedinUrl = `https://www.linkedin.com/in/${encodeURIComponent(username)}/`;
 
         details.push(
             `<a href="${linkedinUrl}" class="linkedin-link" target="_blank" rel="noopener noreferrer">` +
