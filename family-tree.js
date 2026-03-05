@@ -1900,10 +1900,18 @@ function showNodeInfo(node) {
         ? source.families
         : [];
     if (familiesToShow.length > 0) {
+        const personName = source.name;
         if (familiesToShow.length === 1) {
-            details.push(`<strong>Family:</strong> ${createFamilyLink(familiesToShow[0])}`);
+            const fam = familiesToShow[0];
+            const familyData = treeData.families?.find(f => f.name === fam);
+            const isPatriarch = familyData?.patriarch === personName;
+            details.push(`<strong>Family:</strong> ${createFamilyLink(fam)}${isPatriarch ? ' (Patriarch)' : ''}`);
         } else {
-            const familyLinks = familiesToShow.map(f => createFamilyLink(f)).join(', ');
+            const familyLinks = familiesToShow.map(f => {
+                const familyData = treeData.families?.find(fd => fd.name === f);
+                const isPatriarch = familyData?.patriarch === personName;
+                return createFamilyLink(f) + (isPatriarch ? ' (Patriarch)' : '');
+            }).join(', ');
             details.push(`<strong>Families:</strong> ${familyLinks}`);
         }
     } else {
