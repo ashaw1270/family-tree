@@ -1852,6 +1852,22 @@ function showNodeInfo(node) {
         details.push(`<strong>Little:</strong> None`);
     }
 
+    // LinkedIn (if present and non-empty) — always last field above the action button
+    const linkedinRaw = (source.linkedin || '').trim();
+    if (linkedinRaw) {
+        let linkedinUrl = linkedinRaw;
+        if (!/^https?:\/\//i.test(linkedinUrl)) {
+            linkedinUrl = 'https://' + linkedinUrl;
+        }
+
+        details.push(
+            `<a href="${linkedinUrl}" class="linkedin-link" target="_blank" rel="noopener noreferrer">` +
+                `<span class="linkedin-link-icon">in</span>` +
+                `<span>View profile</span>` +
+            `</a>`
+        );
+    }
+
     detailsEl.innerHTML = details.join('<br>');
     
     // Attach event listeners to the links

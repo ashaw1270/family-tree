@@ -541,7 +541,8 @@
 
         .info-panel .info-link,
         .family-info-panel .info-link,
-        #pledgeClassInfoPanel .info-link {
+        #pledgeClassInfoPanel .info-link,
+        .path-content .info-link {
             color: #629dc7;
             text-decoration: none;
             cursor: pointer;
@@ -559,7 +560,8 @@
 
         .info-panel .info-link:hover,
         .family-info-panel .info-link:hover,
-        #pledgeClassInfoPanel .info-link:hover {
+        #pledgeClassInfoPanel .info-link:hover,
+        .path-content .info-link:hover {
             color: #764ba2;
             background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
             border-color: rgba(102, 126, 234, 0.5);
@@ -567,20 +569,37 @@
             box-shadow: 0 2px 4px rgba(102, 126, 234, 0.2);
         }
 
-        .path-content .info-link {
-            color: #629dc7;
+        .linkedin-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            margin-top: 3px;
+            border-radius: 4px;
+            background-color: #0a66c2;
+            color: #fff !important;
             text-decoration: none;
-            cursor: pointer;
             font-weight: 600;
-            padding: 0px 3px;
-            margin: 0 2px;
-            border-radius: 2px;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
-            border: 1px solid rgba(102, 126, 234, 0.3);
-            transition: all 0.2s ease;
-            display: inline-block;
-            line-height: 1.2;
-            vertical-align: baseline;
+            font-size: 12px;
+            border: none;
+        }
+
+        .linkedin-link:hover {
+            background-color: #004182;
+        }
+
+        .linkedin-link-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+            background-color: #fff;
+            color: #0a66c2;
+            font-size: 11px;
+            font-weight: 700;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         }
 
         .family-info-panel {
