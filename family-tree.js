@@ -855,6 +855,47 @@ function calculateGraphLayout(nodes, links) {
             }
         });
 
+        // Final per-depth collision pass: ensure siblings / same-layer nodes
+        // within this family do not end up with identical or overlapping x positions.
+        // This can happen when different subtrees have very similar child centroids.
+        const byDepthAsc = familyNodesList.slice().sort((a, b) => (a.depth || 0) - (b.depth || 0));
+        let idx = 0;
+        while (idx < byDepthAsc.length) {
+            const currentDepth = byDepthAsc[idx].depth || 0;
+            const layer = [];
+            while (idx < byDepthAsc.length && (byDepthAsc[idx].depth || 0) === currentDepth) {
+                layer.push(byDepthAsc[idx]);
+                idx += 1;
+            }
+            if (layer.length <= 1) continue;
+
+            // Sort by current localX so we can sweep left-to-right and push nodes apart if needed.
+            layer.sort((a, b) => (a.localX ?? 0) - (b.localX ?? 0));
+
+            let cursorRight = null;
+            layer.forEach(node => {
+                const width = node.estimatedWidth || 80;
+                const half = width / 2;
+                let cx = node.localX ?? 0;
+                const left = cx - half;
+
+                if (cursorRight == null) {
+                    // First node in this depth layer establishes the cursor.
+                    cursorRight = cx + half;
+                    return;
+                }
+
+                const requiredLeft = cursorRight + minGap;
+                if (left < requiredLeft) {
+                    const shift = requiredLeft - left;
+                    cx += shift;
+                    node.localX = cx;
+                }
+
+                cursorRight = cx + half;
+            });
+        }
+
         const allLeft = familyNodesList.map(n => (n.localX ?? 0) - (n.estimatedWidth || 0) / 2);
         const allRight = familyNodesList.map(n => (n.localX ?? 0) + (n.estimatedWidth || 0) / 2);
         const familyWidth = Math.max(...allRight) - Math.min(...allLeft);
