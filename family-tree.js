@@ -967,6 +967,46 @@ function calculateGraphLayout(nodes, links) {
         });
     }
 
+    // Global per-depth collision pass across all families:
+    // ensure that nodes sharing the same depth do not visually overlap,
+    // even when they belong to different families that end up very close.
+    const nodesByDepth = new Map();
+    nodes.forEach(node => {
+        const d = node.depth || 0;
+        if (!nodesByDepth.has(d)) nodesByDepth.set(d, []);
+        nodesByDepth.get(d).push(node);
+    });
+
+    nodesByDepth.forEach(layer => {
+        if (layer.length <= 1) return;
+
+        // Sort by current x so we can sweep left-to-right and push nodes apart if needed.
+        layer.sort((a, b) => (a.x ?? 0) - (b.x ?? 0));
+
+        let cursorRight = null;
+        layer.forEach(node => {
+            const width = node.estimatedWidth || 80;
+            const half = width / 2;
+            let cx = node.x ?? 0;
+            const left = cx - half;
+
+            if (cursorRight == null) {
+                // First node in this depth layer establishes the cursor.
+                cursorRight = cx + half;
+                return;
+            }
+
+            const requiredLeft = cursorRight + minGap;
+            if (left < requiredLeft) {
+                const shift = requiredLeft - left;
+                cx += shift;
+                node.x = cx;
+            }
+
+            cursorRight = cx + half;
+        });
+    });
+
     // For two-family nodes: order families by layout position (left column = left half of node)
     const familyCenterX = new Map();
     for (let f = 0; f < familyKeys.length; f++) {
