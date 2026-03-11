@@ -848,11 +848,57 @@ function calculateGraphLayout(nodes, links) {
         const byDepth = familyNodesList.slice().sort((a, b) => (b.depth || 0) - (a.depth || 0));
         byDepth.forEach(node => {
             const kids = littlesInFamily(node);
-            if (kids.length > 0) {
+            if (kids.length === 0) return;
+
+            // Compute descendant counts for each little to detect "small" descendant trees.
+            const kidInfos = kids.map(child => {
+                const descendants = getDescendantsInFamily(child.id, childrenMap, nodeMap, familyKey);
+                return {
+                    child,
+                    descendantsCount: descendants.length,
+                    subtreeSize: 1 + descendants.length
+                };
+            });
+
+            // "Small" descendant tree = 2 or fewer total descendants (excluding the node itself)
+            const anySmallDescendantTree = kidInfos.some(info => info.descendantsCount <= 2);
+
+            const xs = kids.map(c => c.localX ?? 0).sort((a, b) => a - b);
+            const minX = xs[0];
+            const maxX = xs[xs.length - 1];
+            const span = maxX - minX;
+
+            // If none of the littles have a small descendant tree, fall back to the original
+            // behavior: center the parent at the mean of the littles' positions.
+            if (!anySmallDescendantTree) {
                 const sum = kids.reduce((s, c) => s + (c.localX ?? 0), 0);
                 const count = kids.length;
                 if (Number.isFinite(sum)) node.localX = sum / count;
+                return;
             }
+
+            if (kids.length === 2) {
+                const [k1, k2] = kids;
+                const [x1, x2] = [k1.localX ?? 0, k2.localX ?? 0];
+                const info1 = kidInfos.find(info => info.child === k1);
+                const info2 = kidInfos.find(info => info.child === k2);
+                const size1 = info1 ? info1.subtreeSize : 1;
+                const size2 = info2 ? info2.subtreeSize : 1;
+
+                // If one child is much "heavier" (larger subtree) and they are far apart,
+                // align the parent above that heavier child so the lighter one can stay closer.
+                if (span > defaultSpacing * 1.5 && size1 !== size2) {
+                    node.localX = size1 > size2 ? x1 : x2;
+                    return;
+                }
+            }
+
+            // General case (>= 2 littles) when at least one little has a small descendant tree:
+            // use median of child positions rather than mean so a single far-out child
+            // doesn't drag the parent (and therefore other littles) equally far the other way.
+            const mid = Math.floor(xs.length / 2);
+            const median = xs.length % 2 === 0 ? (xs[mid - 1] + xs[mid]) / 2 : xs[mid];
+            node.localX = median;
         });
 
         // Helper: get all descendants of a node in this family (for shifting subtree when parent has one little)
@@ -1005,6 +1051,113 @@ function calculateGraphLayout(nodes, links) {
 
             cursorRight = cx + half;
         });
+    });
+
+    // After global collision resolution, pull "simple" littles (one big, no littles of their own)
+    // horizontally toward their big as much as possible without introducing overlaps.
+    nodesByDepth.forEach(layer => {
+        if (layer.length <= 1) return;
+
+        // We will repeatedly try to move simple littles closer to their bigs;
+        // a small fixed number of passes is enough for convergence in practice.
+        const maxPasses = 2;
+        for (let pass = 0; pass < maxPasses; pass++) {
+            // Always work with the current left-to-right ordering.
+            layer.sort((a, b) => (a.x ?? 0) - (b.x ?? 0));
+
+            for (let i = 0; i < layer.length; i++) {
+                const child = layer[i];
+                const parents = parentsMap.get(child.id) || [];
+                // "Simple" little: exactly one big, no littles of their own.
+                if (parents.length !== 1) continue;
+                if ((child.littlesCount ?? (child.littles ? child.littles.length : 0)) !== 0) continue;
+
+                const parentId = parents[0];
+                const parent = nodeMap.get(parentId);
+                if (!parent) continue;
+
+                const targetX = parent.x ?? 0;
+                const width = child.estimatedWidth || 80;
+                const half = width / 2;
+
+                // Build forbidden center ranges for this child based on all other nodes
+                // at this depth: for each other node with center xo and half-width hO,
+                // we cannot place the child's center within:
+                //   [xo - (hO + half + minGap), xo + (hO + half + minGap)]
+                const forbidden = [];
+                for (let j = 0; j < layer.length; j++) {
+                    if (j === i) continue;
+                    const other = layer[j];
+                    const wO = other.estimatedWidth || 80;
+                    const hO = wO / 2;
+                    const xo = other.x ?? 0;
+                    const radius = hO + half + minGap;
+                    forbidden.push([xo - radius, xo + radius]);
+                }
+
+                if (forbidden.length === 0) {
+                    // No constraints: move directly under the parent.
+                    const currentX = child.x ?? 0;
+                    if (Math.abs(targetX - (child.x ?? 0)) > 1e-3) {
+                        child.x = targetX;
+                    }
+                    continue;
+                }
+
+                // Merge forbidden intervals
+                forbidden.sort((a, b) => a[0] - b[0]);
+                const merged = [];
+                let [curL, curR] = forbidden[0];
+                for (let k = 1; k < forbidden.length; k++) {
+                    const [L, R] = forbidden[k];
+                    if (L <= curR) {
+                        curR = Math.max(curR, R);
+                    } else {
+                        merged.push([curL, curR]);
+                        curL = L;
+                        curR = R;
+                    }
+                }
+                merged.push([curL, curR]);
+
+                // Compute allowed intervals (complement of merged forbidden intervals)
+                const allowed = [];
+                let lastEnd = -Infinity;
+                for (const [L, R] of merged) {
+                    if (L > lastEnd) {
+                        allowed.push([lastEnd, L]);
+                    }
+                    lastEnd = R;
+                }
+                if (lastEnd < Infinity) {
+                    allowed.push([lastEnd, Infinity]);
+                }
+
+                // Find best position within allowed intervals, closest to parent.x
+                let bestX = null;
+                let bestDist = Infinity;
+                for (const [L, R] of allowed) {
+                    // Skip empty / degenerate intervals
+                    if (R <= L) continue;
+                    // Clamp target into this interval
+                    let cand = targetX;
+                    if (cand < L) cand = L;
+                    if (cand > R) cand = R;
+                    const dist = Math.abs(cand - targetX);
+                    if (dist < bestDist - 1e-6) {
+                        bestDist = dist;
+                        bestX = cand;
+                    }
+                }
+
+                if (bestX == null || !isFinite(bestX)) continue;
+
+                const currentX = child.x ?? 0;
+                if (Math.abs(bestX - targetX) < Math.abs(currentX - targetX) - 1e-3) {
+                    child.x = bestX;
+                }
+            }
+        }
     });
 
     // For two-family nodes: order families by layout position (left column = left half of node)
