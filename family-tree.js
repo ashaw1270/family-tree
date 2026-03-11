@@ -695,6 +695,53 @@ function calculateGraphLayout(nodes, links) {
         childrenMap.get(src.id).push(tgt.id);
     });
 
+    // When a person has multiple bigs within the same family, layout should treat them
+    // as if only their first-listed big in that family is the parent for positioning,
+    // while edges to all bigs are still rendered. To do this, we prune extra parents
+    // inside each family's children map based on the person's `bigs` order.
+    familyToChildren.forEach((childrenMap, familyKey) => {
+        const childToParents = new Map();
+
+        // Build reverse mapping child -> [parents] within this family
+        childrenMap.forEach((kids, parentId) => {
+            kids.forEach(childId => {
+                if (!childToParents.has(childId)) {
+                    childToParents.set(childId, []);
+                }
+                childToParents.get(childId).push(parentId);
+            });
+        });
+
+        childToParents.forEach((parents, childId) => {
+            if (parents.length <= 1) return;
+
+            const childNode = nodeMap.get(childId);
+            if (!childNode || !Array.isArray(childNode.bigs) || childNode.bigs.length === 0) return;
+
+            // From the child's bigs list, find the first big that:
+            // 1) is actually one of the parents for this child in this family, and
+            // 2) shares this family as their primary family.
+            const preferredParentId = childNode.bigs.find(bigName => {
+                if (!parents.includes(bigName)) return false;
+                const bigNode = nodeMap.get(bigName);
+                if (!bigNode) return false;
+                const bigFamily = bigNode.family || 'default';
+                return bigFamily === familyKey;
+            }) || parents[0];
+
+            // Remove this child from all other parents' children lists for layout.
+            parents.forEach(parentId => {
+                if (parentId === preferredParentId) return;
+                const kids = childrenMap.get(parentId);
+                if (!kids) return;
+                const idx = kids.indexOf(childId);
+                if (idx !== -1) {
+                    kids.splice(idx, 1);
+                }
+            });
+        });
+    });
+
     // Cross-family link counts: order families so connected ones are adjacent (minimize long edges)
     const familyCrossLinks = new Map(); // familyKey -> Map(otherFamilyKey -> count)
     graphLinks.forEach(link => {
@@ -983,6 +1030,55 @@ function calculateGraphLayout(nodes, links) {
             });
         }
 
+        // Within each sibling group where a child has multiple bigs in the same family,
+        // adjust only the ORDER of littles (left/right assignment) without changing the
+        // underlying spacing rules. We do this only for simple two-sibling cases so the
+        // child with a second same-family big sits on the side of its primary big closer
+        // to that other big.
+        familyNodesList.forEach(child => {
+            if (!Array.isArray(child.bigs) || child.bigs.length < 2) return;
+
+            const sameFamilyBigs = child.bigs.filter(bigName => {
+                const bigNode = nodeMap.get(bigName);
+                return bigNode && ((bigNode.family || 'default') === familyKey);
+            });
+            if (sameFamilyBigs.length < 2) return;
+
+            const primaryBigId = sameFamilyBigs[0];
+            const otherBigId = sameFamilyBigs[1];
+            const primaryBigNode = nodeMap.get(primaryBigId);
+            const otherBigNode = nodeMap.get(otherBigId);
+            if (!primaryBigNode || !otherBigNode) return;
+
+            const siblingsIds = childrenMap.get(primaryBigId);
+            if (!siblingsIds || siblingsIds.length !== 2) return; // only handle simple two-little case
+
+            const [sibAId, sibBId] = siblingsIds;
+            const otherSiblingId = child.id === sibAId ? sibBId : child.id === sibBId ? sibAId : null;
+            if (!otherSiblingId) return;
+
+            const otherSibling = nodeMap.get(otherSiblingId);
+            if (!otherSibling || (otherSibling.family || 'default') !== familyKey) return;
+
+            const primaryPos = primaryBigNode.localX ?? primaryBigNode.unitX ?? 0;
+            const otherPos = otherBigNode.localX ?? otherBigNode.unitX ?? 0;
+            if (!Number.isFinite(primaryPos) || !Number.isFinite(otherPos)) return;
+
+            const dir = otherPos > primaryPos ? 1 : otherPos < primaryPos ? -1 : 0;
+            if (dir === 0) return;
+
+            const childX = child.localX ?? 0;
+            const siblingX = otherSibling.localX ?? 0;
+
+            // If child is already on the correct side relative to its sibling, do nothing.
+            if ((dir > 0 && childX > siblingX) || (dir < 0 && childX < siblingX)) return;
+
+            // Swap the horizontal slots of the two littles so we only change ordering, not spacing.
+            const tmp = child.localX;
+            child.localX = otherSibling.localX;
+            otherSibling.localX = tmp;
+        });
+
         const allLeft = familyNodesList.map(n => (n.localX ?? 0) - (n.estimatedWidth || 0) / 2);
         const allRight = familyNodesList.map(n => (n.localX ?? 0) + (n.estimatedWidth || 0) / 2);
         const familyWidth = Math.max(...allRight) - Math.min(...allLeft);
@@ -1204,6 +1300,7 @@ function renderTree(nodes, links, animate = false) {
 function renderTreeInternal(nodes, links, fadeIn = false) {
     // Clear previous
     g.selectAll('.link').remove();
+    g.selectAll('.link-arrow').remove();
     g.selectAll('.node').remove();
 
     // Ensure gradients exist for two-family nodes (left/right half colors)
@@ -1310,6 +1407,76 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
                 } else {
                     return fadeIn ? 0 : 0.15; // Very faded for other links
                 }
+            }
+            return fadeIn ? 0 : 1;
+        });
+
+    // Arrowheads for links where little is above big (big → little direction)
+    const reversedLinks = links.filter(d => {
+        const sy = d.source && d.source.y;
+        const ty = d.target && d.target.y;
+        return typeof sy === 'number' && typeof ty === 'number' && ty < sy;
+    });
+    const arrowSize = 12;
+    const arrowWidth = 6;
+    g.selectAll('.link-arrow')
+        .data(reversedLinks, d => `${d.source.id}-${d.target.id}`)
+        .enter().append('path')
+        .attr('class', 'link-arrow')
+        .attr('d', d => {
+            const sx = d.source.x;
+            const sy = d.source.y;
+            const tx = d.target.x;
+            const ty = d.target.y;
+            const dx = tx - sx;
+            const dy = ty - sy;
+            const len = Math.sqrt(dx * dx + dy * dy);
+            if (len < 1e-6) return 'M 0 0';
+            const ux = dx / len;
+            const uy = dy / len;
+            const baseX = tx - ux * arrowSize;
+            const baseY = ty - uy * arrowSize;
+            const px = -uy * arrowWidth;
+            const py = ux * arrowWidth;
+            return `M ${tx} ${ty} L ${baseX + px} ${baseY + py} L ${baseX - px} ${baseY - py} Z`;
+        })
+        .attr('fill', '#999')
+        .attr('stroke', 'none')
+        .style('opacity', d => {
+            const sourceId = typeof d.source === 'object' ? d.source.id : d.source;
+            const targetId = typeof d.target === 'object' ? d.target.id : d.target;
+            if (currentlySelectedNode && (!currentPledgeClass || currentPledgeClass === 'all') && pathNodes.size === 0) {
+                const sourceInNuclearFamily = selectedNodeNuclearFamily.has(sourceId);
+                const targetInNuclearFamily = selectedNodeNuclearFamily.has(targetId);
+                if ((sourceId === currentlySelectedNode.id && targetInNuclearFamily) || (targetId === currentlySelectedNode.id && sourceInNuclearFamily) || (sourceInNuclearFamily && targetInNuclearFamily)) {
+                    return fadeIn ? 0 : 1;
+                }
+                return fadeIn ? 0 : 0.15;
+            }
+            if (pathNodes.size > 0) {
+                const isPathLink = pathLinks.has(`${sourceId}-${targetId}`) || pathLinks.has(`${targetId}-${sourceId}`);
+                if (isPathLink || (pathNodes.has(sourceId) && pathNodes.has(targetId))) return fadeIn ? 0 : 1;
+                return fadeIn ? 0 : 0.15;
+            }
+            if (currentPledgeClass && currentPledgeClass !== 'all') {
+                const sourceInNuclearFamily = pledgeClassNuclearFamily.has(sourceId);
+                const targetInNuclearFamily = pledgeClassNuclearFamily.has(targetId);
+                if ((pledgeClassNodes.has(sourceId) && targetInNuclearFamily) || (pledgeClassNodes.has(targetId) && sourceInNuclearFamily) || (sourceInNuclearFamily && targetInNuclearFamily)) {
+                    return fadeIn ? 0 : 1;
+                }
+                return fadeIn ? 0 : 0.15;
+            }
+            if (descendantNodes.size > 0) {
+                const isDescendantLink = descendantLinks.has(`${sourceId}-${targetId}`) || descendantLinks.has(`${targetId}-${sourceId}`);
+                return isDescendantLink ? (fadeIn ? 0 : 1) : (fadeIn ? 0 : 0.15);
+            }
+            if (currentFamily && currentFamily !== 'all') {
+                const sourceInNuclearFamily = familyNuclearFamily.has(sourceId);
+                const targetInNuclearFamily = familyNuclearFamily.has(targetId);
+                if ((familyNodes.has(sourceId) && targetInNuclearFamily) || (familyNodes.has(targetId) && sourceInNuclearFamily) || (sourceInNuclearFamily && targetInNuclearFamily)) {
+                    return fadeIn ? 0 : 1;
+                }
+                return fadeIn ? 0 : 0.15;
             }
             return fadeIn ? 0 : 1;
         });
