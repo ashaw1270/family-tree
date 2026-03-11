@@ -3526,7 +3526,7 @@
       "littles": [],
       "linkedin": "",
       "families": [
-        "Gold"
+        "Ice"
       ]
     },
     {
@@ -3590,7 +3590,7 @@
       ],
       "linkedin": "",
       "families": [
-        "Gold"
+        "Ice"
       ]
     },
     {
@@ -4406,7 +4406,6 @@
         "Ben Feldman"
       ],
       "littles": [],
-      "nickname": "Peterbot",
       "linkedin": "",
       "families": [
         "Fire"
@@ -4464,7 +4463,7 @@
       "littles": [],
       "linkedin": "",
       "families": [
-        "Gold"
+        "Ice"
       ]
     },
     {
@@ -4814,6 +4813,11 @@
       "name": "White",
       "patriarch": "Thomas Giaclone",
       "color": "#FFFFFF"
+    },
+    {
+      "name": "Ice",
+      "patriarch": "David Moseley, Shad Bello",
+      "color": "BBF2FC"
     }
   ]
 }
