@@ -23,6 +23,9 @@ let familyFilterIsolateMode = true;
 let descendantNodes = new Set(); // Track person + all descendants when "See descendants" is active
 let descendantLinks = new Set(); // Track links between descendant nodes
 
+// Gap (in pixels) between the arrow and the node when the little is above their big. Increase to pull the arrow further from the node.
+let linkArrowToNodeGap = 0;
+
 // Family colors are loaded from data.json (treeData.families); built in init()
 let familyColors = { default: { fill: '#fff', stroke: '#629dc7' } };
 
@@ -1302,6 +1305,40 @@ function renderTree(nodes, links, animate = false) {
     }
 }
 
+// Given line from (sx,sy) to (tx,ty) and a rectangle centered at (tx,ty) with half-width hw and half-height hh,
+// return the point where the line first meets the rectangle (so the line can stop before entering the node).
+function lineEndAtNodeEdge(sx, sy, tx, ty, hw, hh) {
+    const dx = tx - sx;
+    const dy = ty - sy;
+    let tMin = 1;
+    const tol = 1e-9;
+    if (Math.abs(dx) > tol) {
+        let t = (tx - hw - sx) / dx;
+        if (t > 0 && t <= 1) {
+            const py = sy + t * dy;
+            if (py >= ty - hh - tol && py <= ty + hh + tol) tMin = Math.min(tMin, t);
+        }
+        t = (tx + hw - sx) / dx;
+        if (t > 0 && t <= 1) {
+            const py = sy + t * dy;
+            if (py >= ty - hh - tol && py <= ty + hh + tol) tMin = Math.min(tMin, t);
+        }
+    }
+    if (Math.abs(dy) > tol) {
+        let t = (ty - hh - sy) / dy;
+        if (t > 0 && t <= 1) {
+            const px = sx + t * dx;
+            if (px >= tx - hw - tol && px <= tx + hw + tol) tMin = Math.min(tMin, t);
+        }
+        t = (ty + hh - sy) / dy;
+        if (t > 0 && t <= 1) {
+            const px = sx + t * dx;
+            if (px >= tx - hw - tol && px <= tx + hw + tol) tMin = Math.min(tMin, t);
+        }
+    }
+    return { x: sx + tMin * dx, y: sy + tMin * dy };
+}
+
 // Internal render function
 function renderTreeInternal(nodes, links, fadeIn = false) {
     // Clear previous
@@ -1311,6 +1348,19 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
 
     // Ensure gradients exist for two-family nodes (left/right half colors)
     ensureFamilyGradients(nodes);
+
+    const nodeHalfWidth = (node) => (node.estimatedWidth != null ? node.estimatedWidth : 80) / 2;
+    const nodeHalfHeight = 18;
+
+    const linkEndPoint = (d) => {
+        const sy = d.source && d.source.y;
+        const ty = d.target && d.target.y;
+        const reversed = typeof sy === 'number' && typeof ty === 'number' && ty < sy;
+        if (!reversed) return { x: d.target.x, y: d.target.y };
+        const hw = Math.max(0, nodeHalfWidth(d.target) - linkArrowToNodeGap);
+        const hh = Math.max(0, nodeHalfHeight - linkArrowToNodeGap);
+        return lineEndAtNodeEdge(d.source.x, d.source.y, d.target.x, d.target.y, hw, hh);
+    };
 
     // Draw links
     const link = g.selectAll('.link')
@@ -1331,8 +1381,8 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
         })
         .attr('x1', d => d.source.x)
         .attr('y1', d => d.source.y)
-        .attr('x2', d => d.target.x)
-        .attr('y2', d => d.target.y)
+        .attr('x2', d => linkEndPoint(d).x)
+        .attr('y2', d => linkEndPoint(d).y)
         .style('opacity', d => {
             const sourceId = typeof d.source === 'object' ? d.source.id : d.source;
             const targetId = typeof d.target === 'object' ? d.target.id : d.target;
@@ -1430,21 +1480,22 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
         .enter().append('path')
         .attr('class', 'link-arrow')
         .attr('d', d => {
+            const end = linkEndPoint(d);
+            const tipX = end.x;
+            const tipY = end.y;
             const sx = d.source.x;
             const sy = d.source.y;
-            const tx = d.target.x;
-            const ty = d.target.y;
-            const dx = tx - sx;
-            const dy = ty - sy;
+            const dx = tipX - sx;
+            const dy = tipY - sy;
             const len = Math.sqrt(dx * dx + dy * dy);
             if (len < 1e-6) return 'M 0 0';
             const ux = dx / len;
             const uy = dy / len;
-            const baseX = tx - ux * arrowSize;
-            const baseY = ty - uy * arrowSize;
+            const baseX = tipX - ux * arrowSize;
+            const baseY = tipY - uy * arrowSize;
             const px = -uy * arrowWidth;
             const py = ux * arrowWidth;
-            return `M ${tx} ${ty} L ${baseX + px} ${baseY + py} L ${baseX - px} ${baseY - py} Z`;
+            return `M ${tipX} ${tipY} L ${baseX + px} ${baseY + py} L ${baseX - px} ${baseY - py} Z`;
         })
         .attr('fill', '#999')
         .attr('stroke', 'none')
