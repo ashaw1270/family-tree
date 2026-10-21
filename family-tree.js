@@ -544,6 +544,12 @@ function buildTree(preservePath = false, animate = false) {
 }
 
 
+// A bond number of -1 means the person has not crossed.
+function formatBondNumber(bondNumber) {
+    if (Number(bondNumber) === -1) return 'Not Crossed';
+    return String(bondNumber);
+}
+
 // Measure label width for layout (same font as .node-label: 14px, weight 600)
 function measureNodeLabelWidth(node) {
     const label = formatNameWithNickname(node.name);
@@ -558,7 +564,7 @@ function measureNodeLabelWidth(node) {
         const hasBond = node.bondNumber != null && node.bondNumber !== '';
         temp.append('tspan').attr('x', 0).attr('dy', hasBond ? '-0.55em' : '0').text(label);
         if (hasBond) {
-            temp.append('tspan').attr('class', 'node-bond').attr('x', 0).attr('dy', '1.35em').text(String(node.bondNumber));
+            temp.append('tspan').attr('class', 'node-bond').attr('x', 0).attr('dy', '1.35em').text(formatBondNumber(node.bondNumber));
         }
         const bbox = temp.node().getBBox();
         temp.remove();
@@ -1650,7 +1656,7 @@ function renderTreeInternal(nodes, links, fadeIn = false) {
                     .attr('class', 'node-bond')
                     .attr('x', 0)
                     .attr('dy', '1.35em')
-                    .text(String(d.bondNumber));
+                    .text(formatBondNumber(d.bondNumber));
             }
         })
         .style('font-weight', d => {
@@ -2175,12 +2181,13 @@ function searchAndSelectPersonByBondNumber() {
     if (!query) return;
     const people = treeData.people;
     const bondStr = String(query).toLowerCase();
-    const exact = people.find(p => p.bondNumber != null && String(p.bondNumber).toLowerCase() === bondStr);
+    const bondLabel = (bondNumber) => formatBondNumber(bondNumber).toLowerCase();
+    const exact = people.find(p => p.bondNumber != null && (String(p.bondNumber).toLowerCase() === bondStr || bondLabel(p.bondNumber) === bondStr));
     if (exact) {
         selectPersonByName(exact.name);
         return;
     }
-    const partial = people.filter(p => p.bondNumber != null && String(p.bondNumber).toLowerCase().includes(bondStr));
+    const partial = people.filter(p => p.bondNumber != null && (String(p.bondNumber).toLowerCase().includes(bondStr) || bondLabel(p.bondNumber).includes(bondStr)));
     if (partial.length === 0) {
         showErrorPopup('No person found with bond number matching "' + query + '"');
         return;
@@ -2264,7 +2271,7 @@ function showNodeInfo(node) {
     
     // Bond Number
     if (source.bondNumber !== null && source.bondNumber !== undefined) {
-        details.push(`<strong>Bond Number:</strong> ${source.bondNumber}`);
+        details.push(`<strong>Bond Number:</strong> ${formatBondNumber(source.bondNumber)}`);
     } else {
         details.push(`<strong>Bond Number:</strong> Unknown`);
     }
@@ -3438,7 +3445,7 @@ function setupBondNumberAutocomplete(inputId, onSelectCallback) {
     let filteredBonds = [];
 
     function applySelection(bondStr) {
-        input.value = bondStr;
+        input.value = formatBondNumber(bondStr);
         dropdown.classList.remove('show');
         selectedIndex = -1;
         const personName = bondToName.get(bondStr);
@@ -3453,7 +3460,11 @@ function setupBondNumberAutocomplete(inputId, onSelectCallback) {
             return;
         }
         const queryLower = query.trim().toLowerCase();
-        filteredBonds = allBondNumbers.filter(bond => String(bond).toLowerCase().includes(queryLower));
+        filteredBonds = allBondNumbers.filter(bond => {
+            const raw = String(bond).toLowerCase();
+            const label = formatBondNumber(bond).toLowerCase();
+            return raw.includes(queryLower) || label.includes(queryLower);
+        });
         filteredBonds = filteredBonds.slice(0, 10);
 
         if (filteredBonds.length === 0) {
@@ -3465,7 +3476,7 @@ function setupBondNumberAutocomplete(inputId, onSelectCallback) {
         filteredBonds.forEach((bondStr, index) => {
             const item = document.createElement('div');
             item.className = 'autocomplete-item';
-            item.textContent = bondStr;
+            item.textContent = formatBondNumber(bondStr);
             item.addEventListener('click', () => applySelection(bondStr));
             dropdown.appendChild(item);
         });
